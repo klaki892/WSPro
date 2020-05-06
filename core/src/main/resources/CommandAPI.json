@@ -1,0 +1,24 @@
+[
+  {
+    "GroupName" : "Low-Level Commands",
+    "Description" : "These commands are basic building blocks for all other commands and as such do not do much checking for validity or coherence, be warned if you attempt to call these commands, depending on the type of game running these may be ignored when issued by cards or players.",
+    "Commands": [
+      {
+        "Name" : "ADDCARD",
+        "Description" : "Add a specific card to a zone.",
+        "Notice" : "Note: Players and cards are not allowed to call this command.",
+        "Synopsis": "ADD CARD [CARD UUID] [CARD ZONE NAME]",
+        "Parameters" : [
+          {
+            "Name" : "UUID",
+            "Description" : "The Unique Identifier for a known card in the game."
+          },
+          {
+            "Name" : "TARGET_ZONE_NAME",
+            "Description" : "The Zone which should receive this card."
+          }
+        ]
+      },
+    ]
+  }
+]

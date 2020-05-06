@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="357.0" y="287.0">ton.klay.wspro.core.api.game.events.EventHandler</node>
+    <node x="452.0" y="0.0">ton.klay.wspro.core.api.game.IGame</node>
+    <node x="0.0" y="102.0">ton.klay.wspro.core.api.game.commands.ICommand</node>
+    <node x="0.0" y="287.0">ton.klay.wspro.core.api.game.communication.Communicator</node>
+    <node x="0.0" y="591.0">ton.klay.wspro.core.api.game.commands.CommandSender</node>
+    <node x="0.0" y="450.0">ton.klay.wspro.core.api.game.commands.CommandExecutor</node>
+    <node x="321.0" y="591.0">ton.klay.wspro.core.api.game.events.EventListener</node>
+    <node x="102.25" y="0.0">ton.klay.wspro.core.api.game.communication.Communicable</node>
+    <node x="305.0" y="450.0">ton.klay.wspro.core.api.game.commands.CommandSenderType</node>
+    <node x="244.0" y="124.0">ton.klay.wspro.core.api.game.events.Event</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ton.klay.wspro.core.api.game.commands.ICommand" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="0.0" y="-70.0" />
+      <point x="112.0" y="77.0" />
+      <point x="160.5" y="77.0" />
+      <point x="-58.25" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.Event" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="0.0" y="-48.0" />
+      <point x="325.5" y="77.0" />
+      <point x="277.0" y="77.0" />
+      <point x="58.25" y="26.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.9536617842876165" x="380.0" y="276.7509075677185" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

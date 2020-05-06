@@ -1,0 +1,34 @@
+package ton.klay.wspro.core.api.game.field;
+
+import java.util.EnumSet;
+
+/**
+ * The play Zones in Weiss
+ * @see <code>Weiss Schwarz Rule 3</code>
+ */
+public enum Zones {
+    ZONE_DECK,
+    ZONE_HAND,
+    ZONE_WAITING_ROOM,
+//    ZONE_STAGE,
+    ZONE_CLOCK,
+    ZONE_LEVEL,
+    ZONE_STOCK,
+    ZONE_CLIMAX,
+    ZONE_MEMORY,
+    ZONE_RESOLUTION,
+
+//    ZONE_CENTER_STAGE,
+//    ZONE_BACK_STAGE,
+    ZONE_CENTER_STAGE_LEFT,
+    ZONE_CENTER_STAGE_MIDDLE,
+    ZONE_CENTER_STAGE_RIGHT,
+    ZONE_BACK_STAGE_LEFT,
+    ZONE_BACK_STAGE_RIGHT,
+    ZONE_CENTER_STAGE_LEFT_MARKER,
+    ZONE_CENTER_STAGE_MIDDLE_MARKER,
+    ZONE_CENTER_STAGE_RIGHT_MARKER,
+    ZONE_BACK_STAGE_LEFT_MARKER,
+    ZONE_BACK_STAGE_RIGHT_MARKER;
+
+}

@@ -1,0 +1,20 @@
+Board for Scripting Engine
+--------------------------
+
+To-Do:
+
+    - Define what a card effect is and the different types of effects
+
+    - Create the functions to interact with the specific fields
+    - Create utility functions that do more complex actions from core functions
+        - Draw a card, shuffle the deck,
+
+In-Progress:
+- Define what a card Ability is, and what effects are a result of abilities
+
+    - Create the Core functions to do simple abstract action in the game for scripters
+        - moving a card from zone to zone, get a certain field on a player side, etc.
+
+
+Done:
+    - Create the playing field zones

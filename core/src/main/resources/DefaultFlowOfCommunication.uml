@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ton.klay.wspro.core.api.game.communication.Communicator</OriginalElement>
+  <nodes>
+    <node x="396.0" y="325.0">ton.klay.wspro.core.api.game.communication.GameCommunicationManager</node>
+    <node x="746.5" y="11.0">ton.klay.wspro.core.api.game.communication.Communicable</node>
+    <node x="0.0" y="590.0">ton.klay.wspro.core.api.game.events.EventHandler</node>
+    <node x="208.0" y="358.0">ton.klay.wspro.core.api.game.events.EventListener</node>
+    <node x="256.15241228070164" y="146.0">ton.klay.wspro.core.api.game.events.Event</node>
+    <node x="1063.8524122807016" y="124.0">ton.klay.wspro.core.api.game.commands.ICommand</node>
+    <node x="62.5" y="802.0">ton.klay.wspro.core.api.game.events.EventManager</node>
+    <node x="707.0" y="314.0">ton.klay.wspro.core.api.game.communication.Communicator</node>
+    <node x="1093.8524122807016" y="0.0">ton.klay.wspro.core.api.game.commands.CommandSender</node>
+    <node x="1162.5" y="336.0">ton.klay.wspro.core.api.game.commands.CommandExecutor</node>
+    <node x="643.7491228070174" y="524.0">ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ton.klay.wspro.core.api.game.events.EventListener" target="ton.klay.wspro.core.api.game.events.Event">
+      <point x="0.0" y="-26.0" />
+      <point x="291.5" y="289.0" />
+      <point x="317.27741228070164" y="289.0" />
+      <point x="-20.375" y="48.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.EventHandler" target="ton.klay.wspro.core.api.game.events.EventListener">
+      <point x="70.25" y="-48.0" />
+      <point x="210.75" y="504.0" />
+      <point x="235.83333333333337" y="504.0" />
+      <point x="-55.66666666666666" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.commands.CommandExecutor" target="ton.klay.wspro.core.api.game.commands.ICommand">
+      <point x="0.0" y="-48.0" />
+      <point x="1292.5" y="289.0" />
+      <point x="1250.5190789473681" y="289.0" />
+      <point x="74.66666666666663" y="70.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.events.EventListener">
+      <point x="-157.9375000000001" y="-114.0" />
+      <point x="666.3116228070173" y="504.0" />
+      <point x="347.16666666666663" y="504.0" />
+      <point x="55.66666666666663" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="112.81249999999989" y="-114.0" />
+      <point x="937.0616228070173" y="494.0" />
+      <point x="1029.5" y="494.0" />
+      <point x="1029.5" y="104.0" />
+      <point x="909.5999999999999" y="104.0" />
+      <point x="46.59999999999991" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.commands.ICommand" target="ton.klay.wspro.core.api.game.commands.CommandSender">
+      <point x="56.0" y="-70.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.EventHandler" target="ton.klay.wspro.core.api.game.events.Event">
+      <point x="-70.25" y="-48.0" />
+      <point x="70.25" y="289.0" />
+      <point x="276.52741228070164" y="289.0" />
+      <point x="-61.125" y="48.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.commands.ICommand" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="-56.0" y="-70.0" />
+      <point x="1119.8524122807016" y="94.0" />
+      <point x="956.1999999999999" y="94.0" />
+      <point x="93.19999999999993" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.communication.GameCommunicationManager" target="ton.klay.wspro.core.api.game.commands.ICommand">
+      <point x="97.0" y="-59.0" />
+      <point x="638.5" y="289.0" />
+      <point x="1101.185745614035" y="289.0" />
+      <point x="-74.66666666666663" y="70.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.communication.GameCommunicationManager" target="ton.klay.wspro.core.api.game.events.Event">
+      <point x="-97.0" y="-59.0" />
+      <point x="444.5" y="289.0" />
+      <point x="398.77741228070164" y="289.0" />
+      <point x="61.125" y="48.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.EventManager" target="ton.klay.wspro.core.api.game.events.EventHandler">
+      <point x="-76.75" y="-26.0" />
+      <point x="139.25" y="777.0" />
+      <point x="140.5" y="777.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.events.Event">
+      <point x="-112.81250000000011" y="-114.0" />
+      <point x="711.4366228070173" y="494.0" />
+      <point x="385.5" y="494.0" />
+      <point x="385.5" y="289.0" />
+      <point x="358.02741228070164" y="289.0" />
+      <point x="20.375" y="48.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.communication.GameCommunicationManager">
+      <point x="-67.68750000000011" y="-114.0" />
+      <point x="756.5616228070173" y="484.0" />
+      <point x="541.5" y="484.0" />
+      <point x="0.0" y="59.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.Event" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="0.0" y="-48.0" />
+      <point x="337.65241228070164" y="94.0" />
+      <point x="769.8" y="94.0" />
+      <point x="-93.20000000000005" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.communication.Communicator">
+      <point x="-22.562500000000114" y="-114.0" />
+      <point x="801.6866228070173" y="474.0" />
+      <point x="759.0" y="474.0" />
+      <point x="-104.0" y="70.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.communication.Communicator" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="0.0" y="-70.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.communication.GameCommunicationManager" target="ton.klay.wspro.core.api.game.communication.Communicable">
+      <point x="0.0" y="-59.0" />
+      <point x="541.5" y="104.0" />
+      <point x="816.4" y="104.0" />
+      <point x="-46.60000000000002" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.api.game.events.EventManager" target="ton.klay.wspro.core.api.game.events.EventListener">
+      <point x="76.75" y="-26.0" />
+      <point x="292.75" y="777.0" />
+      <point x="291.5" y="777.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager" target="ton.klay.wspro.core.api.game.commands.ICommand">
+      <point x="157.93749999999986" y="-114.0" />
+      <point x="982.1866228070173" y="504.0" />
+      <point x="1152.0" y="504.0" />
+      <point x="1152.0" y="289.0" />
+      <point x="1175.8524122807016" y="289.0" />
+      <point x="0.0" y="70.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.048741418764302" x="924.339960232604" y="535.3240235653502" />
+  <SelectedNodes>
+    <node>ton.klay.wspro.core.game.communication.DefaultGameCommunicationManager</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
