@@ -8,13 +8,25 @@ To-Do:
     - Create the functions to interact with the specific fields
     - Create utility functions that do more complex actions from core functions
         - Draw a card, shuffle the deck,
-
-In-Progress:
-- Define what a card Ability is, and what effects are a result of abilities
-
+    - Define what a card Ability is, and what effects are a result of abilities
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
+    -Refactor eventListerners to Guava EventHub
+    -Change command Format from list of strings to a key-value pair of arguments
+        ex: playtiming command:
+            - Methodname/commandname
+            - arguments
+                - object
+                - object
+            -Meta Arguments?
+    - Proof of concept the ability template system
+    - POTENTIAL ISSUES TO CHECK:
+        - [critical] Players might be receiving events out of order 
+In-Progress:
 
+    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+    - Design how Interrupt Type rule actions affect the overall system, and how to evade their interruptions (wrapping something with atomic?)
+        [see InterruptTypeRuleActionThoughts.txt]
 
 Done:
     - Create the playing field zones

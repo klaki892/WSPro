@@ -1,0 +1,27 @@
+Old Implemented Way
+Description: each phase hard-coded specifically: knows its steps, knows the phase before and after it, performs the functions to get user input. abstracts all functionality for all phases to StartPhase() and 
+	Pros:
+		+ Each phase is encapsulated within itself, no single entity holding the entire game state
+		+ Gameflow does not have to happen on original main thread that started the game.
+	Cons:
+		- hard-coupled phases, cannot handle changes that affect the flow of the phases (extra turns or e.g. extra trigger steps)
+		- common state for phases has to be abstracted outside individual phases
+	Neutrual:
+		* The Duel object keeps track of what phase is currently going on 
+		* Immutable. always guarantted to perform the same steps
+		* Multiple classes needed to implement entire game flow
+Forge's Implementation:
+Description: Dedicated Class for phase handling, knows all phases and implements specific handlers in a switch for each "phase type", any common functionality in the flow is abstracted out to a main game loop (while loop). abstracted function to handle switching phases based on hard-coded and other conditions affecting the game state
+	Pros:
+		+ Entire game is handled in one loop, common functionality is centralized, less overall code.
+		+ abstracted nextPhase() allows for adding extra turns / steps & skipping turns and steps
+		+ game state relating to phases and turns is consolidated to one class
+	Cons:
+		- main game loop is tied to thread that started the game.
+		- special conditionals that break common flow are manually exceptioned in common flow 
+			(e.g. magic's game resetting effect or a particular family of cards that must be activated before all others)
+	Neutrual:
+		- Handles game end as a conditional, not as a short circuit happening immediately 
+		
+Decision: hybrid needed - Implement Forge's use of a Phase Handler to centralize the code's game flow. The Phase Handler will create new instances of phases as the game progresses. The phases will have references to the Phase Handler so that it can maintain persistent states (e.g. attacking/defending card during attack phase) Use the Phase Handler class as the persistent data store for game state information, It's needed for future effect handling of modifying the game flow. Event triggering turns from affecting game state, to only informative. (this might be an issue for replays)
+		

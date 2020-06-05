@@ -1,0 +1,26 @@
+1. The case of "Refresh & Level up at the same time"
+	The idea is presented that if i have 6 cards in clock, im taking 1 damage, and i have one card left in deck and its not a climax, that upon taking the damage, i now have triggered two interrupt type rule actions, leveling up and resolving a reshuffle. However from the rules as written this is not necessarily true:
+		rule 9.1.2.1 states: "Rule Actions classified as interrupt type Rule Actions are executed when a specified condition(s) is met during the game, suspending all actions being executed without exception, executing itself immediately"
+	the key words here is "without exception".
+	The Damage Proces is as follows:
+		4.10.1.1. The player that received damage puts the top card of his or her deck face up into his or her resolution zone
+		4.10.1.3. If [number] cards are moved to the resolution zone by this Damage Process, put all those cards at the top of the clock in the same order as they were put into the resolution zone, and conclude the Damage Process. If not, return to 4.10.1.1
+	Resolving a reshuffle is as follows:
+		9.2.1. The resolution of a reshuffle is executed when there are no cards in a player’s deck. This is an interrupt type Rule Action.
+	Because of the presence of "without exception" in 9.1.2.1, Let's revisit the scenario strictly taking the rules as the occur into perspective:
+	setup: 6 cards in clock, 1 card in deck
+	1. Damage process begins, the [number] of damage to take is 1.
+	2. 4.10.1.1. occurs, the top card transitions from deck to waiting room.
+	3. Interrupt Type Rule Action 9.2.1 occurs: there are no cards in a player's deck.
+	4. 9.1.2.1 suspends all actions without exception, 4.10.1.3's action does not begin for moving the cards in resolution to the clock, damage process is not concluded. 
+	5. Resolving a reshuffle executes fully.
+	6. 4.10.1.3 proceeds and resolves as 1 card has been moved to the resolution zone.
+	7. Interrupt type rule action Level Up now resolves. 
+	8. game continues (and refresh point happens on next check timing)
+
+2. when does simultaneous interrupt rule actions happen? (9.1.2.1.1)
+	When cards like P3/S01-066 & P3/S01-065	Exist: "...deal 1 Damage to all players"
+	The only way to beat the "without exception" rule, is not have events happen sequentially, but defined concurrently. 
+	the word "simultaneous" is the only thing faster than interrupt type rule actions. In the land of single-threaded programming, simultaneous is "impossible" therefore the effect "deal 1 damage to all players" has to be, in a sense "atomic" where it is guaranteed to complete regardless of outside influence.* So the loop of dealing 1 damage to each player would have to be wrapped atomically so that interrupts could not stop it, (which implementing such a scenario is a different rabbit hole)
+	Interrupt type rule actions would normally intercept "deal 1 damage to player" but when the events happen at the same time there is no time for an interrupt between both players execution 4.10.1.3 "simultaneiously", thus causing rule 9.1.2.1.1 to finally be evoked.
+	*atomicity is actually a term for multi-threading, but the idea applies here

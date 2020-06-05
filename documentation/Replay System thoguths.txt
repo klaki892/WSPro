@@ -1,0 +1,12 @@
+Replaying games requires the recreation of game logic either through simulating the game again with controllers just sending the same inputs that they originally did, or by showing effects on the screen from retellings of the game event logs by itself.
+
+Simulating controllers:
+	How: a noraml game is run, but all the player controllers is just a controller that replays all events as they were originally sent when any input is requested. 
+	- requires exact version of the system to be running, else the commands could be different and the process flow might have changed resulting in invalid replays (Crashing games)
+	- This would be impossible for online systems if the deployment requires provisioning an old version specifically for the replay. 
+	- This would require desktop systems to redownload and dynamically load the library for the core game that originally produced the replay.
+Simulating events:
+	How: No game engine is running, the UI interprets all of the events as they happened and follows the steps from those "events" that were broadcasted.
+	- relies on the broadcasted events to be verbose enough to recreate all actions.
+	- solves the versioning problem 
+	- might still require specific versioning for the GUI however, as if different actions are changed in how they are interpreted, the replays could enter inconsistent states. 
