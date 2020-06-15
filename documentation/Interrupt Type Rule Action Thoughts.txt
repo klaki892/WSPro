@@ -19,8 +19,24 @@
 	8. game continues (and refresh point happens on next check timing)
 
 2. when does simultaneous interrupt rule actions happen? (9.1.2.1.1)
-	When cards like P3/S01-066 & P3/S01-065	Exist: "...deal 1 Damage to all players"
+	a. When cards like P3/S01-066 & P3/S01-065	Exist: "...deal 1 Damage to all players"
 	The only way to beat the "without exception" rule, is not have events happen sequentially, but defined concurrently. 
 	the word "simultaneous" is the only thing faster than interrupt type rule actions. In the land of single-threaded programming, simultaneous is "impossible" therefore the effect "deal 1 damage to all players" has to be, in a sense "atomic" where it is guaranteed to complete regardless of outside influence.* So the loop of dealing 1 damage to each player would have to be wrapped atomically so that interrupts could not stop it, (which implementing such a scenario is a different rabbit hole)
 	Interrupt type rule actions would normally intercept "deal 1 damage to player" but when the events happen at the same time there is no time for an interrupt between both players execution 4.10.1.3 "simultaneiously", thus causing rule 9.1.2.1.1 to finally be evoked.
 	*atomicity is actually a term for multi-threading, but the idea applies here
+	b. "If you have 6 cards in your clock and you use an effect to put the last card of your deck into your clock as a cost, then you can choose if you want to refresh or level up first."
+
+Implementing interrupt type rule actions:
+	TL:DR: QUEUE system just like CHECK TIMINGS. BUT WILL NOT EXECUTE IF A GAME-WIDE INTERRUPT LOCK IS ON.
+	we have listeners for events in the game (e.g. "moved from A to B" and "card was reversed") and these trigger effects in other cards. (via check timings) 
+	If we have the game listen to very specific triggers (moved from deck = reshuffle check) and ( moved to clock = level-up check) and after every action check for "interrupt timing" we can interrupt the game and correctly perform the actions.
+	how to handle simultaneous actions: simultaneous actions have to be explicit "happens to all players / move all cards at the same time (brainstorm)" these effects need to be specially coded so that interrupts dont happen inbetween. at the beginning of an simultaneous action, declare a interrupt lock. any interrupt timings that are called while the lock is enabled, will not pop from queue. upon ending a interrupt lock, do an interrupt timing. 
+	Interrupt Timing's follow the same queuing logic as check timings. 
+	ex: Implement deal X damage to all players (* dealing a unit of damage is more complicated, logic isnt verbatim) 
+		1. Declare interrupt lock to game
+		2. deal 1 damage to player A
+			- interrupt timing (ignored)
+		3. Deal 1 damage to player B
+			- interrupt timing (ignored)
+		4. release interrupt lock
+		5. interrupt timing 

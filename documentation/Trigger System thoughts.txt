@@ -1,0 +1,129 @@
+game-trigger examples:
+CARD_MOVED
+CARD_DRAWN
+DAMAGE_TAKEN
+DAMAGE_CANCELLED
+DECK_EMPTY
+CLOCK_AT_7
+
+When are triggers handled?
+	- Immediately after they are emitted
+		Emitting/Issuing is different from handling the results
+	- check timings &  interrupt timings?
+		NO. chain effects from triggers are handled in timings (the results from listening)
+Who Emits triggers?
+	- Low level Commands
+		EX: drawing cards, playing a card from another zone, moving cards around all should emit CARD_MOVED without worrying about it. (lower level API)
+	
+Whats in a trigger?
+	- The Name
+	- Relevant Properties?
+		Ex: CARD MOVED
+			FROM ZONE & TO ZONE
+			WHO CAUSED IT? (Effect? Game?) (WHO OWNED THE CAUSE? e.g. for anti-heal))
+		EX: DAMAGE TAKEN
+			FROM WHAT? (BATTLE? effect?)
+			WHO CAUSED IT? (Which player/ whats th source / who owned the source)
+			HOW MUCH?
+		EX: DECK_EMPTY
+		How do handlers of the triggers know their properties?
+		(aka how do we represent triggers?) 
+			Option 1: ENUM backed by class
+				enum: TriggerType 
+				Properties are held in Mappings (String Property: Object Value)
+					EX: "SourceZone" : ZoneType
+						"DestinationZone" : ZoneType
+						"Damage" : Int
+				Pros:
+					+ Reusable property keys for multiple types of triggers
+					+ Theoretically could dynamically add new triggers, and handlers
+					+ Non-opinionated for asking questions about a trigger, potential for non-standard information in trigger (but handler would have to ask for non-standard information, destroying expected known properties but allows for extensions of types.)
+				Cons:
+					- not statically documented what properties belong to what triggers, forces manual checking of if a property exists when handling a trigger.
+			Option 2: Highly explicit constants / enums
+				Ex: CARD_MOVED_FROM_STAGE_TO_WAITING
+				Pros:
+					+ Explicit and well known at compile time
+				Cons:
+					- cards and abilities have to know about this list
+					- requires explicit checking in more generic functioanlities, causing boilerplate checking and removing polymorphism. (e.g. CARD_MOVED now has to check the zones and issue a correct trigger
+					- does not solve multiple properties issue (who owned the moved card?)
+			Option 3: Triggers are the own class with statically defined properties
+				EX: new CardMovedTrigger(ZoneType Source, ZoneType Destination, Player sourceOwner, Player destinationOwner, TriggerCauser cause)
+					immutable, getters that provide the information in the consturctor.
+					
+				Pros: 
+					+ Known properties provides saftey in defining new triggers, provides guarantee of information.
+				Cons: 
+					- Destroys polymorphism, have to check for static property in specific trigger, boilerplate if want to handle multiple triggers. 
+					- Inheritance is lost / explicit constructors needed for every potential combination of initial proeprties. (aka boilerplate to define for multiple events who the owner was) 
+					- Opinionated in what questions can be answered by a trigger, no extra questions can be asked  
+			arguments:
+				Option 3 makes sense if triggers are handled by low level systems. A point of note is for triggers to be independent, and be chainable, triggers can only take what the previous trigger defined for properties in terms of info ()
+				triggers should contain enough data to handle all of the who/what/when/where/why questions that could be presented from the action that took placed
+				Triggers are referencing game events that have ALREADY HAPPENED. not referncing something to come in the future. (it's a handler's job to determine what happens next).
+				Option 3 requires future abstraction for other parts: e.g. if CARD_MOVE is issued, we have to explicity define what caused it (effect, game, player action, cost) these three now need to be abstracted and then redefined by whoever interprets the trigger. option 2 doesnt solve this. Option 1 has this problem, but abstraction of other types of causes dont need to be done. in summary: instanceOf is required and the types of sources needs to be known for handlers of a specific trigger.
+				
+			Decision: Option 3 seems to provide what we need for a strong system of core events that can happen and the details surrounding them. handlers of triggers can ask for pre-defined information from a trigger, but not random information that might be situation specific, enforcing a standard which is statically checked. Option 1 makes sense in systems that need to share information with little structure. Game Triggers need explicit structuring.
+			
+------------TL;DR----------------
+Implementation of trigger:
+	(data) class per trigger:
+		name of trigger and metadata 
+		Metadata needs to answer Who/What/When/Where/Why of the trigger.  
+		needs to be serializable
+Implementation of Trigger Handling:
+	-During game creation, create an EventBus. 
+	- Register necessary game-level event handlers (logger for all events, deck is empty handler, player has 7 or more cards in clock, etc.)
+	- All publishers and subscribers should be able to access this EventBus for subscribing and recieving. (through helper methods ideally)
+------------------------------------
+High level example: CARD_MOVED
+	1. Its currently a player's play timings
+	2. the player chooses to play a card
+	3. after cost is paid, the card is placed on stage
+	4. CARD_MOVED (Hand -> STAGE) is emitted.
+		who emits this? 
+	
+More Detailed Example:
+	1. its currently a player's play timing
+	2. The player chooses to play a card.
+	3. A cost is paid.
+	4. A command is issued to move the selected card to the chosen stage position
+		4a. the card is moved internally
+		4b. a CARD_MOVED game-trigger is emitted
+			Details of Trigger:
+				TriggerName: CARD_MOVED
+				Source: HAND_ZONE
+				Destination: LEFT_CENTER_STAGE_ZONE
+				cardID: [guid]
+				cause: GAME_RULE
+				Owner: [Player1]
+			
+Case Study: How does the game know when the deck is empty?
+	Possiblity #1: game registered trigger
+		1. at start of game, a subscription to CARD_MOVE is registered and a handler is created:
+			"ON CARD_MOVED
+				if MOVED_FROM is DECK_ZONE
+					if DECK_ZONE.size = 0 
+						emit(DECK_EMPTY)
+		2. CARD_MOVE is issued, moving the last card from deck to somewhere else
+		3. CARD_MOVED is triggered
+			FROM: DECK
+			TO: X
+			CAUSE: Game Rule
+		4. subscription in step #1 is triggered
+			conditions are met
+			DECK_EMPTY is emitted
+		PROS:
+			+ Decentralized rule. CARD_MOVED doesnt know/care about DECK_EMPTY
+		CONS:
+			- dedicated, very specific listener for DECK_EMPTY that needs to be registered at game start. 
+	Possibility #2: DECK_ZONE itself listens for empty
+		1. at start of game, DECK_ZONE registers a subscription to CARD_MOVE with same conditions as in possibility #1
+		2. same steps ensure as in possiblity #1
+		PROS:
+			
+		CONS:
+			- DECK_ZONE hard coupled to very specific listener 
+			- DECK_ZONE now cares about state of game, even though its just a "model"
+	Conclusion: Possiblity #1 offers a decentralized method of adding game rules without affecting the rest of the game, this allows rules / listeners to come in and out at will

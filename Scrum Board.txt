@@ -12,6 +12,14 @@ To-Do:
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
     -Refactor eventListerners to Guava EventHub
+    - Proof of concept the ability template system
+    - POTENTIAL ISSUES TO CHECK:
+        - [critical] Players might be receiving events out of order
+    - Code Interrupt Rule Action System
+    - Code Trigger Handling System
+    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+
+In-Progress:
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
             - Methodname/commandname
@@ -19,14 +27,10 @@ To-Do:
                 - object
                 - object
             -Meta Arguments?
-    - Proof of concept the ability template system
-    - POTENTIAL ISSUES TO CHECK:
-        - [critical] Players might be receiving events out of order 
-In-Progress:
-
-    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
-    - Design how Interrupt Type rule actions affect the overall system, and how to evade their interruptions (wrapping something with atomic?)
-        [see InterruptTypeRuleActionThoughts.txt]
+    - Define all basic commands needed for game completion, assuming no player input and default choices for simple choices. 
 
 Done:
+    - Detail STEP-BY-STEP how triggers occur (ex: triggering a level up or reshuffle) (see Trigger System Thoughts.txt)
+    - Design how Interrupt Type rule actions affect the overall system, and how to evade their interruptions
+        [see InterruptTypeRuleActionThoughts.txt]
     - Create the playing field zones
