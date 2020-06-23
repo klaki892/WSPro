@@ -2,7 +2,8 @@ Board for Scripting Engine
 --------------------------
 
 To-Do:
-
+    - Create a card scripting program for fast effect application to cards.
+    - Create a GUI to play the game.
     - Define what a card effect is and the different types of effects
 
     - Create the functions to interact with the specific fields
@@ -15,11 +16,15 @@ To-Do:
     - Proof of concept the ability template system
     - POTENTIAL ISSUES TO CHECK:
         - [critical] Players might be receiving events out of order
-    - Code Interrupt Rule Action System
-    - Code Trigger Handling System
     - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+        - Code Trigger Handling System
+        - Code Interrupt Rule Action System
+            - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
 
+    -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
 In-Progress:
+
+    - read all rules about abilities & effects, diagram and sudocode out their methods of application
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
             - Methodname/commandname
@@ -27,9 +32,9 @@ In-Progress:
                 - object
                 - object
             -Meta Arguments?
-    - Define all basic commands needed for game completion, assuming no player input and default choices for simple choices. 
 
 Done:
+    - Define all basic commands needed for game completion, assuming no player input and default choices for simple choices.
     - Detail STEP-BY-STEP how triggers occur (ex: triggering a level up or reshuffle) (see Trigger System Thoughts.txt)
     - Design how Interrupt Type rule actions affect the overall system, and how to evade their interruptions
         [see InterruptTypeRuleActionThoughts.txt]

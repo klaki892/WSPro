@@ -1,0 +1,30 @@
+Actions the game needs to perform
+	Draw Card
+	Discard Card
+	Move Card from any zone to any zone
+	initiate player choice prompt(e.g. wanna encore this card)
+	Shuffle Cards
+
+	REshuffle - interrupt rule action
+	Level Up - interrupt rule action
+	HandSizeLimit - checked Rule Action
+	Lose Game - checked Rule action
+	
+Actions the player needs to perform
+	select card(s) (from any zone)
+	select card(s) from specific selection? (same as above?)
+	Play Card (from hand)
+	Select Target/choice
+
+Old Commands:
+	DrawCard
+	Info
+	PlayerResponse
+	Playtiming
+	AddCard
+	GameEnd
+	GameError
+	GameStart
+	NextPhase
+	MoveCard
+	Shuffle

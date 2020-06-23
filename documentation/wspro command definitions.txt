@@ -1,0 +1,84 @@
+Note: Every command is independent of outside game knowledge.
+to perform any action, all relevant information needs to be passed to it.
+Note: All Actions are for one occurrence unless specified otherwise (draw does NOT draw multiple)
+
+Definition Format:
+
+MetaArguments:  - arguments needed for every command
+
+
+Command Name - short definition
+    Arguments
+        arg0
+        argX
+    Sudocode
+
+------------------
+
+MoveCard - move a card from one zone to another
+    Args:
+        Card
+        Source Zone
+        Destination Zone
+        Destination Index (top of zone, bottom, etc.)
+        Reason for moving (who caused/owned reason)
+    Sudocode:
+        1. get ID
+        2. Remove from source zone
+        3. Place in Destination Zone at Destination Index
+        4. Issue event with reason
+
+Draw Card - draws a card from the deck
+    Args:
+        Player Reference
+        Who/What Caused
+    Sudo:
+        1. get reference on top card of Player's deck
+        2. [Move Card]
+            Card
+            Player's DeckZone
+            Player's HandZone
+            Top of zone
+            Reason for Draw
+        3. Issue Event with reason
+
+Discard Card - player selects a card to move to waiting room
+    Args:
+        Player Reference
+        Card
+        Reason for event
+    Sudo:
+        1. [Move Card]
+            card
+            Player's HandZone
+            Player's  WaitingRoomZone
+            top of zone
+            Reason for event
+        2. Issue event with reason
+
+Shuffle Cards - randomly change the location indexes of cards in a zone
+    Args:
+        Player Reference
+        target zone
+        Reason for Event
+    Sudo:
+        1. TBD
+        X. Issue Event with reason
+
+Lose Game - triggers an impending lose condition for a player
+    args:
+        player reference
+        Reason for event (who/what)
+        Immediately?* See rules, normally a check type, but can be immediate
+    Sudo:
+        1. If Immediate
+            1a. TODO
+        2. Issue Event with reason
+
+Player Choice - TBD
+    TODO: choose implementation of player choice: if 1 mother function or individual methods for respective calls with respective triggers.
+
+
+
+
+
