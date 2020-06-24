@@ -1,0 +1,42 @@
+
+how can we tell if a cost can 100% be paid or not before it's actually paid?
+	begs replay system: can all actions procede with default options? 
+WHen do we apply continious effects?
+	results from triggers?
+	When do we re-apply continious effects?
+
+how do you check and apply "this can stand during stand phase"
+
+What is an ability?
+	A information container which holds:
+		How this ability can be used (Cont, Auto, Act)
+		What (if any) cost is required 
+		Who Owns the ability (Card, effect of a card)
+		When this ability can be used (Trigger conditional)
+What is a cost?
+	Atomic action(s) that must be performed, and cant be interrupted.
+		Requires a choice? 
+			1 or more options must be possible to proceed. 
+	If all are performed fully, cost is considered paid. else unpaid.
+	
+What is an effect?
+	Holds:
+		action(s) to perform. / states to change
+			Could require choices
+		Where the effect came from (ability)
+		Who owns the effect (master of ability)
+	
+		
+	Action(s) that cause state changes, may be based on conditionals.
+	One-Shot effect
+		action(s) in the game that may create triggers and cause state changes
+	Continious Effect
+		actions that apply to specific game entities and continue to apply until a condition is met. 
+		Who holds the state change?
+		Who triggers the end of a continious effect?
+		When are these effects updated?
+	Replacement Effect
+		Actions that intercept original game programming for a new option (or choice)
+		
+		
+	

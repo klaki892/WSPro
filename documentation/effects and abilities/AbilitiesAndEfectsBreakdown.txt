@@ -1,0 +1,57 @@
+Effects
+	One-shot effect
+		Nothing special, just do them.
+	continuous Effect
+		If continious effect affects a specific ZONE instead of a card:
+			the change is applied the moment it enters the zone.
+			If the effect comes from an automatic ability, effects on zones apply before basic resolution.
+		If card stats needed, basic resolve as follows:
+			1. obtain base stats of card
+			2. apply effects that DO NOT change the state of the card.
+			3. apply effects that DO change the state of the card.
+				3a.Indepedent Effects are resolved in Fundamental Order*
+				3b.Dependent Effects* are resolved after Indepedent
+				*Dependent Effects (multiple state changes)
+					If Effect A applies a State that Effect B needs to be active:
+						Effect B is labeled a Dependent Effect and always occurs after Indepedent effects.
+						(A.K.A if an Effect requires a conditional to apply, its dependent)
+				*Fundamental Order (Multiple Indepedent state changes)
+					If a Continuous Effect comes from Continuous Ability:
+						When the card is placed on its current zone is the fundemental order of that card.
+						If character on stage owns the cont ability, when that character was placed on that specific stage position from another zone is it's fundamental order.
+						Else, when the ability is played is its fundamental order.
+		If continuous effect is NOT from a continuous ability:
+			the effect DOES NOT apply to cards that move zones after the ability is played, EXCEPT if its a stage position move.
+	replacement effect
+		If replacement effect is a choice-type replacement,and a choice cant be made, the effect doesnt occur. 
+		If multiple effects are generated simultaneously:
+			the player receiving the consequences decides the order of the effects:
+				A. if effect affects a card or ability, respective master makes decisions
+				B. if effect affects an action, the player (master) makes the decision
+			If the multiple effects pertain to attack types, resolve as:
+				turn player replacement effects first
+				non-turn player replacement effect.
+				
+	"Active and Inactive effects"
+		TODO: Example of 8.3 is needed
+Abilities
+	Activaed Abilitiy
+		Possible to be used during a playtiming by paying the cost.
+	Continuous Ability 
+	Automatic Abilities
+		Enters "Standby" whenever the condition is fulfilled.
+			When playing a standby-ed ability. If the card that caused the ability changes zones, the ability still occurs UNLESS the zone change makes the ability unable to continue. (a.k.a card still in zone which meets trigger condition)
+		"Zone Change Trigger Condition" - condition that happens upon movement
+			if moved: public zone -> Hidden zone or vise versa:
+				use the card state when it was in the public zone
+			if moved: stage -> [zone outside stage]
+				use state while on stage
+			if moved: public->public 
+				use the state after it was moved
+		"Timed Trigger Condition" - effect that creates an auto ability later on
+			can only be put into standby once at a time.
+		"State Trigger Condition" - not based on event but when a condition is reached in the game. (ex: empty hand)
+			Can only be in standby one at a time, cannot enter standby again until after first one is resolved.
+		
+		
+			

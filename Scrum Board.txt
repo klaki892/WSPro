@@ -24,7 +24,8 @@ To-Do:
     -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
 In-Progress:
 
-    - read all rules about abilities & effects, diagram and sudocode out their methods of application
+    - define abilities & effects implementation, may need a step-by-step example of entire system.
+    - diagram and sudocode out abilities & effects implementation
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
             - Methodname/commandname
@@ -34,6 +35,7 @@ In-Progress:
             -Meta Arguments?
 
 Done:
+    - read all rules about abilities & effects
     - Define all basic commands needed for game completion, assuming no player input and default choices for simple choices.
     - Detail STEP-BY-STEP how triggers occur (ex: triggering a level up or reshuffle) (see Trigger System Thoughts.txt)
     - Design how Interrupt Type rule actions affect the overall system, and how to evade their interruptions
