@@ -23,10 +23,17 @@ MoveCard - move a card from one zone to another
         Destination Index (top of zone, bottom, etc.)
         Reason for moving (who caused/owned reason)
     Sudocode:
-        1. get ID
-        2. Remove from source zone
-        3. Place in Destination Zone at Destination Index
-        4. Issue event with reason
+        1. get Card ID
+		2. Is Source & Destination Zone both on STAGE?
+			2a. Yes:
+				2a1. Remove from source zone
+				2a2. Add to destination zone at destination index
+			2b. No:
+				2b1. Remove from source zone
+				2b2. Create new Card
+				2b3. Place new card in Destination Zone at Destination Index
+		3. Update Card's Fundamntal Order. 
+        4. Issue event with details 
 
 Draw Card - draws a card from the deck
     Args:

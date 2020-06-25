@@ -39,4 +39,152 @@ What is an effect?
 		Actions that intercept original game programming for a new option (or choice)
 		
 		
-	
+Case Study: Automatic ability - Encore (One Shot effect)
+	Possibility #1:
+		1. CharacterA PaperCard registers Trigger Listener at start of game:
+			On CARD_MOVE
+				if CARD_MOVE.card's papercard is this papercard,
+				source was STAGEZONE,
+				Destination is WAITINGROOMZONE:
+				Register in CheckTiming  The following Ability:
+					Cost:
+						Repeat 3 Times:
+							1. Get card on top of stock
+							2. MOVE card from STOCK -> WAITING ROOM
+					Validity:
+						CARD_MOVE's Destination Card is in WAITINGROOM
+					Effect:
+						Check If cost can be paid
+						Confirm Player wants to use ability.
+						Pay Cost
+						MOVE CARD_MOVE's Destination Card from WAITING_ROOM -> CARD_MOVE's Source Zone
+						Get Destination Zone
+						REST card in Destination Zone
+						emit Event CARD_ENCORE
+		2. CharacterA Instance is reversed in battle
+		3. Encore Step happens
+		4. MOVE CharacterA Instance occurs
+		5. meets conditions of CharacterA PaperCard's Listener
+		6. Effect Plays out (assume valid and cost can be paid)
+		
+			Pros:
+				+ One Listener for all multiples of Instanced Playing Cards
+				+ 
+			Cons:
+				-
+			Neutral:
+
+Case Study: Continious Ability - During your opponent's turn, all of your other 《A》 or 《B》 characters get +1000 power.(Continious Effect)
+	Possibility #1: Continious Timing after every action (after interrupt timing)
+		1. CharacterA PaperCard Registers Effect at start of Game:
+			Conditions:
+				If Current Turn's master is not the master of this card,
+				This card exists on STAGE_ZONE
+				
+				
+	Possibility #2: Trigger system into registering continious effects for continious timing. Continious timings happen after actions, and when PHASE_START is triggered 
+		1. CharacterA PaperCard Registers Trigger Listener at start of game:
+			On CARD_PLAYED
+				if CARD_PLAYED.Card's papercard is this papercard
+					Register the following Effect: 
+						Condition: 
+							If Current Turn's master is not the master of CARD_PLAYED's play card,
+							CARD_PLAYED playing card exists on STAGE_ZONE:
+						Actions:
+							1. Get all cards on master's stage
+							2. for each playing card
+								2a. If NOT CARD_PLAYED playing card
+								2b.Get Traits of card
+								2c. If Card Trait's Contain <A> or <B>
+								2d. Add +1000 to power stat.
+						UnRegister: (if continious condition fails)
+							CARD_PLAYED playing card does NOT exist on STAGE_ZONE
+						Flags:
+							DEPENDENT: TRUE (needs traits being present)
+							ZONE effect: FALSE
+							CHANGES_STATE: TRUE (modifies power)
+		2. CharacterB is on stage with Trait <A>
+		3. CharacterC currently has an active effect to modify +500 power to All characters (DEPENDENT FALSE, ZONE FALSE, CHANGES_STATE TRUE)
+		3. CARD_PLAYED CharacterA is emitted
+			3a. CharacterA's effect is registered for continious timings.
+		4. interrupt Check
+		5. Continious Check:
+			5a. For all Registered effects sort in this order:
+				5a1. Effects with ZONE Flag set to true
+				5a2. Effects with CHANGES_STATE set to false
+				5a3. effects with DEPENDENT set to false
+					5a3a. sub-Sort in Fundamental Order
+				5a4. Effects with DEPENDENT st to true
+					5a4a. Sub-sort in Fundamental Order
+			5b. For all playing cards in the game, reset to papercard stats. 
+			5c. Execute Effects in order
+				5c1. CharacterC's effect happens. Adding 500 power to CharacterB & CharacterA
+				5c2. CharacterA's effect Triggers. 
+					5c2a. Condition is not met (not opponents turn)
+					5c2b. Effect checks if should be unregistered
+						5c2b1. It should not be unregistered (source is still on stage)
+				5c3. End Result: CharacterB has +500, CharacterA has +500
+		6. Game Continues as normal.
+		7. PHASE_START is emitted for stand phase of opponents turn 
+			7a. Continious Check:
+				7a1. For all playing cards in the game, reset to papercard stats. 
+				7a2. Execute Effects in order
+					7a2a. CharacterC's effect happens. Adding 500 power to CharacterB & CharacterA
+					7a2b. CharacterA's effect Triggers. 
+						7a2b1. All Conditions are met. CharacterB Adds +1000 power.
+				7a3. End Results: CharacterB has +1500, CharacterA +500
+		Pros:
+			+ Effects Application is independent of card state
+		
+		Cons
+			- when to do continious checks is not clear. 
+			- Somehow need to return emitted event properties from to the action callers parents (CARD_PLAYED needs info from MoveCard immediately)
+		Additional Example: Character moving stage positions exception: 2 continious effects, one from a continious ability & one from an Act ability
+			1.CharacterA exists on STAGE in MIDDLE stage position
+			2. CharacterB Exists on LEFT BACK STAGE, with an active effect to give +500 to the cards in front of it.
+			3. CharacterC exists on Stage with the ACT Ability: "choose a character, it gets 1000+ til end of turn"
+			4. Main Phase is occuring.
+				4a. CharacterA currently has +500 buff from CharacterB's continious effect
+			5. Player chooses to activate CharacterC's Ability
+				5a. The Ability Registers the continious Effect:
+					Variables from ability calling:
+						VAR1. CharacterA Playing Card
+						VAR2. [Current Turn Number]
+					Condition:
+						If Current Turn is VAR2,
+						VAR1 is on STAGE 
+					Actions:
+						2. Add 1000 to power stat of VAR1 
+					UnRegister:
+						True/Always (if condition fails, this effect ceases)
+					Flags:
+						DEPENDENT: FALSE
+						ZONE effect: FALSE
+						CHANGES_STATE: TRUE (modifies power)
+			6. ACT_ABILITY event occurs
+			7. Interrupt Timing
+			8. Continious Timing (*all cards are reset to base stats)
+				8a. CharacterC's Ability's effect is activated.
+					8a1. CharacterA +1000 power
+				8b.CharacterB's effect is activated
+					8b1. CharacterA +500 Power
+			9. CharacterA has +1500 power
+			10. CARD_MOVE 
+				10a. CharacterA is being moved to RIGHT STAGE POSITION
+					10a1. A new Card is not made since this is a stage position move. Destination Card & Source Card Reference the same playing card. 
+			11. Interrupt Timing
+			12. Continious Timing (*all cards are reset to base stats)
+				12a. CharacterC's Ability's Effect is activated
+					8a1. CharacterA's playing card refernce still exists and is on stage. Conditions met
+					8a2. CharacterA +1000 Power
+				12b. CharacterB's Ability is activated
+					12b1. CharacterB does not have any cards in front of it. Conditions met. But doesnt apply to any cards.
+			13. CharacterA has +1000 Power.
+			14. Game Continues. 
+					
+				
+			
+
+			
+			
+ 

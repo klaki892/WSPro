@@ -1,0 +1,21 @@
+REMEMBER: Triggers are "this event happened" not "this is happening"
+Definition Format:
+
+MetaArguments:  - arguments needed for every Trigger
+
+
+Trigger Name - short definition
+    Arguments
+        arg0
+        argX
+		
+---------
+
+CARD_MOVE - a card moved from 1 zone to another
+	Source Playing Card
+	Source Zone
+	Destination Zone
+	Destination Index
+	Destination Playing Card
+	Cause of Trigger (Reason for moving)
+	Owner of Trigger (What made it?)
