@@ -22,10 +22,12 @@ To-Do:
             - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
 
     -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
+    - Determine how Abilities maintain memory (Ex: swimsuit Sugaha)
 In-Progress:
 
+    - define how cost is checked and played (see CostImpl.txt)
     - define abilities & effects implementation, may need a step-by-step example of entire system.
-        - Define Replacement Effects and Act Abiltiies implementation. (see AbilitiesAndEffectsImpl.txt)
+        - Define Act Abilities implementation. (see AbilitiesAndEffectsImpl.txt)
     - diagram and sudocode out abilities & effects implementation
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:

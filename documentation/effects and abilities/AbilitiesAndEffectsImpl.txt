@@ -1,11 +1,16 @@
 
 how can we tell if a cost can 100% be paid or not before it's actually paid?
-	begs replay system: can all actions procede with default options? 
+	See CostImpl.txt, need a system that checks if the game wont fail to 100% execute the cost steps.
 WHen do we apply continious effects?
-	results from triggers?
+	- After Actions
+	- After PHASE_START Trigger
+	- Potentially after all triggers...
+	- first step of application is to reset all cards stats. (but not states)
 	When do we re-apply continious effects?
+	- see above 
 
 how do you check and apply "this can stand during stand phase"
+	- Flags on the playing card. (e.g. CAN_STAND) The continious effect system handles how this will be set by evaluation time (including multiple effects that change the flag) 
 
 What is an ability?
 	A information container which holds:
@@ -184,7 +189,95 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 					
 				
 			
-
+Case Study: Continious Ability - "If this card would attack, you may instead choose a character on your opponent's back stage, and have this card frontal attack with the chosen character as the defending character" (Replacement Effect)
+	Possibility #1: ATTACKER_CHOSEN event intercepts attack declaration step.
+		1. CharacterA registers the effect:
+			Variables
+			Condition:
+				Attacking Card has the papercard of this effect's master.
+			Action:
+				1. Confirm would like to perform effect
+				2. Player Choice - Back Stage Character (if not possible to choose, halt)
+				3. obtain current combat
+				4. Set combat's Defending character to player's choice playing card
+				5. Skip Normal Defending character execution 
+			UnRegister:
+			Flags:
+				DEPENDENT: 
+				ZONE Effect:
+				CHANGES_STATE:
+		2. Game Advances to Attack Declaration Step
+			2a. PHASE_START emitted
+			2b. Check Timing Occurs
+			2c. PHASE_START emitted
+			2d. Check timing occurs
+			2e. Game Decides which character are able to perform attack
+			2f. Player Choice - Choose Attacker or stop 
+			2g. Player Chooses CharacterA
+			2h. ATTACKER_CHOSEN emitted
+		Sub-Possibility #1A: replacementTiming
+			3. replacementTiming Occurs 
+		Sub-Possibility #1B: Flags on characters
+			3. Game checks if card has flag to choose opponent, and asks player to do so if true
+			4. Game checks if defending character is forced (Great performance)5
+			5. game selects defending characters
+		Cons:
+			- The game now is explicitly checking for known card effects (great performance and replacement of attack choice) this is a slippary slope and is not extensible.
+	Possibility #2: 
+		- All code executed by phase handler (and other system/game proceses) are now wrapped inside ReplaceableAction() Methods where:
+			Arguments:
+				Replacement Trigger Condition (i.e. ATTACKER_CHOSEN)
+				Closure containing default code to do.
+			- ReplaceableAction Checks if theres a queue of Replacement Effects to occur at the declaration of the specific trigger condition. If so, it does those actions. If not, it does the default code.
+			- ReplaceableAction Must execute Replacement Effects according to the game rules 
+		1. CharacterA Papercard registers the following Trigger Listener:
+			on ATTACKER_CHOSEN
+				if ATTACKER_CHOSEN.card  has this card's papercard
+				Register in ReplaceableAction the following RplacementEffect:
+					Condition:
+						Trigger: SETUP_ATTACK
+						Attacking Card has the papercard of this effect's master.
+						There exists a character in opponents back stage
+					Action:
+						1. Confirm would like to perform effect
+						2. Player Choice - Back Stage Character 
+						3. obtain current combat
+						4. Set combat's Attack Type to Frontal
+						5. Set combat's Defending character to player's choice playing card
+					UnRegister:
+						True/Always (If Condition was met or not)
+					Flags:
+						REPLACES_ATTACK_TYPES: True (affects defending character)
+						AFFECTS_ACTION: TRUE (Overrides normal attack choice)
+						AFFECTS_CARD_OR_ABILITY: FALSE
+		2. Game Advances to Attack Declaration Step
+			2a. PHASE_START emitted
+			2b. Check Timing Occurs
+			2c. PHASE_START emitted
+			2d. Check timing occurs
+			2e. Game Decides which character are able to perform attack
+			2f. Player Choice - Choose Attacker or stop 
+			2g. Player Chooses CharacterA
+			2h. ATTACKER_CHOSEN emitted
+				CharacterA's Trigger successfully registers a ReplaceableAction
+		3. ReplaceableAction(SETUP_ATTACK)
+			3a. A ReplaceableAction Exists for this trigger, CharacterA's Replacement Effect is executed
+		4. Attacking Character is rested
+		5. Game Continues as normal. 
+		Pros:
+			+ Abstract enough to replace code with caring what the replaced code does.
+			+ Granularity is adjustble 
+			+ If changes need to be made, existing code can go into default code section. 
+			+Doesnt affect game mandated trigger (yet)
+		Cons:
+			- Doesnt solve Effects that skips phases 
+			- all default replaceable code cant return values (must be void)
+			- Requires VERY STRATGIC naming of game rules and grouping them. We are likely 99% to get this wrong and have to refactor a lot if something gets more granular.
+			- Unless we wrap ALL GAME CODE, we will be wrapping more code as more replacement effects get made.
+			- Replacement effects may have to be broken up into multiple game rule categories so it hits everything it needs to. 
+General Issue:
+	- The game needs to go down choice trees to make sure the user can actually make the choice without breaking the game. 
+		
 			
 			
  

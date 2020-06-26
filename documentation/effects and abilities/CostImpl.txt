@@ -1,0 +1,37 @@
+Case Study: CharacterA is a 2 cost card that has the continious ability: " When this card is played from your hand, you may choose one of your cards named "CharacterB", and put it into your waiting room. If you do, you may play this card with 0 cost."
+	Possibility #1: Evaluate Gamestates, Dumb AI makes sure all decisions are possible. if so, cost can be paid. 
+		
+
+	Possibility #2: Script Additional CostConditional which tell if the card/ability can be played
+		1. All Playing Cards & Abilities have a CostConditional Field.
+			CharacterA's Cost Conditional:
+				Master's of effect's Stock has at least 2 cards.
+		2. At the beginning of the Game, CharacterA's Paper card registers the following continious effect: (see AbilitiesAndEffectsImpl.txt)
+			Condition: 
+				Master's hand contains at least 1 Playing card who has this papercard backing it.
+				"CharacterB" exists on master's stage
+			Actions:
+				For each instance of this card's papercard in master's hand,	Set CostCondtional:
+				Master's of effect's Stock has at least 2 cards.
+				OR
+				"CharacterB" exists on Master's stage
+			UnRegister: (if continious condition fails)
+				if game has ended (or never)
+			Flags:
+				DEPENDENT: FALSE
+				ZONE effect: FALSE
+				CHANGES_STATE: FALSE 
+		3. At the beginning of the Game, CharacterA's Paper Card Registers the following Trigger Listener:
+			On WILL_PLAY_CARD
+				if WILL_PLAY_CARD.card has this papercard as master
+				Register the following Continious effect:
+					Condition:
+						TRUE (happens immediately)
+					Actions:
+						Ask player if would like to pay cost 
+		Cons:
+			- Abusing our system by registering more effects than actually are present. not clean nor simple because we are being "clever"
+				- If we allow scripts to modify base cards costConditional/cost  on creation, this would solve the problem of the extra "effect"
+			- continious effect with conditional: true. dangerous
+	Possibility #3: Scripts for playing cards & abilities  have CostConditional & Cost modifable to tell if card/ability can be played.
+		
