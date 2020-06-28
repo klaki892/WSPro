@@ -4,31 +4,28 @@ Board for Scripting Engine
 To-Do:
     - Create a card scripting program for fast effect application to cards.
     - Create a GUI to play the game.
-    - Define what a card effect is and the different types of effects
 
     - Create the functions to interact with the specific fields
     - Create utility functions that do more complex actions from core functions
         - Draw a card, shuffle the deck,
-    - Define what a card Ability is, and what effects are a result of abilities
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
     -Refactor eventListerners to Guava EventHub
-    - Proof of concept the ability template system
     - POTENTIAL ISSUES TO CHECK:
         - [critical] Players might be receiving events out of order
     - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
         - Code Trigger Handling System
         - Code Interrupt Rule Action System
             - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
+        - code how cost is checked and played (see CostImpl.txt)
+        - Code abilities & effects implementation
+            - Code the Abilities & effects scripting system
 
-    -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
-    - Determine how Abilities maintain memory (Ex: swimsuit Sugaha)
+    - Proof of concept the ability template system
+
 In-Progress:
-
-    - define how cost is checked and played (see CostImpl.txt)
-    - define abilities & effects implementation, may need a step-by-step example of entire system.
-        - Define Act Abilities implementation. (see AbilitiesAndEffectsImpl.txt)
-    - diagram and sudocode out abilities & effects implementation
+    -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
+    - Define how (if possible) the state of the game can be preserved
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
             - Methodname/commandname
@@ -38,6 +35,15 @@ In-Progress:
             -Meta Arguments?
 
 Done:
+    - Define the ability template system for scripting. (see AbiltiiesEffectSCriptingBreakdown.txt)
+    - Define Cards. Playing cards, Papercards, and how abilities attach to cards. (See CardBreakdown.txt)
+    - Define what a card Ability is, and what effects are a result of abilities
+    - Define what a card effect is and the different types of effects
+    - sudocode out abilities & effects implementation
+    - define abilities & effects implementation, may need a step-by-step example of entire system.
+        - Determine how Abilities maintain memory (Ex: swimsuit Sugaha)
+        - Define Act Abilities implementation. (see AbilitiesAndEffectsImpl.txt)
+    - define how cost is checked and played (see CostImpl.txt)
     - read all rules about abilities & effects
     - Define all basic commands needed for game completion, assuming no player input and default choices for simple choices.
     - Detail STEP-BY-STEP how triggers occur (ex: triggering a level up or reshuffle) (see Trigger System Thoughts.txt)

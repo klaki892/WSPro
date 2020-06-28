@@ -1,0 +1,129 @@
+How do we script an ability/effect
+
+What goes into an ability & Effect?
+	(See AbilitiesAndEFfectsImpl & AbilitiesAndEFfectsBreakdown)
+	Abilities:
+		- A Listener for a trigger condition
+			- This listener checks custom defined conditionals and returns a boolean response to perform a further action. 
+		- 5 variables of free usage
+	Effects:
+		- List of commands/gameactions.
+		Auto & Act Effects:
+			- A Cost
+		Continious:
+			- Condition: boolean response to be active
+			- Unregister: boolean response to remove from registation
+			- Flags - booleans for when the effect should happen compared to other
+			
+Who Defines the commands/gameactions?
+	- Exposed functions/methods from the core/game
+		- same API that game logic uses ex: MoveCard
+
+Who/what defines the conditionals?
+	Possibility #1: user defined conditionals
+		- manually code if/else as long as it returns a boolean
+		Pros:
+			+ custom conditionals give a greater guarantee of correct implementation.
+		Cons:
+			- Scripters require knowledge of How game engine works and when to apply conditionals
+			- each script for a card is that much more unique and subject to breaking on future game engine changes and individual implementation.
+		Neutral:
+			- ygopro does this
+	Possibility #2: Generated from the actions
+		- Requires a "scripting layer" which interprets the actions and also adds conditionals
+			- Ex: moveCard from scripting also adds to the script a conditional checking that the card exists, is in the source zone, etc. 
+		Cons:
+			- Additional Layer that might not meet every specific conditional situation.
+			- hardto implmenet OR conditionals if everything is independent. (e.g. may pay 0 cost if you do this action.)
+				- can we concatanate conditionals/predicates with AND OR?
+					- no, they never see the conditional to know to do this.
+	Verdict: Possibility #1 seems like the tenative way forward fo the least amount of cons that can inhibit future growth and extensibility.
+	
+Originally drawn expected flow implementation:
+	AbilityAPI1 <- AbilityTemplate1(Args) <- LuaAbility1 (arg1) <- LuaCard
+	AbilityAPI2											(arg2)
+	
+	AbilityAPI1 and AbilityTemplate1 are written in Java
+		AbilityTemplate:
+			- Written in Java- Consturcotrs builder
+			
+How could AbilityTemplate's exist?
+	Case Study: Assist Abilities - Assist All of your 《A》 characters in front of this card get +X power. X is equal to that character's level ×500.
+		Possibility #1: AbilityTemplates are a higher level ability/effect pair that is exposed to scripting for the purposes of speeding it up. A scripter can either make an ability from scratch or  call upon a template like a utility instead of manually defining an ability/effect.
+		1. SudoCode for the Assist Ability/effect (scritped):
+			Listener:
+				ON CARD_MOVE
+					if SourceCard is this playing card
+					Destination Zone is BACK_STAGE
+					Register the following Continious Effect:
+			Keywords:
+				Assist
+			Variables:
+			Condition:
+				PlayingCard is in master's BACK_STAGE
+			Actions:
+				get cards in front of playing card, for each:
+					if card contains any of the traits in LuaArgs*
+						get character level
+						Add 500 * character level to power stat of card.
+			Unregister:
+				playing card is NOT in BACK_STAGE
+			Flags:
+				DEPENDENT: True
+				ZONE: FALSE
+				CHANGES_STATE: True
+		2. Lua Scripter registers this ability instead of custom defining the code in step#1. Passes the following Variables:
+			- 1..5 Trait names
+			- Amount of buff
+		3. AbilityTemplate is called: AssistByCharacterLevelWithTrait
+		Pros:
+			+ Speeds up scripting commonly implemented ability/effect
+			+ Core underlying changes only need to change this abilityTemplate
+			+ Template can be coded in lua or java, but needs to be exposed
+			+ Does not have to be used. people can still do their own implementation for special situations.
+		Cons:
+			- highly specific template name
+	Verdict: AbilityTemplate are not the middle step in accessing AbilityAPIs. It's an optional middleman to speed up scripting. Implemeting this "utility" is 100% optional, but lowers barrier to entry. 
+	
+How are Abilities (scripted) created?
+	From Java:
+		1.A Papercard is being created
+		2. a papercard asks an Ability Finder to obtain ability list for this particlar ID(?)
+		3. A lookup table returns a bunch of Ability instances which correspond
+		4. These Abilities are added to the ability list for the papercard
+	From Lua:
+		1. A Papercard is being created
+		2. A Papercard asks AbilityFinder To obtain Ability List for this particular ID(?)
+		3. A lookup table returns a lua script corresponding to the ID
+		4. The script engine calls a known method in all scripts to obtain the ability list
+		5. these abilities are added to the ability list for the papercard.
+
+Revised Flow Implementation:
+	1. Papercard
+		- Obtains all Stats
+		- Asks for Ability List:
+	2. Ability Finder
+		- Looks for Java implemented abilities
+		- Look for Scripting language implemented Abilities
+			1. Finds a Script file for the papercard
+			2. Asks ScriptEngine to load script file ability list.
+	3. ScriptEngine exposes known API's and constants to scripts
+			1. Calls upon (or creates) a new blank list for abilities
+			2. runs known method in script to populate list (passing list object)
+	3. LuaScript
+		- Has method for passing abilities to a list (or creating a list object)
+			1. When method is called, it peforms CreateAbility for each ability of its card
+				a. Each CreateAbility looks up relative API's and constants in the engines namespace/global to create new abilities. 
+			2. returns these objects for the method
+	---Game Commences---
+	1. PlayingCard
+		1. copies all stats from Papercard
+		2. Copies list of abilities
+		3. for each ability, call its register function with paramters passed
+	2. LuaCard
+		1. Register function is called and with argumnts interacts and registers the listener.
+	X. Similar process for any other functions of abilities 
+
+Final Notes:
+	Conditions in abilities and triggers might have to be enclosed in a 1 method object/interface that returns a boolean. 
+	

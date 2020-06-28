@@ -17,5 +17,6 @@ CARD_MOVE - a card moved from 1 zone to another
 	Destination Zone
 	Destination Index
 	Destination Playing Card
+	Destination Orientation
 	Cause of Trigger (Reason for moving)
 	Owner of Trigger (What made it?)

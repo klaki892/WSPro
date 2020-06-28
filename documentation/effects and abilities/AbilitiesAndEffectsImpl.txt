@@ -1,16 +1,15 @@
 
 how can we tell if a cost can 100% be paid or not before it's actually paid?
 	See CostImpl.txt, need a system that checks if the game wont fail to 100% execute the cost steps.
-WHen do we apply continious effects?
+WHen do we apply continuous effects?
 	- After Actions
-	- After PHASE_START Trigger
-	- Potentially after all triggers...
+	- After all triggers
 	- first step of application is to reset all cards stats. (but not states)
-	When do we re-apply continious effects?
+	When do we re-apply continuous effects?
 	- see above 
 
 how do you check and apply "this can stand during stand phase"
-	- Flags on the playing card. (e.g. CAN_STAND) The continious effect system handles how this will be set by evaluation time (including multiple effects that change the flag) 
+	- Flags on the playing card. (e.g. CAN_STAND) The continuous effect system handles how this will be set by evaluation time (including multiple effects that change the flag) 
 
 What is an ability?
 	A information container which holds:
@@ -35,10 +34,10 @@ What is an effect?
 	Action(s) that cause state changes, may be based on conditionals.
 	One-Shot effect
 		action(s) in the game that may create triggers and cause state changes
-	Continious Effect
+	Continuous Effect
 		actions that apply to specific game entities and continue to apply until a condition is met. 
 		Who holds the state change?
-		Who triggers the end of a continious effect?
+		Who triggers the end of a continuous effect?
 		When are these effects updated?
 	Replacement Effect
 		Actions that intercept original game programming for a new option (or choice)
@@ -46,9 +45,9 @@ What is an effect?
 		
 Case Study: Automatic ability - Encore (One Shot effect)
 	Possibility #1:
-		1. CharacterA PaperCard registers Trigger Listener at start of game:
+		1. CharacterA PlayingCard registers Trigger Listener at start of game:
 			On CARD_MOVE
-				if CARD_MOVE.card's papercard is this papercard,
+				if CARD_MOVE.card's PlayingCard is this PlayingCard,
 				source was STAGEZONE,
 				Destination is WAITINGROOMZONE:
 				Register in CheckTiming  The following Ability:
@@ -69,7 +68,7 @@ Case Study: Automatic ability - Encore (One Shot effect)
 		2. CharacterA Instance is reversed in battle
 		3. Encore Step happens
 		4. MOVE CharacterA Instance occurs
-		5. meets conditions of CharacterA PaperCard's Listener
+		5. meets conditions of CharacterA PlayingCard's Listener
 		6. Effect Plays out (assume valid and cost can be paid)
 		
 			Pros:
@@ -78,19 +77,24 @@ Case Study: Automatic ability - Encore (One Shot effect)
 			Cons:
 				-
 			Neutral:
+				- How do we anti checks for not being able to do keywords? (no change can be played, no encore can be played)
+					1. Flag down the name of the effect?
+						- add a new cost conditional that says you can play?
+					2. add a dedicated flag in the player. (CAN_ENCORE)
+						- now the player needs to be reset at continuous...
 
-Case Study: Continious Ability - During your opponent's turn, all of your other 《A》 or 《B》 characters get +1000 power.(Continious Effect)
-	Possibility #1: Continious Timing after every action (after interrupt timing)
-		1. CharacterA PaperCard Registers Effect at start of Game:
+Case Study: Continuous Ability - During your opponent's turn, all of your other 《A》 or 《B》 characters get +1000 power.(Continuous Effect)
+	Possibility #1: Continuous Timing after every action (after interrupt timing)
+		1. CharacterA PlayingCard Registers Effect at start of Game:
 			Conditions:
 				If Current Turn's master is not the master of this card,
 				This card exists on STAGE_ZONE
 				
 				
-	Possibility #2: Trigger system into registering continious effects for continious timing. Continious timings happen after actions, and when PHASE_START is triggered 
-		1. CharacterA PaperCard Registers Trigger Listener at start of game:
+	Possibility #2: Trigger system into registering continuous effects for continuous timing. Continuous timings happen after actions, and when PHASE_START is triggered 
+		1. CharacterA PlayingCard Registers Trigger Listener at start of game:
 			On CARD_PLAYED
-				if CARD_PLAYED.Card's papercard is this papercard
+				if CARD_PLAYED.Card's PlayingCard is this PlayingCard
 					Register the following Effect: 
 						Condition: 
 							If Current Turn's master is not the master of CARD_PLAYED's play card,
@@ -102,7 +106,7 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 								2b.Get Traits of card
 								2c. If Card Trait's Contain <A> or <B>
 								2d. Add +1000 to power stat.
-						UnRegister: (if continious condition fails)
+						UnRegister: (if continuous condition fails)
 							CARD_PLAYED playing card does NOT exist on STAGE_ZONE
 						Flags:
 							DEPENDENT: TRUE (needs traits being present)
@@ -111,9 +115,9 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 		2. CharacterB is on stage with Trait <A>
 		3. CharacterC currently has an active effect to modify +500 power to All characters (DEPENDENT FALSE, ZONE FALSE, CHANGES_STATE TRUE)
 		3. CARD_PLAYED CharacterA is emitted
-			3a. CharacterA's effect is registered for continious timings.
+			3a. CharacterA's effect is registered for continuous timings.
 		4. interrupt Check
-		5. Continious Check:
+		5. Continuous Check:
 			5a. For all Registered effects sort in this order:
 				5a1. Effects with ZONE Flag set to true
 				5a2. Effects with CHANGES_STATE set to false
@@ -131,7 +135,7 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 				5c3. End Result: CharacterB has +500, CharacterA has +500
 		6. Game Continues as normal.
 		7. PHASE_START is emitted for stand phase of opponents turn 
-			7a. Continious Check:
+			7a. Continuous Check:
 				7a1. For all playing cards in the game, reset to papercard stats. 
 				7a2. Execute Effects in order
 					7a2a. CharacterC's effect happens. Adding 500 power to CharacterB & CharacterA
@@ -142,16 +146,16 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 			+ Effects Application is independent of card state
 		
 		Cons
-			- when to do continious checks is not clear. 
+			- when to do continuous checks is not clear. 
 			- Somehow need to return emitted event properties from to the action callers parents (CARD_PLAYED needs info from MoveCard immediately)
-		Additional Example: Character moving stage positions exception: 2 continious effects, one from a continious ability & one from an Act ability
+		Additional Example: Character moving stage positions exception: 2 continuous effects, one from a continuous ability & one from an Act ability
 			1.CharacterA exists on STAGE in MIDDLE stage position
 			2. CharacterB Exists on LEFT BACK STAGE, with an active effect to give +500 to the cards in front of it.
 			3. CharacterC exists on Stage with the ACT Ability: "choose a character, it gets 1000+ til end of turn"
 			4. Main Phase is occuring.
-				4a. CharacterA currently has +500 buff from CharacterB's continious effect
+				4a. CharacterA currently has +500 buff from CharacterB's continuous effect
 			5. Player chooses to activate CharacterC's Ability
-				5a. The Ability Registers the continious Effect:
+				5a. The Ability Registers the continuous Effect:
 					Variables from ability calling:
 						VAR1. CharacterA Playing Card
 						VAR2. [Current Turn Number]
@@ -168,7 +172,7 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 						CHANGES_STATE: TRUE (modifies power)
 			6. ACT_ABILITY event occurs
 			7. Interrupt Timing
-			8. Continious Timing (*all cards are reset to base stats)
+			8. Continuous Timing (*all cards are reset to base stats)
 				8a. CharacterC's Ability's effect is activated.
 					8a1. CharacterA +1000 power
 				8b.CharacterB's effect is activated
@@ -178,7 +182,7 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 				10a. CharacterA is being moved to RIGHT STAGE POSITION
 					10a1. A new Card is not made since this is a stage position move. Destination Card & Source Card Reference the same playing card. 
 			11. Interrupt Timing
-			12. Continious Timing (*all cards are reset to base stats)
+			12. Continuous Timing (*all cards are reset to base stats)
 				12a. CharacterC's Ability's Effect is activated
 					8a1. CharacterA's playing card refernce still exists and is on stage. Conditions met
 					8a2. CharacterA +1000 Power
@@ -189,12 +193,12 @@ Case Study: Continious Ability - During your opponent's turn, all of your other 
 					
 				
 			
-Case Study: Continious Ability - "If this card would attack, you may instead choose a character on your opponent's back stage, and have this card frontal attack with the chosen character as the defending character" (Replacement Effect)
+Case Study: Continuous Ability - "If this card would attack, you may instead choose a character on your opponent's back stage, and have this card frontal attack with the chosen character as the defending character" (Replacement Effect)
 	Possibility #1: ATTACKER_CHOSEN event intercepts attack declaration step.
 		1. CharacterA registers the effect:
 			Variables
 			Condition:
-				Attacking Card has the papercard of this effect's master.
+				Attacking Card has the PlayingCard of this effect's master.
 			Action:
 				1. Confirm would like to perform effect
 				2. Player Choice - Back Stage Character (if not possible to choose, halt)
@@ -230,13 +234,13 @@ Case Study: Continious Ability - "If this card would attack, you may instead cho
 				Closure containing default code to do.
 			- ReplaceableAction Checks if theres a queue of Replacement Effects to occur at the declaration of the specific trigger condition. If so, it does those actions. If not, it does the default code.
 			- ReplaceableAction Must execute Replacement Effects according to the game rules 
-		1. CharacterA Papercard registers the following Trigger Listener:
+		1. CharacterA PlayingCard registers the following Trigger Listener:
 			on ATTACKER_CHOSEN
-				if ATTACKER_CHOSEN.card  has this card's papercard
+				if ATTACKER_CHOSEN.card  has this playing card's master
 				Register in ReplaceableAction the following RplacementEffect:
 					Condition:
 						Trigger: SETUP_ATTACK
-						Attacking Card has the papercard of this effect's master.
+						Attacking Card has the playing card of this effect's master.
 						There exists a character in opponents back stage
 					Action:
 						1. Confirm would like to perform effect
@@ -275,9 +279,198 @@ Case Study: Continious Ability - "If this card would attack, you may instead cho
 			- Requires VERY STRATGIC naming of game rules and grouping them. We are likely 99% to get this wrong and have to refactor a lot if something gets more granular.
 			- Unless we wrap ALL GAME CODE, we will be wrapping more code as more replacement effects get made.
 			- Replacement effects may have to be broken up into multiple game rule categories so it hits everything it needs to. 
+
+Case Study: Activated Abilities - "[(2)] Until end of turn, this card gets +2000 power, and your opponent cannot use "【AUTO】 Encore"." (2 continious effects, memory needed)
+	Possibility #1: Activated Abilities are sub-elements of playing cards, selectable during anytime playing cards are. Removal effects remove directly from Checktiming Queue's 
+		1. CharacterA PlayingCard Contains the following activated ability:
+			CostConditional:
+				Master's stock contains at least 2 cards
+			Cost:
+				Repeat 2 times:
+					MOVE top card in STOCK -> WAITING_ROOM
+			Action:
+				Pay Cost
+				get current turn number
+				get master playing card that activated this ability
+				Register the following Continious Effect:
+					Variables:
+						VAR1: Playing Card
+						VAR2: Current Turn Number
+					Condition:
+						If Current Turn is VAR2
+						VAR1 is on stage
+					Action:
+						Add 2000 to Power stat of VAR1
+					Unregister:
+						Current turn is not VAR2
+					Flags:
+						DEPENDENT: FALSE
+						ZONE: FALSE
+						CHANGES_STATE: True
+				Register the following Continious Effect:
+					Variables:
+						VAR2: Current Turn Number
+					Condition:
+						If Current Turn is VAR2
+					Action:
+						Remove Auto Abilities from Checktiming queue with Game Keyword: ENCORE
+					Unregister:
+						Current turn is not VAR2
+					Flags:
+						DEPENDENT: FALSE
+						ZONE: FALSE
+						CHANGES_STATE: FALSE
+		2. Game Advances to Player's Play timing
+		3. CharacterA exists on stage
+		3. PHASE_START emitted
+		4. continious timing occurs
+		5. Check timing occurs
+		6. Play timing checks the playability of playing cards
+			6a. Playtiming checks CharacterA on stage for activation abilities
+				6a1. CostConditional is checked for the activatable ability
+				6a2. Conditions met. This Activation ability is registered as a possible action during the playtiming.
+		7. Player chooses to play ACT
+		8. WILL_PLAY_ACT is emitted
+			Card: CharacterA's playing card
+			ability: reference to ability?
+		9. continious timing occurs
+		10. cost for Ability is determined and paid for
+			10a. MOVE_CARD is emitted twice
+				10a1. Interrupt Timings occur after each(*Ignored, paying cost)
+				10a2. Continious Timings occur after each
+			10b. Two Continious effects were registered to continious Timings
+		11. ACT_PLAYED emitted
+			(Same properties as WILL_PLAY_ACT)
+			11a. Continious Timing Occurs
+				11a1. CharacterA now has +2000 power
+				11a2. all (if any) Auto Abilities with keyword ENCORE were unregistered from checktiming queue
+		12. Game continues as normal. with another play timing. 
+	Pros:
+		+ Automatically handles all ENCORE abilties, no need for very specific flag.
+	Cons:
+		- "Clever"? affecting internal game system to actively prevent effects
+			- EFfects are still issued, might be an issue if side effects happen from trigger listeners. 
+		- need a way to tell affected people of anti-abilties that they can no longer do an action. 
+	Neutral:
+		- potential alternative: (might be more "clever") modify cost conditional of cards with "backup" (or event cards in general) to handle activation based prevention with impossible cost conditional (ex: "if this card is NOT in your hand.") Continue with active denial for auto keywords.
+		
+Case Study: Automatic Ability with limit - "This ability activates up to one time per turn. When you use an 【ACT】, this card gets +1500 power until end of turn"
+	Possibility #1: Playing Cards have 3 "AbilityLimit" Counters Checkable by effects 
+		- not possible, if a limited effect is added to a card with a effect limit, they would use the same counter. 
+	Possibility #2: Abilities are objects, they have their own "occurances happened" counter inside their objects. 
+		-Playing cards now have a "Deregister" which only CARD_MOVE calls. 
+			- Saves all state information about the playing into a "Last Known State" and Flips a flag "DEREGISTERED", anytime information is looked up about that playing card, it now pulls from "last known information" instead of normal information.
+			- Playing cards now register their abilities' Trigger Listeners, and unsubscribes them when Deregistered.
+			- Tells all known registered trigger listeners to stop listening
+		1. CharacterA PLAYING CARD registers trigger listener at creation of card:
+			ON ACT_PLAYED
+				If THIS.ability has occured less than 1 time, 
+					add one to trigger limit counter and register the following Continious Effect:
+					Variables:
+						VAR1 - Current Turn
+					Condition:
+						if this effect's master's card is on stage.
+						If Current turn is VAR1
+					Actions:
+						this effect's master's card adds 1500 to its power stat.
+					Unreigster:
+						If Current turn is not VAR1
+					Flags:
+						DEPENDENT: FALSE
+						ZONE: FALSE
+						CHANGES_STATE: TRUE (modifies power)
+		3. CharacterA is placed on stage 
+			3a. on card creation, Trigger listener for ACT_PLAYED is created. 
+		4. Game Continues
+		5. ACT_PLAYED is emitted from CharacterB's activated ability resolution.
+			5a. CharacterA's Listener is triggered
+				5a1. Trigger Listener sees ability has happened 0 times and registers the continious effect.
+			5b. Continious timing occurs
+		6. Game continues as normal
+		7. ACT_PLAYED is emitted from CharacterB's activatable ability resolution
+			7a. CharacterA's Listener is triggered 
+				7a1. Trigger Listener sees trigger counter has happened 1 time.
+				7a2. it does not register a continuous effect.
+			7b. continious timing occurs 
+		8. game continues as normal. 
+		9. A move Card command is called.
+			9a. CharacterA is being moved from STAGE -> WAITING_ROOM
+			9b. CharacterA's Deregister function is called
+				9b1. all stats on CharacterA's playing card are copied to its LKI state.
+				9b2. all known trigger listeners are are deregistered
+			9c. a new card is created
+				9c1. This new CharacterA Registeres new Trigger Listeners
+			9d. the new card is put into WAITING_ROOM
+			9e. the fundamental order is updated on the new cad
+		10. CARD_MOVE is emitted 
+		11. Game continues as normal.
+		Pros:
+			+ Can now store memory for abilities tied to playing cards
+		Cons:
+			- effects created from abilities now need to explicitly have a reference to the original card.
+		Neutural:
+			- abilities need to know their effects need variables. 
 General Issue:
 	- The game needs to go down choice trees to make sure the user can actually make the choice without breaking the game. 
 		
 			
 			
- 
+ ----- TL;DR VERDICTS:
+ Automatic Abilities: Possibility #1
+ Continuous Abilities/Effects: Possibility #2
+ Replacement Effects: Possibility #2
+ Activated Abilities: Possibility #1
+ Abilities with Limits: Possibility #2
+
+ Abilities (all):
+    - Exist within A Representation of a card
+    - Contain a Listener for a Trigger Conditional for registering (or performing) a respective Effect.
+        - This is registered when the playing card is instantiated/created.
+        - and removed with the playing card is deregistered.
+    Contain the following parts:
+        TriggerListener - Contain a Listener for a Trigger Conditional for registering (or performing) a respective Effect.
+            - This is registered when the playing card is instantiated/created.
+            - and removed with the playing card is deregistered.
+		List of Keywords the ability uses
+
+        5 generic variables - pass known needed variables to the corresponding effect.
+            - variables are generic objects and arent restricted. its up to the effects to know the correct order & usage.
+
+Automatic Abilities (and the effects that come from them):
+    - The Trigger Listener will register Auto Abilities in CheckTiming's queue system(see trigger system thoughts.txt) when their conditions (if any) are met)
+    Contain the following Parts:
+        Cost - See CostImpl.txt
+        Effect/actions - A list of GameActions that will be performed to carry out the effect.
+            - Need to be able to pass data from the Trigger Conditional into effects for memory, variables and targeting purposes.
+Continuous Abilities/effects:
+    Continious Effects have the following parts:
+        Condition - one or more checks that resolve if the effect should be active or not.
+        Actions - A sequence of actions that should be performed once conditional is true
+        UnRegister - Conditionals or checks that determine if the effect should be unregistered from the Continious Check system.
+            - Should only be called if the Condition Fails.
+        Flags: - Boolean switches that tell when the effect should occur
+            DEPENDENT - A dependent Continuous effect is one that depends on a Card's information (e.g. having a trait) to be able to execute its actions.
+            ZONE Effect - The actions affect a zone rather than a specific card. (The card must explicitly say this)
+            CHANGES_STATE - Whether or not the actions in this effect change the state or stats of a playing card. (e.g. adds power)
+    A "Continuous Check" System is to be implemented for continuous abilities.
+        - A Queue which accepts continuous effects to be registerd into it at any time.
+        A Continuous check resolves as follows:
+            1. For all Registered effects sort in this order:
+                1a. Effects with ZONE Flag set to true
+                    - tiebreak in Fundamental Order (see AbilitiesAndEffectsBreakdown.txt)
+                1b. Effects with CHANGES_STATE set to false
+                    - tiebreak in Fundamental Order
+                1c. effects with DEPENDENT set to false
+                    - tiebreak in Fundamental Order
+                1d. Effects with DEPENDENT st to true
+                    - tiebreak in Fundamental Order
+            2. For all playing cards in the game, reset to papercard stats.
+                - States such as Orientation, should not be reset. (TODO: Exaustive list)
+            3. Execute Effects in order
+Activated Abilities:
+    - Directly known by the Playing card hosting this Act ability, Cost is checked during playtimings.
+    Contain the following Parts:
+        Cost - see CostImpl.txt
+        Effect/actions - A list of GameActions that will be performed to carry out the effect.
+            - Need to be able to pass data from the Trigger Conditional into effects for memory, variables and targeting purposes.
+

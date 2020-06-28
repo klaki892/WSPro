@@ -1,0 +1,71 @@
+What is in a card
+	- Card Name
+		- JP Card Name
+		- EN Card Name
+		- one of the card names will be present but not necessiarly both.
+	- Level
+	- Cost
+		- See CostImpl.txt
+	- Icon(s)
+	- Trigger Icon(s)
+	- Known Abilities
+		- See AbilitiesAndEffectImpl.txt
+		- Automatic & Activation Abilities are known from here. 
+	- Power
+	- Soul
+	- Trait(s)
+		- Characters only
+	- Color
+	- Affiliation
+	- Type
+	- Title Name
+	
+How can we represent a card during the game?
+	- Known as a Playing card 
+	- Contains a copy (or reference) of a papercard for getting basic details
+	- Contains references to the abilities it can use (Auto & Activated)
+	- Contains the following states:
+		- Orientation
+		- Master (player)
+		- Owner (player)
+		- Revealed
+		- Markers
+		- CAN_STAND
+		- CAN_REST
+		- CAN_BE_REVERSED
+		- CAN_BE_TARGETED
+	- Contains a reference to its last known state:
+		A collection of the stats and states within the card before it was "deregistered"
+		- all getters now reference the last known state information after being deregistered.
+	- Playing Cards are deregistered when they are no longer going to be used in the game (ex: removed becuase card is moving zones)
+		- Deregistering unregisters all ability trigger listeners
+	- can be "RESET"
+		- Resets all stats, obtained from the papercard.
+		- only resets the following states:
+			- CAN_X
+			- Cost
+How do we represent a card outside of a game?
+	- Known as a Papercard
+	- A papercard is responsible for holding all information to prep a card for a game
+		- It contains a reference to a base Cost (see costImpl.txt)
+		- It contains references to abilities that need to be registered in a game
+	- Papercards and the properties inside of them are immutable once created/finalized.
+How do we represent a card to a user?
+	- TODO: only GUI Worries about this
+
+Example: Loading a card for gameplay
+	Possibility #1:
+		1. A Deck contains a map of papercards to the amount that should be made in game. (ex: "CharacterA" -> "4" for 4 copies of "CharacterA")
+		2. During game initalization, A new PlayingCard for CharacterA is made:
+			2a. All stats from CharacterA Papercard are copied (set) into playing card.
+				2a1. A Cost reference is NOT copied, a new cost is made with parts from the original (deepcopying)
+				2a2. The ability references are copied from the papercard into the playing card's own list for abilties.
+					2a2a. The Abilities' trigger listeners are registered at this time.
+			2b. default gameplay states are set
+				2b1. Master & Owner are set to the respective player
+		3. The game sets the new PlayingCard into the master's DECK ZONE. 
+		4. Game Continues
+		Pros:
+			+ PlayingCard's can be built and destroyed at will
+		Cons:
+			

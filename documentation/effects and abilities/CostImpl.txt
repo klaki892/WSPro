@@ -1,6 +1,8 @@
 Case Study: CharacterA is a 2 cost card that has the continious ability: " When this card is played from your hand, you may choose one of your cards named "CharacterB", and put it into your waiting room. If you do, you may play this card with 0 cost."
 	Possibility #1: Evaluate Gamestates, Dumb AI makes sure all decisions are possible. if so, cost can be paid. 
-		
+		Cons:
+			- Computationally expensive, expontental growth in number of decisions
+			- 
 
 	Possibility #2: Script Additional CostConditional which tell if the card/ability can be played
 		1. All Playing Cards & Abilities have a CostConditional Field.
@@ -33,5 +35,82 @@ Case Study: CharacterA is a 2 cost card that has the continious ability: " When 
 			- Abusing our system by registering more effects than actually are present. not clean nor simple because we are being "clever"
 				- If we allow scripts to modify base cards costConditional/cost  on creation, this would solve the problem of the extra "effect"
 			- continious effect with conditional: true. dangerous
-	Possibility #3: Scripts for playing cards & abilities  have CostConditional & Cost modifable to tell if card/ability can be played.
-		
+	Possibility #3: Scripts for playing cards & abilities  have CostConditional & can modify Cost to tell if card/ability can be played.
+		1. All Playing Cards & Abilities have a CostConditional Field.
+			CharacterA's CostConditional:
+				Master's of effect's Stock has at least 2 cards.
+				OR
+				"CharacterB" exists on Master's stage
+			Cost:
+				repeat 2 times:
+					Move card from stock to waiting room
+		2. At the beginning of the Game, CharacterA's Paper Card Registers the following Trigger Listener:
+			On WILL_PLAY_CARD
+				if WILL_PLAY_CARD.card has this papercard as master
+				Peform the following One-Shot effect:
+					Variables from Ability/Listener:
+						VAR1 - Playing Card in WILL_PLAY_CARD.card
+					CostCondition:
+						"CharacterB" exists on stage 
+					Cost:
+						Choose a "CharacterB" on Master's stage
+						MOVE chosen CharacterB from STAGE -> WAITING_ROOM
+					Actions:
+						Check CostConditional
+						Ask player if would like to pay cost
+						Pay Cost
+						set VAR1 cost to none
+		3. Game Progresses
+		4. "CharacterB" Exists on BACK_LEFT_STAGE
+		5. "CharacterA" Exists in player's hand
+		7. PHASE_START emitted
+			PHASE: Main Phase 
+			MASTER: Player 
+		8. Continious Timing occurs
+		9. Checktiming occurs
+		10. Playtiming begins for main phase
+			10a. CharacterA's CostCondition is checked
+				10a1. Condition is true, CharacterA is marked as possible choice to play.
+		11. WILL_PLAY_CARD emitted
+			Card: CharacterA reference
+			StagePostion: MIDDLE_CENTER_STAGE
+			11a. CharacterA's Trigger Listener is activated
+				11a1. Listener Activates One-Shot Effect.
+					11a1a. CostConditional returns true
+					11a1b. Player indicates they will pay cost.
+					11a1c. CharacterB is moved to waiting room
+						11a1c1. MOVE_CARD Emitted
+							11a1c1a. Interrupt Timing occurs (* IGNORED. PAYING COST.)
+							11a1c1b. Continous Timing occurs
+					11a1d. CharacterA's Cost is set to nothing.
+			11b. Interrupt Timing Occurs
+			11c. Continious Timing Occurs
+		12. Cost for CharacterA's playing is determined and paid for
+			Cost for CharacterA was set to 0
+		13. Card is played on stage, game continues.
+		Pros:
+			+ Allows for modifyable costs at anytime from effects
+		Neutral:
+			- Choices in costs (or effects responding to costs) do not have a clear rule of what happens first (currently who registered first)
+
+----- TL;DR VERDICT: Possibility #3
+	Although simulating that a cost can be paid fully (Possibility #1) would be ideal it Computationally more expensive than having a conditional associated with all ability and effect costs.
+	The Following has been determined for representing 
+	A Cost:
+		- CostConditional: Checks if the actions in cost can fully happen 
+			- can be set/overriden after initially defined
+				- THe coder/scripter NEEDS TO BE VERY CAREFUL that changing the conditional does not break the ability to pay a cost if a cost is to be overriden
+		- PayCost: has a sequence of actions to perform. 
+			- Can be set/overriden after initially defined. 
+			- Any actions inside should IGNORE Interrupt Timings.
+			- A Game ending exception NEEDS to be thrown if cost cant be paid fully, as the game is in an Illegal state
+		- A Trigger COST_PAID should be emitted after PayCost is successfuly
+			Who: master of the object that owns this cost
+			What: N/A (Impossible to determine as it was a series of actions, potentially overriden)
+			When: N/A
+			Where:N/A
+			Why: Effect Type and metadata should answer this
+		- Costs as an object are final, their parts (costConditional/cost) are not. When overriding parts, original references should not be overriden (From papercards)
+Note: Possibility #3 also confirms that listener's need to be able to pass variables to their effects (as first seen in AbilitiesAndEffectsImpl.txt)
+	non-confirmed idea: A CharacterCost* (Strict Superset of a Cost)
+		- has non-overridable, obtainable value for original stock cost of card.
