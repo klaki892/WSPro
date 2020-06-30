@@ -1,0 +1,219 @@
+What needs to be communicable/serialized?
+	Received:
+		- How each player is communicating with the game. (controller instances)
+		- Game Startup data
+			- Decks
+				- Papercards
+					- amount of each
+			- How and when to do abilities (Scripts)
+			- How to when pay costs (internally & Scripts) 
+		- Requests for information?
+			- NO. The game doesnt care or maintain. A Logger would.
+			- ex: what has happened in the game up until now? (disconnected/reconnecting client)
+	Sent:
+		- State of playing fields 
+			- information inside a public/visible field (e.g. hand)
+		- things that happen
+			- Card movements 
+			- game actions (e.g deck shuffled, ability activated)
+			- Current State of the game (ex: What phase we are in)
+		- Requests for the player (e.g. Clock a card, Do something for main phase)
+			- What choices the player can make (what cards can be played at main phase)
+How do we Communicate these things:
+	- Recieving
+		- Player Communication
+			- How does communication get forwarded to game?
+				Method list (See Sending Section) is directly called upon by low-level/command API. Game is blocked until input is received. 
+					- What if other player concedes? / How to stop perma-lock if player never responds?
+						- Concede call should bypass any input restriction lock
+							Possibility #1: issue concede event, whatever choice is being made should be defaulted
+								Pros: 
+									- Removes perma-locks
+								Cons:
+									- Destroys purity of log (unless log stops listening after concede)
+							Possibility #2: Defer Issue, The Game doesnt care if its hung forever. Up to implementation 
+								Cons:
+									- No game supported method of ending early
+			- Response of Choice Message:
+				Possibility #1: [ResponseChoiceType, ChoiceNumber] [ResponseChoiceType, ChoiceNumbers...]
+					- Seperate Message for single choice and multi-choice. 
+					- ResponseChoiceType for verification of correct question/answer timing. 
+					- ResponseChoiceType is an ENUM of possible questions
+					- ChoiceNumber for selection previously presented
+				- What is the server response to response messages?
+					Possibility #1: Good Selection or bad Selection
+						Cons:
+							- Endless internal loop 
+					Possibility #2: Confirmation of receive, re-issue command later if wrong 
+						Pros:
+							- Frees up server lock to handle other checks during re-issuing
+						Cons:
+							- Falls on Core to ensure input validation
+					VERDICT: #2. When Dealing with async communication (even though the game itself is not async) its better to just give acknowledgement instead of infinite loop.
+		- Concede
+			- Immediate Loss Issue, Send default choice for pending chocies
+	- Game Startup Data
+		- Decks
+			- List of Card ID's 
+				- Obtain Papercards from lookup service (DB + Scripting Engines)
+		Possibility #1: Generic lobby RPC? 
+			- SetPlayerDeck
+				- with a list of cardId's obtain full playingcards, report back if unsuccessful to prevent false game start.
+			- Set Future Game Options?
+			Pros:
+				- Straightforward for lobbies
+		- Abilities
+			- Given a Papercard / CardID, return a list of abilities
+				- Lookup Service for ScriptEngine 
+		- Costs
+			 - Same as Abilties 
+
+	- Sending:
+		-State of the playing field
+			- State of a playing card 
+				- what effects gave me this current state?
+					Possibility #1: Any effect that changes state, sends a trigger EFFECT_APPLIED. When an effect is unregistered, EFFECT_STOPPED?
+						EFFECT_APPLIED:
+							From: Card - master of effect
+							AbilityNumber - Identifies which effect from FROMCARD was applied
+							TO: Card 
+							UID: - Unique ID for this effect, needs to persist through continioustimings and be unique to each playing card.
+						EFFECT_STOPPED:
+							same fields as EFFECT_APPLIED
+						Pros:
+							+ We can now track who applied what to who
+							+ AbilityNumber allows tracking of effects through continioustimings.
+						Cons:
+							- Horrifically generic
+					Possibility #2: Any state changing effects issue a trigger.
+						1. Assist effect gives +500 to a a character
+						2. ADD_POWER emitted
+							from: Playing card- master of effect
+							To: Playing Card
+						Pros:
+							+ Specific tells what was applied
+						Cons:
+							- Requires specific enumeration of all effects that can happen
+					VERDICT: Possibility #1 -  abstract enough to be used for current and  future expansion. 
+				- what continious effects are active?
+					See Above question.
+				- How do we hide details not visible?
+					- How is PlayingCard Serialized for event viewing:
+						GUID - unique ID that tracks an entity in physical space
+							- How to we prevent total tracking of a card?
+								Possibility #1: new GUID when a card is shuffled in deck. 
+								Pros:
+									+ Guarantees new tracking when no outside party knows.
+							+ Persists through card movements
+							- How do we manage revealed state?
+								Possibility #1: 2 states.
+									Every playing card has two states:
+										REVEALED_TO_MASTER
+										REVEALED_TO_ALL
+									PRos:
+									Cons:
+										- manual management of revealed 
+									Neutral: 
+										- These states cant be reset
+								Possiblity #2 Visible Enum, CARD_MOVE has an argument for visibility.
+									Every playing card has a enum for current visibility:
+										0 - HIDDEN
+										1 -VISIBLE_TO_MASTER
+										2 -VISIBLE_TO_ALL
+										3 -VISIBILE_TO_OPPONENT
+									Pros:
+										- visibility management is on the caller
+										- visibility status is guaranteed during movement
+									Cons:
+										-
+								VERDICT: Possibility #2 - less boolean flags, easy to include as an argument for game actions/commands
+						Visibility - Enum Telling if the card is visible to the player. not
+						Card Stats - the basic stats of the playing card, possibly  modified by effects. (all stats from papercard)
+							*** WHY. This means the player doesnt "need" a Card DB on client end***
+								- In Theory, Card Name can change
+								- Its not the job of the dumb client to figure out what effects do (ex: "RandomCardA effect is applying to this card, what does this mean?" - AKA scripting in two locations.) and calculate values. It should only display information.
+								- ISSUE: Ability Text & Translations: WE ARE NOW OPEN TO LEGAL RAMIFICATIONS IF THE DB HAS COPYRIGHTED TRANSLATIONS. (E.G. HOTC)
+							- A Communication Barrier is needed for stripping these stats based on visibility. This barrier is the job of the entity which sends out information to player controllers.
+						
+					- what manages whether a card is revealed to a player?
+						- Its up to CARD_MOVED events and REVEALED events to change the state of visibility.
+						- Communication Barrier:
+							Possibility #1:
+								Flow of actions:
+									1. Communication Trigger Listener 
+										1. Listens for all events emitted by game
+										2. forwards Events to the player controllers
+											a. For each controller:
+												1. Check event metadata for Card Information
+												2. Compare Card Visibility state to identity of controller
+												3. Replace Card Data in event with redacted information as necessary
+													A. EXCEPTION: ZoneContents in choice requests (e.g: Shows deck when options from deck exist)
+		- Things that happen:
+			- Events are serialized and pushed to the player as they happen.
+				- Log of events should be maintained to catch up those who were not at the start of the game. 
+			- Card Movements
+				- CARD_MOVED event 
+					- (See wspro trigger definitions)
+			- Game Actions (deck shuffled, ability activated)
+				- Cards in events get serialized as defined above 
+				- Event Names: serialized as enums
+		- Requests for the player (e.g. Clock a card, Do something for main phase)
+			Non-Exausive list of requests (Likely response type in "+"):
+				mulligan cards
+					+ Multi-Card Select
+				Clock phase selection
+					+Single Card Select
+				main phase:
+					+ Choice Select
+					- Play a card
+						- where to place card 
+							+ Single Location Selection
+					- Move/Exchange card on stage
+						+Multi Location Select
+					- Play an ACT ability
+				Climax a card
+					+Single Card Select
+				Attack Phase
+					- WHo is attacking
+						+Single Card Select
+					- What type of attack?
+						+Single Action Selection
+				End a Phase 
+				COunter Step card selection
+					+Single Card Select
+				Level up choice
+					+Single Card Select
+				Abilities:
+					- What Auto ability to use
+						+Single Action Selection
+					- Confirmation of MAY Activate
+						+Single Location Selection
+					- Selection from range of card
+						- range of cards in certain zone?
+						- Range of cards across zones
+						- One Card Select
+						- Multi Selection
+						- Repeat action UP TO Selection
+							+Repeated Prompt Selection?
+						- Custom Prompt Selections
+							- Select a Number
+							- Rock paper Scissors
+					
+					
+				
+			- What choices the player can make (what cards can be played at main phase)
+				- Simplify response choices.
+				Possibility #1: [requestType, [ChoiceNumber, SubObject], zoneContents]
+					- If a SubObject is a card, show the rest of the zone content 
+					SubObject Types:
+						+ Serialized Card
+						+ Action ("End Turn")
+						+
+					Ex1: Clock a CARD
+						RequestType: CLOCK_SELECTION
+						CHoice Options:
+							1: No Clock
+							2...x: Any Card in Master's hand
+				Pros:
+					+ Universal for all questions 
+					+ minimal message size

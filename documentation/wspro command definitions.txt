@@ -22,6 +22,7 @@ MoveCard - move a card from one zone to another
         Destination Zone
         Destination Index (top of zone, bottom, etc.)
 		Destination Orientation
+		Destination Visibility
         Reason for moving (who caused/owned reason)
     Sudocode:
         1. get Card ID

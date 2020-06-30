@@ -28,7 +28,7 @@ How can we represent a card during the game?
 		- Orientation
 		- Master (player)
 		- Owner (player)
-		- Revealed
+		- Visibility
 		- Markers
 		- CAN_STAND
 		- CAN_REST

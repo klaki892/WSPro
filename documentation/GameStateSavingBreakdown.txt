@@ -1,0 +1,41 @@
+TODO: This hasnt been fully looked into because the "need" for it isnt clear.
+AI is a very real thing but will not be implemented at game start due to lack of knowledge, with the hopes that the system is extensive enough to support it
+
+This document does bring up, but does not explore, ideas for why preserving gamestate is useful for other functionality.
+
+
+Why do we need to be able to perserve game state?
+	- Replay system
+		-No, A replay system at minimum needs just all external input and same version. The Replay can be a "reenactment"
+	- AI systems
+		- Yes, need to be able to branch on future events
+		How Would an AI get the copy of a gamestate? copying every object? 
+		
+How can we preserve a gamestate? (serialization, debugging, etc.)
+	Game State:
+		- What Must be preserved:
+			Card/Deck information
+				- custom serialization, card/deck are models other than abiltiies
+			- Game Board
+				- java serialization, state holding
+				All Fields and cards on the fields 
+					- Java Serialziation - state holding
+			- Active effects
+				- java serialization - purely references to other classes
+			- entire game trigger history and the metadata for each
+				- custom serialization in theory
+			- Player inputs (part of trigger history)
+			- Pending effects in queues
+			- Card Scripts
+				Does this have to be preserved?
+			- Randomization seed
+		- What CANT be preserved:
+			- Connection to player 
+			
+Possibility #1: Preservation enables replaying game up until save point
+	Things Needing to be saved:
+		- Papercards
+		- Card Abilities
+		- List of all game events since start & their metadata
+			- How do we preserve a CARD_MOVED if the metadata contains an active reference to a playing card? Create a Fake copy of the event with a papercard?
+	- All player input 

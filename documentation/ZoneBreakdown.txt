@@ -1,0 +1,65 @@
+What are the zones: (For Each Player)
+	- Deck
+		- Hidden
+	- Hand
+		- Visible to Master
+	- Waiting Room
+		- VIsible to all
+	- Stage
+		- Visible to All
+		- References stage positions
+	- Stage Position
+		- Visible to All
+		- Center Stage
+			- LEFT_CENTER_STAGE (1)
+				- Behind: 4
+				- Facing: Opponent 3
+			- MIDDLE_CENTER_STAGE (2)
+				- Behind: 4,5
+				- Facing: Opponent 2
+			-RIGHT_CENTER_STAGE (3)
+				- behind: 5
+				- Facing: Opponent 1
+		- Back Stage
+			- LEFT_BACK_STAGE(4)
+				- InFront: 1,2
+			- RIGHT_BACK_STAGE (5)
+				- InFront: 2,3
+	- Marker 
+		- Hidden
+		- One for reach Stage Position
+		- NOT CONSIDERED ON Stage
+		- Markers are moved with the card if they are moved
+	- Clock
+		- Visible To All
+	- Level
+		- Visible to All
+		- Visible to master* (face down cards)
+		- face down cards are considered blank cards (for color purposes)
+	- Stock
+		- Hidden
+	- Climax Area
+		- visible to all
+		- It's illegal for cards other than climaxes to be moved
+	- Memory
+		- visible to all
+		- Visible to master(face down cards)
+	- Resolution
+		- visible to all
+		
+		
+What do the zones tell us
+	- size (number of cards)
+	- contents (what cards)
+	- Visiblity
+	- Master 
+How do we Interact with a zone?
+	- Add
+		- By Default add to last index
+	- Add Via Index
+		- All zones should follow a 0-based index (0 is the first card inserted/bottom of stack)
+	- Remove
+		- by default remove from last index 
+	- Remove Via Index
+	- SetIndex
+		- used for moving a card within a zone

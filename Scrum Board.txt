@@ -2,9 +2,7 @@ Board for Scripting Engine
 --------------------------
 
 To-Do:
-    - Create a card scripting program for fast effect application to cards.
-    - Create a GUI to play the game.
-
+    - Create common scripts for fast effect application to cards.
     - Create the functions to interact with the specific fields
     - Create utility functions that do more complex actions from core functions
         - Draw a card, shuffle the deck,
@@ -14,18 +12,22 @@ To-Do:
     - POTENTIAL ISSUES TO CHECK:
         - [critical] Players might be receiving events out of order
     - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+        - Refactor Zones and cards (see CardBreakdown & ZoneBreakdown)
         - Code Trigger Handling System
         - Code Interrupt Rule Action System
             - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
         - code how cost is checked and played (see CostImpl.txt)
         - Code abilities & effects implementation
             - Code the Abilities & effects scripting system
+                - Proof of concept the ability template system
 
-    - Proof of concept the ability template system
+    - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
+        - Code External Communication / Server for input
+            - Create a GUI to play the game.
 
 In-Progress:
-    -determine how player choices & input is handled at th command level. (see wspro command definitions.txt)
-    - Define how (if possible) the state of the game can be preserved
+    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
             - Methodname/commandname
@@ -35,6 +37,9 @@ In-Progress:
             -Meta Arguments?
 
 Done:
+    - Dfine Zones (see ZoneBreakdown.txt)
+    - determine how player choices & input is handled at th command level. (see wspro command definitions.txt & WsPoCommunicationBreakdown.txt)
+    - Define how (if possible) the state of the game can be preserved (see GameStateSavingBreakdown & Replay System Thoughts)
     - Define the ability template system for scripting. (see AbiltiiesEffectSCriptingBreakdown.txt)
     - Define Cards. Playing cards, Papercards, and how abilities attach to cards. (See CardBreakdown.txt)
     - Define what a card Ability is, and what effects are a result of abilities
