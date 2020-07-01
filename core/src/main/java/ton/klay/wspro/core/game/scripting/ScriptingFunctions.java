@@ -2,7 +2,6 @@ package ton.klay.wspro.core.game.scripting;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.cards.GameCard;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.game.actions.GameAction;
@@ -10,6 +9,7 @@ import ton.klay.wspro.core.game.Duel;
 import ton.klay.wspro.core.game.actions.InvalidActionException;
 import ton.klay.wspro.core.api.cards.abilities.components.AbilityConditions;
 import ton.klay.wspro.core.api.game.LoseConditions;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.throwables.LoseCondition;
 import ton.klay.wspro.core.game.formats.standard.zones.DeckZone;
 import ton.klay.wspro.core.game.formats.standard.zones.BasePlayZone;
@@ -149,15 +149,15 @@ public class ScriptingFunctions {
             throw new LoseCondition(LoseConditions.EMPTY_DECK_AND_WAITING, targetPlayer);
 
         //move waiting room contents
-        for (GameCard card : waitingRoom.getContents()) {
+        for (PlayingCard card : waitingRoom.getContents()) {
             deck.add(card);
         }
         waitingRoom.clear();
 
         //shuffle and replace deck
-        List<GameCard> tempDeck = (deck.getContents());
+        List<PlayingCard> tempDeck = (deck.getContents());
         Collections.shuffle(tempDeck);
-        deck.setContents(tempDeck.toArray(new GameCard[tempDeck.size()]));
+        deck.setContents(tempDeck.toArray(new PlayingCard[tempDeck.size()]));
 
         if (addRefreshPoint) {
             //todo add refresh point to targetplayer counter.
@@ -210,7 +210,7 @@ public class ScriptingFunctions {
      * @return whether the action was successful
      * @throws InvalidActionException if the action could not be completed due to errors in the command
      */
-    private static boolean moveCard(GameCard card, ton.klay.wspro.core.api.game.field.PlayZone sourceZone, ton.klay.wspro.core.api.game.field.PlayZone destinationZone) throws InvalidActionException{
+    private static boolean moveCard(PlayingCard card, ton.klay.wspro.core.api.game.field.PlayZone sourceZone, ton.klay.wspro.core.api.game.field.PlayZone destinationZone) throws InvalidActionException{
         log.debug("Moving " + card + " from " + sourceZone + " to " + destinationZone);
 
         //check that the source zone is where we will find the card

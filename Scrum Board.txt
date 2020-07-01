@@ -8,12 +8,11 @@ To-Do:
         - Draw a card, shuffle the deck,
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
-    -Refactor eventListerners to Guava EventHub
     - POTENTIAL ISSUES TO CHECK:
         - [critical] Players might be receiving events out of order
-    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
-        - Refactor Zones and cards (see CardBreakdown & ZoneBreakdown)
+
         - Code Trigger Handling System
+            -Refactor eventListerners to Guava EventHub
         - Code Interrupt Rule Action System
             - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
         - code how cost is checked and played (see CostImpl.txt)
@@ -25,8 +24,13 @@ To-Do:
         - Code External Communication / Server for input
             - Create a GUI to play the game.
 
+    - Code GamePhases
+        - Code Combat
+    -refactor gameContext into Game
 In-Progress:
-    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+        - Code Trigger Handling System
+            -Refactor eventListerners to Guava EventHub
+        - Code Interrupt Rule Action System
 
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
@@ -37,7 +41,9 @@ In-Progress:
             -Meta Arguments?
 
 Done:
-    - Dfine Zones (see ZoneBreakdown.txt)
+    - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
+    - Refactor Zones and cards (see CardBreakdown & ZoneBreakdown)
+    - Define Zones (see ZoneBreakdown.txt)
     - determine how player choices & input is handled at th command level. (see wspro command definitions.txt & WsPoCommunicationBreakdown.txt)
     - Define how (if possible) the state of the game can be preserved (see GameStateSavingBreakdown & Replay System Thoughts)
     - Define the ability template system for scripting. (see AbiltiiesEffectSCriptingBreakdown.txt)

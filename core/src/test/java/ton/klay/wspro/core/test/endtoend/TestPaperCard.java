@@ -2,17 +2,17 @@ package ton.klay.wspro.core.test.endtoend;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.cards.PaperCard;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Random;
 import java.util.UUID;
 
-public class TestCard implements ton.klay.wspro.core.api.cards.Card {
+public class TestPaperCard implements PaperCard {
 
     private static final Logger log = LogManager.getLogger();
     private String id;
-    public TestCard(){
+    public TestPaperCard(){
         id = "TESTCARD/" + UUID.randomUUID().toString();
     }
 

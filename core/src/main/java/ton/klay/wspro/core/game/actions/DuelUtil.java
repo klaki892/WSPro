@@ -2,8 +2,8 @@ package ton.klay.wspro.core.game.actions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.cards.GameCard;
 import ton.klay.wspro.core.api.game.field.PlayZone;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 /**
  * Utility functions which help operate the game. <br>
@@ -37,7 +37,7 @@ public class DuelUtil {
      * @param dZone - zone to recieve the card, provided it can
      * @return - if the operation was successful.
      */
-    public static boolean SendCardToZone(GameCard card, PlayZone dZone){
+    public static boolean SendCardToZone(PlayingCard card, PlayZone dZone){
 
         return false; //todo
     }

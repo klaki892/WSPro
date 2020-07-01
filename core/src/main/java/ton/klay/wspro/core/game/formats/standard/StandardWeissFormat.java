@@ -46,7 +46,7 @@ public class StandardWeissFormat implements GameFormat {
     private Map<String, GamePhase> initPhaseMap() {
         Map<String, GamePhase> retMap = new HashMap<>();
         retMap.put(TurnPhase.PREP_PHASE.name(), new PrepPhase());
-        retMap.put(TurnPhase.TURN_PHASE_STAND.name(), new StandPhase());
+        retMap.put(TurnPhase.STAND_PHASE.name(), new StandPhase());
 
         return retMap;
     }

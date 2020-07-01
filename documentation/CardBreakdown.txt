@@ -3,6 +3,15 @@ What is in a card
 		- JP Card Name
 		- EN Card Name
 		- one of the card names will be present but not necessiarly both.
+		    - How do we group the card names
+		        Possibility #1: return group of LocalizedString
+		            - GameLocal: ENUM JP o EN
+		            - String: The corresponding sting
+                Pros:
+                    + Returns all card names, asker decides what to do with info
+                    + Serializable & Protobufable
+                Cons:
+                    - Requires unpacking
 	- Level
 	- Cost
 		- See CostImpl.txt
@@ -19,7 +28,8 @@ What is in a card
 	- Affiliation
 	- Type
 	- Title Name
-	
+	- Card ID
+
 How can we represent a card during the game?
 	- Known as a Playing card 
 	- Contains a copy (or reference) of a papercard for getting basic details

@@ -3,7 +3,6 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.abilities.AbilityCategory;
-import ton.klay.wspro.core.game.cardLogic.ability.component.Cost;
 
 /**
  * An AbilityCategory of the category Activation

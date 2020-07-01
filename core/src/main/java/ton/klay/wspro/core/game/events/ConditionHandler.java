@@ -2,11 +2,9 @@ package ton.klay.wspro.core.game.events;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.cards.GameCard;
 import ton.klay.wspro.core.api.cards.abilities.components.AbilityConditions;
-import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
-import ton.klay.wspro.core.game.formats.standard.cards.WeissCard;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 import java.util.ArrayList;
 
@@ -36,7 +34,7 @@ public class ConditionHandler {
      * @param ability - the automatic ability that needs a condition to be triggered (all of them)
      * @return If the ConditionHandler has successfully registered the ability and is ready to prime the ability when the condition applies.
      */
-    public boolean registerAbility(WeissCard card, AutomaticAbility ability) {
+    public boolean registerAbility(PlayingCard card, AutomaticAbility ability) {
         TimingEventHandler.StandbyAbility registeredAbility = timingEventHandler.generateStandByAbility(card, ability);
         registeredAbilities.add(registeredAbility);
         log.debug("Registered Ability " + ability + " for card " + card);
@@ -49,7 +47,7 @@ public class ConditionHandler {
      * @param ability - the automatic ability that needs a condition to be triggered (all of them)
      * @return If the ConditionHandler has successfully removed the registered ability
      */
-    public boolean removeAbility(GameCard card, AutomaticAbility ability) {
+    public boolean removeAbility(PlayingCard card, AutomaticAbility ability) {
 
         //FIXME because there can be A LOT of abiltiies registered at once, we NEED a more efficient search (Not O(n) )
         for (TimingEventHandler.StandbyAbility registeredAbility : registeredAbilities){
@@ -75,7 +73,7 @@ public class ConditionHandler {
 
         for (TimingEventHandler.StandbyAbility registeredAbility : registeredAbilities){
             AutomaticAbility ability = registeredAbility.getAutomaticAbility();
-            GameCard owningCard = registeredAbility.getOwningCard();
+            PlayingCard owningCard = registeredAbility.getOwningCard();
             String cardOwner = registeredAbility.getOwningCard().getOwner();
 
             if (registeredAbility.getAutomaticAbility().getCondition().equals(condition)) {

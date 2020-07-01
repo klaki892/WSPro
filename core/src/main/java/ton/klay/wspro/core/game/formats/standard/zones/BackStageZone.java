@@ -2,6 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
 
@@ -9,19 +10,14 @@ import ton.klay.wspro.core.api.game.field.Zones;
  * Creates a zone based on being in the back row
  * //todo rule reference
  */
-public class BackStageZone extends StackZone {
+public class BackStageZone extends MultiCardZone {
 
     private static final Logger log = LogManager.getLogger();
 
     protected Zones[] zonesInFront = null;
 
     public BackStageZone(GamePlayer owner, Zones zoneName) {
-        this(owner, zoneName, false);
-    }
-
-
-    public BackStageZone(GamePlayer owner, Zones zoneName, boolean isHiddenZone) {
-        super(owner, zoneName, isHiddenZone);
+        super(owner, zoneName, GameVisibility.VISIBLE_TO_ALL);
         zonesInFront = determineCenterStageZones(zoneName);
     }
 

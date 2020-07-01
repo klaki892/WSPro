@@ -1,5 +1,7 @@
 package ton.klay.wspro.core.game.formats.standard.zones;
 
+import ton.klay.wspro.core.api.game.Ownable;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
@@ -14,24 +16,22 @@ public abstract class BasePlayZone implements PlayZone {
 
     protected GamePlayer owner;
     protected Zones ZONE_NAME = null;
-    protected boolean hiddenZone = false;
+    protected GameVisibility visibility;
 
-    public BasePlayZone(GamePlayer owner, Zones zoneName, boolean isHiddenZone){
+    public BasePlayZone(GamePlayer owner, Zones zoneName, GameVisibility visibility){
         this.owner = owner;
         this.ZONE_NAME = zoneName;
-        this.hiddenZone = isHiddenZone;
-        //FIXME: it's possible we need an actual enum for hidden zone designation since there's hidden to both players, opposing, or not at all
+        this.visibility = visibility;
     }
 
 
-    @Override
     public String getZoneName(){
         return ZONE_NAME.name();
     }
 
     @Override
-    public boolean isHiddenZone(){
-        return hiddenZone;
+    public GameVisibility getVisibility() {
+        return visibility;
     }
 
     @Override

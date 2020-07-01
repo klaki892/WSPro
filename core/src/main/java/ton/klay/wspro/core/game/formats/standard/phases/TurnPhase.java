@@ -1,17 +1,45 @@
 package ton.klay.wspro.core.game.formats.standard.phases;
 
-import java.util.prefs.Preferences;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum TurnPhase {
 
     //todo: Add javadocs for this
 
-    PREP_PHASE,
-    TURN_PHASE_STAND,
-    TURN_PHASE_DRAW,
-    TURN_PHASE_CLOCK,
-    TURN_PHASE_MAIN,
-    TURN_PHASE_CLIMAX,
-    TURN_PHASE_ATTACK,
-    TURN_PHASE_END;
+    STAND_PHASE,
+    DRAW_PHASE,
+    CLOCK_PHASE,
+    MAIN_PHASE,
+    CLIMAX_PHASE,
+    ATTACK_PHASE,
+    ATTACK_DECLARATION_STEP,
+    TRIGGER_STEP,
+    COUNTER_STEP,
+    DAMAGE_STEP,
+    BATTLE_STEP,
+    ENCORE_STEP,
+    END_PHASE;
+
+
+    public static final List<TurnPhase> PHASE_LIST = Collections.unmodifiableList(
+            Arrays.asList(
+                    STAND_PHASE, DRAW_PHASE, CLOCK_PHASE,
+                    MAIN_PHASE, CLIMAX_PHASE, ATTACK_PHASE,
+                    ATTACK_DECLARATION_STEP, TRIGGER_STEP,
+                    COUNTER_STEP, DAMAGE_STEP, BATTLE_STEP,
+                    ENCORE_STEP, END_PHASE
+            )
+    );
+
+    /**
+     * Get the next known phase in the standard turn order.
+     * @return the phase that typically follows the given phase
+     */
+    public static TurnPhase getNext(TurnPhase phase){
+        int nextIndex = PHASE_LIST.indexOf(phase) + 1;
+        //support turn wraparound
+        return PHASE_LIST.get(nextIndex >= PHASE_LIST.size() ? 0 : nextIndex);
+    }
 }

@@ -1,10 +1,10 @@
 package ton.klay.wspro.core.api.cards.abilities.components.effects;
 
-import ton.klay.wspro.core.api.game.cards.GameCard;
 import ton.klay.wspro.core.api.game.setup.GameContext;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 /**
- * Implementations modify a particular {@link GameCard} property when called upon. <br/>
+ * Implementations modify a particular {@link IPlayingCard} property when called upon. <br/>
  * This is to be used for implementing continuous effects which cause stat modifications to specific cards.
  * @param <T>
  */
@@ -15,7 +15,7 @@ public interface EffectModification<T> {
      * @param context - the context in which the game is executing
      * @return a boolean on whether to still apply this stat (e.g. call the {@link #applyModification(Object)}
      */
-    boolean isStillValid(GameCard effectOwner, GameContext context);
+    boolean isStillValid(PlayingCard effectOwner, GameContext context);
 
     /**
      * Applies the modification to the given variable that is passed to it

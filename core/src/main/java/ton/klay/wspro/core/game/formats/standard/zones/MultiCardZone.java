@@ -2,12 +2,12 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.cards.GameCard;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,67 +17,50 @@ public class MultiCardZone extends BasePlayZone {
 
     private static final Logger log = LogManager.getLogger();
 
-    ArrayList<GameCard> cardList = new ArrayList<>();
+    ArrayList<PlayingCard> cardList = new ArrayList<>();
 
     /**
      * Creates a zone with a list based implementation for holding the cards within it.
      * @param owner - The player that will own this zone.
      * @param zoneName - the name of the zone for referencing and searching
-     * @param isHiddenZone  - whether this zone will be treated as a hidden zone for game rules.
+     * @param visibility  - indicates who is allowed to see the information within the zone.
      */
-    public MultiCardZone(GamePlayer owner, Zones zoneName, boolean isHiddenZone){
-        super(owner, zoneName, isHiddenZone);
+    public MultiCardZone(GamePlayer owner, Zones zoneName, GameVisibility visibility){
+        super(owner, zoneName, visibility);
     }
 
-    protected ArrayList<GameCard> getCardList() {
+    protected ArrayList<PlayingCard> getCardList() {
         return cardList;
     }
 
     @Override
-    public void add(GameCard card) {
+    public void add(PlayingCard card) {
         getCardList().add(card);
-        card.setPosition(this);
+    }
+
+    @Override
+    public void add(PlayingCard card, int index) {
+        getCardList().add(index, card);
     }
 
     /**
      * Adds multiple cards to the card List<br>
      * @param cards - array of cards to be added to the zone (order is not significant)
      */
-    public void add(GameCard[] cards) {
-        for (GameCard card : cards)
+    public void add(PlayingCard[] cards) {
+        for (PlayingCard card : cards)
             this.add(card);
 
     }
 
 
     @Override
-    public boolean remove(GameCard card) {
-        return getCardList().remove(card);
-    }
-
-    /**
-     * Removes the specified cards from the zone <br/>
-     * If multiple of the same card exists, it will only remove the instance that appears first for each
-     * @param cards - an array of cards to be removed
-     * @return - Whether all cards were removed or not
-     */
-    public boolean remove(GameCard[] cards) {
-        for(GameCard card : cards) {
-            if (!this.remove(card))
-                return false;
-        }
-
-        return false; //reutrn false if the array was already empty
-    }
-
-
-    @Override
-    public void clear() {
-        getCardList().clear();
+    public void remove(PlayingCard card) {
+         getCardList().remove(card);
     }
 
     @Override
-    public boolean contains(GameCard card) {
+    public boolean contains(PlayingCard card) {
         return getCardList().contains(card);
     }
 
@@ -87,53 +70,8 @@ public class MultiCardZone extends BasePlayZone {
     }
 
     @Override
-    public boolean isEmpty() {
-        return getCardList().isEmpty();
-    }
-
-    @Override
-    public List<GameCard> getContents() {
+    public List<PlayingCard> getContents() {
         return getCardList();
     }
-
-    /**
-     * Sets the card list to the given list of cards in the order of which they appear <br/>
-     */
-    public void setContents(GameCard[] cardList){
-        this.clear();
-        getCardList().addAll(Arrays.asList(cardList));
-    }
-
-    @Override
-    public boolean replace(GameCard existingCard, GameCard newCard) {
-        int existingIndex = getCardList().indexOf(existingCard);
-
-        if (existingIndex != -1){
-            getCardList().add(existingIndex, newCard);
-            getCardList().remove(existingCard);
-
-            //replace the cardlist with the new change
-            setContents(getCardList().toArray(new GameCard[this.size()]));
-
-            return true;
-        }
-        return false;
-
-    }
-
-    @Override
-    public GameCard getCard() {
-        return cardList.get(0);
-    }
-
-    @Override
-    public GameCard getCard(String cardID) {
-        for (GameCard card : cardList){
-            if (card.getID().equals(cardID))
-                return card;
-        }
-        return null;
-    }
-
 
 }

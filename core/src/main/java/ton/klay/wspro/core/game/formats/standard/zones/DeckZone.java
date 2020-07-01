@@ -2,6 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
 
@@ -9,7 +10,7 @@ import ton.klay.wspro.core.api.game.field.Zones;
  * AN object that represents the deck zone on a playing field.
  * //todo rules reference
  */
-public class DeckZone extends StackZone {
+public class DeckZone extends MultiCardZone {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -17,12 +18,6 @@ public class DeckZone extends StackZone {
 
 
     public DeckZone(GamePlayer owner){
-        super(owner, ZONE_NAME, true);
+        super(owner, ZONE_NAME, GameVisibility.HIDDEN);
     }
-
-    public DeckZone(GamePlayer owner, boolean hiddenZone){
-        super(owner, ZONE_NAME, hiddenZone);
-    }
-
-
 }

@@ -9,7 +9,7 @@ import ton.klay.wspro.core.game.Duel;
 import ton.klay.wspro.core.game.actions.GameAction;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.enums.PlayTiming;
-import ton.klay.wspro.core.game.formats.standard.cards.WeissCard;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,15 +177,15 @@ public class TimingEventHandler {
     class StandbyAbility {
         private String cardOwner;
         private AutomaticAbility automaticAbility;
-        private WeissCard owningCard;
+        private PlayingCard owningCard;
 
-        StandbyAbility(WeissCard owningCard, AutomaticAbility automaticAbility){
+        StandbyAbility(PlayingCard owningCard, AutomaticAbility automaticAbility){
             this.owningCard = owningCard;
             this.automaticAbility = automaticAbility;
             cardOwner = owningCard.getOwner();
         }
 
-        public WeissCard getOwningCard() {
+        public PlayingCard getOwningCard() {
             return owningCard;
         }
 
@@ -194,7 +194,7 @@ public class TimingEventHandler {
         }
     }
 
-    public StandbyAbility generateStandByAbility(WeissCard owningCard, AutomaticAbility automaticAbility){
+    public StandbyAbility generateStandByAbility(PlayingCard owningCard, AutomaticAbility automaticAbility){
         return new StandbyAbility(owningCard, automaticAbility);
     }
 

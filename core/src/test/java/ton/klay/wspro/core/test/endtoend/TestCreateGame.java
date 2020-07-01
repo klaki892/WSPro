@@ -36,9 +36,9 @@ public class TestCreateGame {
         LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
         Configuration config = ctx.getConfiguration();
         LoggerConfig loggerConfig = config.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
-//        loggerConfig.setLevel(Level.TRACE);
+        loggerConfig.setLevel(Level.TRACE);
 //        loggerConfig.setLevel(Level.FATAL);
-        loggerConfig.setLevel(Level.OFF);
+//        loggerConfig.setLevel(Level.OFF);
         ctx.updateLoggers();  // This causes all Loggers to refetch information from their LoggerConfig.
 
         //connect two players

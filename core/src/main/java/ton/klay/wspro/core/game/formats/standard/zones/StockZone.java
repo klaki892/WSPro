@@ -2,6 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
 
@@ -9,7 +10,7 @@ import ton.klay.wspro.core.api.game.field.Zones;
  * An object that represents the Stock zone on a playing field.
  * //todo rules reference
  */
-public class StockZone extends StackZone {
+public class StockZone extends MultiCardZone {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -17,12 +18,6 @@ public class StockZone extends StackZone {
 
 
     public StockZone(GamePlayer owner){
-        super(owner, ZONE_NAME, true);
+        super(owner, ZONE_NAME, GameVisibility.HIDDEN);
     }
-
-    public StockZone(GamePlayer owner, boolean hiddenZone){
-        super(owner, ZONE_NAME, hiddenZone);
-    }
-
-
 }

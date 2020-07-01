@@ -58,8 +58,7 @@ How do we Interact with a zone?
 		- By Default add to last index
 	- Add Via Index
 		- All zones should follow a 0-based index (0 is the first card inserted/bottom of stack)
-	- Remove
-		- by default remove from last index 
-	- Remove Via Index
+	- Remove Via Reference
+	    - No blind remove or via index, Remova Via Reference guarantees the card is there (what if we tried blind removing stock during paying?)
 	- SetIndex
 		- used for moving a card within a zone

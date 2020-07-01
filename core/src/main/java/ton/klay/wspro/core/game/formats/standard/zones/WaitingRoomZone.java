@@ -2,6 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
 
@@ -9,7 +10,7 @@ import ton.klay.wspro.core.api.game.field.Zones;
  * An object that represents the Waiting Room  zone on a playing field.
  * //todo rules reference
  */
-public class WaitingRoomZone extends StackZone {
+public class WaitingRoomZone extends MultiCardZone {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -17,12 +18,6 @@ public class WaitingRoomZone extends StackZone {
 
 
     public WaitingRoomZone(GamePlayer owner){
-        super(owner, ZONE_NAME, false);
+        super(owner, ZONE_NAME, GameVisibility.VISIBLE_TO_ALL);
     }
-
-    public WaitingRoomZone(GamePlayer owner, boolean hiddenZone){
-        super(owner, ZONE_NAME, hiddenZone);
-    }
-
-
 }
