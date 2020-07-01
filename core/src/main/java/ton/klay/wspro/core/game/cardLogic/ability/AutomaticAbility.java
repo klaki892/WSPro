@@ -2,18 +2,20 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.abilities.AbilityCategory;
+import ton.klay.wspro.core.api.cards.Cost;
+import ton.klay.wspro.core.api.cards.abilities.AbilityType;
+import ton.klay.wspro.core.api.cards.abilities.TriggerableAbility;
 import ton.klay.wspro.core.api.cards.abilities.components.AbilityConditions;
 
 /**
  * An AbilityCategory of the category Automatic
  * @see <code>Weiss Schwarz Rule 8.1.1.2</code>
  */
-public class AutomaticAbility extends BaseAbility {
+public class AutomaticAbility extends BaseAbility implements TriggerableAbility {
 
     private static final Logger log = LogManager.getLogger();
 
-    private static final AbilityCategory category = AbilityCategory.ABILITY_AUTOMATIC;
+    private static final AbilityType category = AbilityType.ABILITY_AUTOMATIC;
 
     /**
      * Automatic abilities may hav ea cost associated with them

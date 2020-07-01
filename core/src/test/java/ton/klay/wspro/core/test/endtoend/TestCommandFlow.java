@@ -2,11 +2,10 @@ package ton.klay.wspro.core.test.endtoend;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.commands.Command;
 import ton.klay.wspro.core.api.game.commands.CommandExecutionException;
 import ton.klay.wspro.core.api.game.commands.CommandSender;
 import ton.klay.wspro.core.api.game.commands.CommandSenderType;
-import ton.klay.wspro.core.api.game.commands.Command;
-import ton.klay.wspro.core.game.commands.DefaultWeissCommandDecoder;
 import ton.klay.wspro.core.test.playground.TestScriptEngine;
 
 import java.util.ArrayList;

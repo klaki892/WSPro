@@ -2,19 +2,23 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.abilities.AbilityCategory;
+import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
+import ton.klay.wspro.core.api.cards.abilities.AbilityType;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
+
+import java.util.Collection;
 
 /**
  * The Base class for defining an ability
  */
-public class BaseAbility implements ton.klay.wspro.core.api.cards.abilities.Ability {
+public abstract class BaseAbility implements Ability {
 
     private static final Logger log = LogManager.getLogger();
 
-    private AbilityCategory abilityType = null;
-    private AbilityKeyword abilityKeyword = AbilityKeyword.KEYWORD_NONE;
-    private ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect = null;
+    private Collection<AbilityKeyword> keywords;
+    private Effect effect = null;
+
 
     /**
      * THe base constructor for defining an ability with a keyword for identification.
@@ -22,11 +26,12 @@ public class BaseAbility implements ton.klay.wspro.core.api.cards.abilities.Abil
      * @param effect  - the enclosed effect of the ability
      * @param keyword - a keyword designation for the ability for identification
      */
-    protected BaseAbility(AbilityCategory category, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect, AbilityKeyword keyword){
-        abilityType = category;
+    protected BaseAbility(AbilityType category, Effect effect, AbilityKeyword keyword){
         this.effect = effect;
         abilityKeyword = keyword;
     }
+
+
 
 
     /**
@@ -34,17 +39,14 @@ public class BaseAbility implements ton.klay.wspro.core.api.cards.abilities.Abil
      * @param category - the category of the ability as provided by an enum
      * @param effect  - the enclosed effect of the ability
      */
-    protected BaseAbility(AbilityCategory category, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect){
+    protected BaseAbility(AbilityType category, Effect effect){
         this(category, effect, AbilityKeyword.KEYWORD_NONE);
     }
 
-    @Override
-    public AbilityCategory getAbilityType() {
-        return abilityType;
-    }
+    public abstract AbilityType getAbilityType();
 
     @Override
-    public ton.klay.wspro.core.api.cards.abilities.components.effects.Effect getEffect() {
+    public Effect getEffect() {
         return effect;
     }
 }

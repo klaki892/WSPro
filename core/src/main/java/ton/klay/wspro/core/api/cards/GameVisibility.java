@@ -1,4 +1,4 @@
-package ton.klay.wspro.core.api.game.cards;
+package ton.klay.wspro.core.api.cards;
 
 public enum GameVisibility {
     HIDDEN,

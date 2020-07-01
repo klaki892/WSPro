@@ -198,6 +198,9 @@ How do we Communicate these things:
 						- Custom Prompt Selections
 							- Select a Number
 							- Rock paper Scissors
+                Interrupt-Type Rule Actions:
+                    - Which Rule action to perform
+                        +Single Action Selection
 					
 					
 				

@@ -1,10 +1,9 @@
 package ton.klay.wspro.core.game.formats.standard.zones;
 
-import ton.klay.wspro.core.api.game.Ownable;
-import ton.klay.wspro.core.api.game.cards.GameVisibility;
-import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
+import ton.klay.wspro.core.api.game.player.GamePlayer;
 
 /**
  * An object that represents a zone thats interactable in the game. <br>
@@ -25,8 +24,8 @@ public abstract class BasePlayZone implements PlayZone {
     }
 
 
-    public String getZoneName(){
-        return ZONE_NAME.name();
+    public Zones getZoneName(){
+        return ZONE_NAME;
     }
 
     @Override

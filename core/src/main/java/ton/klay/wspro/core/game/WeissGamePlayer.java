@@ -45,8 +45,4 @@ public class WeissGamePlayer implements GamePlayer {
         this.playArea = playArea;
     }
 
-    @Override
-    public void setCommunicator(Communicator communicator) {
-        this.communicator = communicator;
-    }
 }

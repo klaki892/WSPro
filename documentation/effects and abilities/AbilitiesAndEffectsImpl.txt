@@ -5,7 +5,7 @@ WHen do we apply continuous effects?
 	- After Actions
 	- After all triggers
 	- first step of application is to reset all cards stats. (but not states)
-	When do we re-apply continuous effects?
+When do we re-apply continuous effects?
 	- see above 
 
 how do you check and apply "this can stand during stand phase"
@@ -424,17 +424,16 @@ General Issue:
 
  Abilities (all):
     - Exist within A Representation of a card
-    - Contain a Listener for a Trigger Conditional for registering (or performing) a respective Effect.
-        - This is registered when the playing card is instantiated/created.
-        - and removed with the playing card is deregistered.
     Contain the following parts:
-        TriggerListener - Contain a Listener for a Trigger Conditional for registering (or performing) a respective Effect.
-            - This is registered when the playing card is instantiated/created.
-            - and removed with the playing card is deregistered.
 		List of Keywords the ability uses
 
         5 generic variables - pass known needed variables to the corresponding effect.
             - variables are generic objects and arent restricted. its up to the effects to know the correct order & usage.
+
+ Auto & Continuous Abilities:
+         TriggerListener - Contain a Listener for a Trigger Conditional for registering (or performing) a respective Effect.
+             - This is registered when the playing card is instantiated/created.
+             - and removed with the playing card is deregistered.
 
 Automatic Abilities (and the effects that come from them):
     - The Trigger Listener will register Auto Abilities in CheckTiming's queue system(see trigger system thoughts.txt) when their conditions (if any) are met)

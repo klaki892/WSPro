@@ -8,17 +8,12 @@ To-Do:
         - Draw a card, shuffle the deck,
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
-    - POTENTIAL ISSUES TO CHECK:
-        - [critical] Players might be receiving events out of order
 
-        - Code Trigger Handling System
-            -Refactor eventListerners to Guava EventHub
-        - Code Interrupt Rule Action System
-            - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
-        - code how cost is checked and played (see CostImpl.txt)
-        - Code abilities & effects implementation
-            - Code the Abilities & effects scripting system
-                - Proof of concept the ability template system
+    - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
+    - code how cost is checked and played (see CostImpl.txt)
+    - Code abilities & effects implementation
+        - Code the Abilities & effects scripting system
+            - Proof of concept the ability template system
 
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
         - Code External Communication / Server for input
@@ -28,9 +23,7 @@ To-Do:
         - Code Combat
     -refactor gameContext into Game
 In-Progress:
-        - Code Trigger Handling System
-            -Refactor eventListerners to Guava EventHub
-        - Code Interrupt Rule Action System
+    - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
 
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
@@ -41,6 +34,10 @@ In-Progress:
             -Meta Arguments?
 
 Done:
+    - Code Interrupt Rule Action System
+    - Coded CheckTiming
+    - Code Trigger Handling System
+        - Refactor eventListerners to Guava EventHub
     - refactor Game Phase handling (see PhaseHandlingComparison.txt & core Major Components impl.docx))
     - Refactor Zones and cards (see CardBreakdown & ZoneBreakdown)
     - Define Zones (see ZoneBreakdown.txt)

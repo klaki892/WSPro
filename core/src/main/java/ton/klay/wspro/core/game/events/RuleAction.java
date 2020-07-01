@@ -7,5 +7,7 @@ package ton.klay.wspro.core.game.events;
  * Class which represents a Weiss Schwarz Rule GameAction
  * @see <code>Weiss Schwarz Rule 9 </code>
  */
-public class RuleAction {
+public class RuleAction  {
+    public void execute() {
+    }
 }

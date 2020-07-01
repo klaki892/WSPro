@@ -4,9 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.communication.Communicable;
 import ton.klay.wspro.core.api.game.communication.Communicator;
-import ton.klay.wspro.core.game.commands.CommandUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

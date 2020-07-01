@@ -1,14 +1,14 @@
 package ton.klay.wspro.core.api.game.field;
 
 
-import ton.klay.wspro.core.api.game.Ownable;
-import ton.klay.wspro.core.api.game.cards.GameVisibility;
+import ton.klay.wspro.core.api.cards.GameVisibility;
+import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 import java.util.List;
 
-public interface PlayZone extends Ownable {
+public interface PlayZone extends GameEntity {
     /**
      * Adds a single card to the zone
      * @param card - the card to be added into the zone
@@ -50,4 +50,6 @@ public interface PlayZone extends Ownable {
      * @return an array containing all of the cards in the zone
      */
     List<PlayingCard> getContents();
+
+    Zones getZoneName();
 }

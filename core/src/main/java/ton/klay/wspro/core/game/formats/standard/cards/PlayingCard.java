@@ -3,17 +3,20 @@ package ton.klay.wspro.core.game.formats.standard.cards;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.*;
-import ton.klay.wspro.core.api.game.Ownable;
-import ton.klay.wspro.core.api.game.cards.GameVisibility;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
+import ton.klay.wspro.core.api.cards.abilities.TriggerableAbility;
+import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Duel;
+import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
-public class PlayingCard implements Ownable {
+public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     private static final int NAME_COMPLEXITY = 4;
     private static final Logger log = LogManager.getLogger();
@@ -21,7 +24,7 @@ public class PlayingCard implements Ownable {
     private final PaperCard baseCard;
     private final String guid;
 
-    private final  List<Ability> triggerableAbilities = new ArrayList<>();
+    private final  List<TriggerableAbility> triggerableAbilities = new ArrayList<>();
     private CardOrientation orientation;
     private final GamePlayer owner;
     private GamePlayer master;
@@ -32,6 +35,8 @@ public class PlayingCard implements Ownable {
     private boolean canRest = true;
     private boolean canBeReversed = true;
     private boolean canBeTargeted = true;
+
+    private int fundamentalOrder;
 
     private Collection<LocalizedString> cardName;
     private int level;
@@ -47,11 +52,12 @@ public class PlayingCard implements Ownable {
 
 
 
-    public PlayingCard(Duel game, PaperCard card, GamePlayer master){
+    public PlayingCard(Duel game, PaperCard card, GamePlayer master, GamePlayer owner){
         this.game = game;
         this.baseCard = card;
-        this.owner = master; //FIXME this is wrong, but we might not need owner anyway
+        this.owner = owner;
         this.master = master;
+        this.fundamentalOrder = game.getNextFundamentalOrder();
 
         copyBaseStats(baseCard);
 
@@ -61,6 +67,13 @@ public class PlayingCard implements Ownable {
         game.getRandom().nextBytes(byteHolder);
         guid = UUID.nameUUIDFromBytes(byteHolder).toString();
         log.trace("Assigned " + guid + " to " + baseCard.getID());
+
+        //todo populate abilities
+
+        //register abilities in the game so they start recieving events
+        for (TriggerableAbility ability : triggerableAbilities){
+            ability.register(game.getTriggerManager());
+        }
 
     }
 
@@ -80,10 +93,13 @@ public class PlayingCard implements Ownable {
 
     /**
          * Playing Cards are deregistered when they are no longer going to be used in the game (ex: removed becuase card is moving zones) <br/>
-         * Deregistering unregisters all ability trigger listeners.
+         * Deregistering unregisters all ability trigger listeners. And makes the Playing card Immutable
          */
     public void deregister() {
-
+        //todo set last known information, make all getters immutable from this point on,
+        for (TriggerableAbility ability : triggerableAbilities){
+            game.getTriggerManager().unregister(ability);
+        }
     }
 
     public void reset() {
@@ -144,7 +160,6 @@ public class PlayingCard implements Ownable {
          * @see <code>Weiss Scharz rule 4.2</code>
          * @return the instance which owns this ccard
          */
-    @Override
     public GamePlayer getOwner() {
         return owner;
     }
@@ -252,15 +267,11 @@ public class PlayingCard implements Ownable {
         this.affiliations = affiliations;
     }
 
-    public PaperCard getBaseCard() {
-        return baseCard;
-    }
-
     public String getGuid() {
         return guid;
     }
 
-    public List<Ability> getTriggerableAbilities() {
+    public List<TriggerableAbility> getTriggerableAbilities() {
         return triggerableAbilities;
     }
 
@@ -321,5 +332,19 @@ public class PlayingCard implements Ownable {
 
     public CardAffiliation getAffiliations() {
         return affiliations;
+    }
+
+    @Override
+    public void setFundamentalOrder(int orderNumber) {
+        fundamentalOrder = orderNumber;
+    }
+
+    @Override
+    public int getFundamentalOrder() {
+        return fundamentalOrder;
+    }
+
+    public Duel getGame() {
+        return game;
     }
 }

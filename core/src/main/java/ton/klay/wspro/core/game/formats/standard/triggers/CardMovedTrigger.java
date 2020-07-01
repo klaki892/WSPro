@@ -3,8 +3,8 @@ package ton.klay.wspro.core.game.formats.standard.triggers;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
-import ton.klay.wspro.core.api.game.Ownable;
-import ton.klay.wspro.core.api.game.cards.GameVisibility;
+import ton.klay.wspro.core.api.cards.GameVisibility;
+import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
@@ -14,6 +14,7 @@ import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 public class CardMovedTrigger extends BaseTrigger{
 
     private static final Logger log = LogManager.getLogger();
+    private final TriggerName name = TriggerName.CARD_MOVED;
 
     private final PlayingCard sourceCard;
     private final PlayZone sourceZone;
@@ -23,12 +24,12 @@ public class CardMovedTrigger extends BaseTrigger{
     private final CardOrientation destinationOrientation;
     private final GameVisibility destinationVisibility;
     private final TriggerCause cause;
-    private final Ownable owner;
+    private final GameEntity owner;
 
     public CardMovedTrigger(PlayingCard sourceCard, PlayZone sourceZone,
                             PlayZone destinationZone, int destinationIndex, PlayingCard destinationCard,
                             CardOrientation destinationOrientation, GameVisibility destinationVisibility,
-                            TriggerCause cause, Ownable owner){
+                            TriggerCause cause, GameEntity owner){
 
         this.sourceCard = sourceCard;
         this.sourceZone = sourceZone;
@@ -77,7 +78,11 @@ public class CardMovedTrigger extends BaseTrigger{
         return cause;
     }
 
-    public Ownable getOwner() {
+    public GameEntity getOwner() {
         return owner;
+    }
+
+    public TriggerName getTriggerName() {
+        return name;
     }
 }
