@@ -18,13 +18,13 @@ public class TimingManager {
 
     private static final Logger log = LogManager.getLogger();
 
-    private final Duel game;
+    private final Game game;
     private final List<RuleAction> checkTypeRuleActions = new ArrayList<>();
     private final List<InterruptRuleAction> interruptRuleActions = new ArrayList<>();
     private final List<AutomaticAbility> automaticAbilities = new ArrayList<>();
     private int interruptLocks;
 
-    public TimingManager(Duel game){
+    public TimingManager(Game game){
         this.game = game;
     }
 
@@ -43,17 +43,29 @@ public class TimingManager {
 
     public void doCheckTiming() {
 
-        resolveRuleActions();
+        while (true) {
 
-        //perform current turn player first, then non-turn player. If any action is performed, reset the check timing.
-        for (GamePlayer player : new GamePlayer[]{game.getCurrentTurnPlayer(), game.getNonTurnPlayer()}) {
+            resolveRuleActions();
 
-            //resolve a player action
-            List<AutomaticAbility> currentPlayerActions = getPlayerActions(player);
-            if (!currentPlayerActions.isEmpty()) {
-                resolvePlayerAction(player, currentPlayerActions);
-                doCheckTiming();
-            }
+            //Resolve all automatic abilities.
+            if (resolveAutomaticAbility(game.getCurrentTurnPlayer()))
+                continue; //repeat the loop so we get the rule actions again.
+
+            //resolve automatic abilities on non-player's side
+            if(resolveAutomaticAbility(game.getNonTurnPlayer()))
+                continue;
+
+            break;
+        }
+    }
+
+    private boolean resolveAutomaticAbility(GamePlayer player) {
+        List<AutomaticAbility> currentPlayerActions = getPlayerActions(player);
+        if (currentPlayerActions.isEmpty()) {
+            return false; //no abilites left
+        } else {
+            resolvePlayerAction(player, currentPlayerActions);
+            return true;
         }
     }
 

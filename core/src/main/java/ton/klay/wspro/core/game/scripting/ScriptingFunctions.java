@@ -4,13 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.field.Zones;
+import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.GameAction;
-import ton.klay.wspro.core.game.Duel;
 import ton.klay.wspro.core.game.actions.InvalidActionException;
 import ton.klay.wspro.core.api.cards.abilities.components.AbilityConditions;
 import ton.klay.wspro.core.api.game.LoseConditions;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
-import ton.klay.wspro.core.game.throwables.LoseCondition;
 import ton.klay.wspro.core.game.formats.standard.zones.DeckZone;
 import ton.klay.wspro.core.game.formats.standard.zones.BasePlayZone;
 import ton.klay.wspro.core.game.formats.standard.zones.WaitingRoomZone;
@@ -29,14 +28,14 @@ public class ScriptingFunctions {
 
     private static final Logger log = LogManager.getLogger();
 
-    private Duel duel;
+    private Game game;
 
     /**
      * Creates an instance of the Scripting Functions class so that scripts that invoke the commands are redirected to the current referenced duel
-     * @param duel the duel in which the actions are currently taking place
+     * @param game the duel in which the actions are currently taking place
      */
-    public ScriptingFunctions(Duel duel){
-        this.duel = duel;
+    public ScriptingFunctions(Game game){
+        this.game = game;
     }
 
 
@@ -46,7 +45,7 @@ public class ScriptingFunctions {
      * @return - whether the operation was successful (in drawing all of the specified number of cards or not)
      */
     public boolean drawCard(){
-        return drawCards(duel.getCurrentTurnPlayer(), 1);
+        return drawCards(game.getCurrentTurnPlayer(), 1);
     }
 
     /**
@@ -66,7 +65,7 @@ public class ScriptingFunctions {
      * @return - whether the operation was successful (in drawing all of the specified number of cards or not)
      */
     public boolean drawCards(int numberOfCardsToDraw){
-        return drawCards(duel.getCurrentTurnPlayer(), numberOfCardsToDraw);
+        return drawCards(game.getCurrentTurnPlayer(), numberOfCardsToDraw);
     }
     /**
      *  Moves cards from deck zone to hand zone while firing drawing specific triggers <br>
@@ -89,7 +88,7 @@ public class ScriptingFunctions {
             if (!moveCard(deck.peek(), deck, targetPlayer.getPlayArea().getPlayZone(Zones.ZONE_HAND)))
                 return false;
             else {
-                duel.triggerCheck(AbilityConditions.CONDITION_ON_DRAW);
+                game.triggerCheck(AbilityConditions.CONDITION_ON_DRAW);
                 //todo record GameACtion of Drawing a card
             }
 
@@ -175,7 +174,7 @@ public class ScriptingFunctions {
      * @return a playzone reference to the zone in the game
      */
     public ton.klay.wspro.core.api.game.field.PlayZone getZone(Zones zone){
-        return getZone(duel.getCurrentTurnPlayer(), zone);
+        return getZone(game.getCurrentTurnPlayer(), zone);
     }
 
     /**
@@ -187,7 +186,7 @@ public class ScriptingFunctions {
      *
      */
     public ton.klay.wspro.core.api.game.field.PlayZone getZone(GamePlayer targetPlayer, Zones targetZone){
-        for (ton.klay.wspro.core.api.game.field.PlayZone playZone : duel.getPlayingField()){
+        for (ton.klay.wspro.core.api.game.field.PlayZone playZone : game.getPlayingField()){
             if (playZone.getZoneName().equals(targetZone) && playZone.getOwner().equals(targetPlayer))
                 return playZone;
         }

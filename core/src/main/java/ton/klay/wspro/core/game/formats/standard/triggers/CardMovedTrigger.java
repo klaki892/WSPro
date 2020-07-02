@@ -11,7 +11,7 @@ import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 /**
  * Announces that a card moved from a zone to another zone.
  */
-public class CardMovedTrigger extends BaseTrigger{
+public final class CardMovedTrigger extends BaseTrigger{
 
     private static final Logger log = LogManager.getLogger();
     private final TriggerName name = TriggerName.CARD_MOVED;
@@ -23,14 +23,13 @@ public class CardMovedTrigger extends BaseTrigger{
     private final PlayingCard destinationCard;
     private final CardOrientation destinationOrientation;
     private final GameVisibility destinationVisibility;
-    private final TriggerCause cause;
-    private final GameEntity owner;
 
     public CardMovedTrigger(PlayingCard sourceCard, PlayZone sourceZone,
                             PlayZone destinationZone, int destinationIndex, PlayingCard destinationCard,
                             CardOrientation destinationOrientation, GameVisibility destinationVisibility,
                             TriggerCause cause, GameEntity owner){
 
+        super(cause, owner);
         this.sourceCard = sourceCard;
         this.sourceZone = sourceZone;
         this.destinationZone = destinationZone;
@@ -38,8 +37,6 @@ public class CardMovedTrigger extends BaseTrigger{
         this.destinationCard = destinationCard;
         this.destinationOrientation = destinationOrientation;
         this.destinationVisibility = destinationVisibility;
-        this.cause = cause;
-        this.owner = owner;
     }
 
     public static Logger getLog() {
@@ -72,14 +69,6 @@ public class CardMovedTrigger extends BaseTrigger{
 
     public GameVisibility getDestinationVisibility() {
         return destinationVisibility;
-    }
-
-    public TriggerCause getCause() {
-        return cause;
-    }
-
-    public GameEntity getOwner() {
-        return owner;
     }
 
     public TriggerName getTriggerName() {

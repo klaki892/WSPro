@@ -38,6 +38,10 @@ public abstract class BasePlayZone implements PlayZone {
         return owner;
     }
 
+    @Override
+    public GamePlayer getMaster() {
+        return getOwner();
+    }
 
     @Override
     public String toString() {

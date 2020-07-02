@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.game.Duel;
+import ton.klay.wspro.core.game.Game;
 
 /**
  * Manages the flow of a game by holding state information and transitions as the game progresses.
@@ -14,7 +14,7 @@ public class PhaseHandler {
 
     private static final Logger log = LogManager.getLogger();
 
-    private final Duel game;
+    private final Game game;
     //todo Combat class
 
     private GamePlayer currentTurnPlayer;
@@ -25,7 +25,7 @@ public class PhaseHandler {
 
     private int turnNumber = 0;
 
-    public PhaseHandler(Duel game) {
+    public PhaseHandler(Game game) {
         this.game = game;
     }
 
@@ -34,6 +34,7 @@ public class PhaseHandler {
         nonTurnPlayer = nextTurnPlayer;
         setCurrentTurnPlayer(firstTurnPlayer);
         currentPhase = new StandPhase(this, currentTurnPlayer);
+        nextPhase = TurnPhase.getNext(currentPhase.getIdentifier());
         game.setGameStatus(GameStatus.PLAYING);
 
         //main game execution
@@ -110,7 +111,7 @@ public class PhaseHandler {
         setNextTurnPlayer(nonTurnPlayer);
     }
 
-    public Duel getGame() {
+    public Game getGame() {
         return game;
     }
 

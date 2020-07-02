@@ -4,13 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.api.game.setup.GameContext;
 import ton.klay.wspro.core.api.game.setup.GameFormat;
 import ton.klay.wspro.core.api.game.setup.GameFormats;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 
 import java.util.Collection;
-import java.util.List;
 
 public class TestGameFormat implements GameFormat {
 

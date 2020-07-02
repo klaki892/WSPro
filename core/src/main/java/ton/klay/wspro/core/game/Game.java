@@ -10,22 +10,19 @@ import ton.klay.wspro.core.api.scripting.ScriptEngine;
 import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
-import ton.klay.wspro.core.game.scripting.ScriptingFunctions;
-import ton.klay.wspro.core.game.throwables.LoseCondition;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
-import java.util.Random;
+import java.util.*;
 
-public class Duel  {
+public class Game {
 
     private static final Logger log = LogManager.getLogger();
+    private static final int GUID_NAME_COMPLEXITY = 4;
+
 
     public GamePlayer player1, player2;
-    private GamePlayer currentTurnPlayer;
-    private GamePlayer opposingPlayer;
     private ScriptEngine scriptEngine;
-    private ScriptingFunctions scriptingFunctions;
     private EventBus TriggerManager;
     private PhaseHandler phaseHandler;
     private TimingManager timingManager;
@@ -34,10 +31,13 @@ public class Duel  {
     private GameStatus gameStatus;
     private Random random;
     private int fundamentalOrderCounter = 0;
+    private String gameID;
 
-    public Duel(GamePlayer player1, GamePlayer player2){
+    public Game(GamePlayer player1, GamePlayer player2){
+
         this.player1 = player1;
         this.player2 = player2;
+
         setup();
     }
 
@@ -49,16 +49,13 @@ public class Duel  {
         initializePlayingField();
 
         //todo obtain decks
-        //todo check deck restrictions
 
         //start scripting engine
-        scriptingFunctions = new ScriptingFunctions(this);
 //        scriptEngine = new LuaScriptEngine();
 
         TriggerManager = new EventBus("Game Trigger Manager");
         phaseHandler = new PhaseHandler(this);
         timingManager = new TimingManager(this);
-        pregame();
     }
 
 
@@ -67,70 +64,55 @@ public class Duel  {
         - throwEx decks, place on deck zone
         - randomly determine who goes first (*overridable method)
         - draw 5 and mill, redraw up to 5
+     * @param currentTurnPlayer
+     * @param opposingPlayer
 
      */
-    private void pregame() {
+    private void pregame(GamePlayer currentTurnPlayer, GamePlayer opposingPlayer) {
         //todo pregame setup as listed in docs
+        //todo MULLIGAN MUST BE DONE.
 
     }
 
     /**
      * Starts the duel with a specified player
-     * @param startingPlayer player to take first turn
+     * @param startingPlayer player to take first turn, if null a random player is chosen
      */
     public void startGame(GamePlayer startingPlayer){
+        gameID = getRandomGuid();
+        log.debug("Game ID created: " + gameID);
+
+        GamePlayer currentTurnPlayer, opposingPlayer;
+
+        if (startingPlayer == null){
+            List<GamePlayer> gamePlayers = Arrays.asList(player1, player2);
+            Collections.shuffle(gamePlayers, getRandom());
+            currentTurnPlayer = gamePlayers.get(0);
+            opposingPlayer = gamePlayers.get(1);
+        } else {
+            currentTurnPlayer = (player1 == startingPlayer) ? player1 : player2;
+            opposingPlayer = (player1 == startingPlayer) ? player2 : player1;
+        }
+
         try {
-            startTurn(startingPlayer);
-        } catch (LoseCondition loseCondition)
+            pregame(currentTurnPlayer, opposingPlayer);
+            phaseHandler.startFirstTurn(currentTurnPlayer, opposingPlayer);
+            endGame();
+        } catch (GameRuntimeException exception)
         {
-            endGame(loseCondition);
+            unexpectedEndGame(exception);
         }
     }
 
-    /**
-     * Starts the duel with a randomly chosen player going first
-     */
-    public void startGame(){
-        startGame(currentTurnPlayer); //this works because pregame was suppose to set currentTurnPlayer.
-    }
 
-    private void startTurn(GamePlayer player) throws LoseCondition {
-        currentTurnPlayer = player;
-        opposingPlayer = (currentTurnPlayer == player1) ? player2 : player1;
-
-        try {
-            //go through the phases
-//            currentPhase = TurnPhase.TURN_PHASE_STAND;
-//            new StandPhase(this).startPhase();
-//
-//            currentPhase = TurnPhase.TURN_PHASE_DRAW;
-//            new DrawPhase(this).startPhase();
-//
-//            currentPhase = TurnPhase.TURN_PHASE_CLOCK;
-//            new ClockPhase(this).startPhase();
-//
-//            currentPhase = TurnPhase.TURN_PHASE_MAIN;
-//            new MainPhase(this).startPhase();
-//
-//            currentPhase = TurnPhase.TURN_PHASE_ATTACK;
-//            new AttackPhase(this).startPhase();
-//
-//            currentPhase = TurnPhase.TURN_PHASE_END;
-//            new EndPhase(this).startPhase();
-        } catch (GameRuntimeException ex){
-            unexpectedEndGame(ex);
-        }
-        //start turn of other player
-        startTurn(opposingPlayer);
-    }
 
     public void unexpectedEndGame(GameRuntimeException ex){
         log.fatal("Stopping Game " + this + " Due to exception: " + ex.getMessage());
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
     }
 
-    public void endGame(LoseCondition loseCondition){
-        //todo code in endGame functionality
+    public void endGame(){
+        //todo code in endGame functionality, this is called afte GameOver has been declared
     }
 
     private void initializePlayingField() {
@@ -155,17 +137,14 @@ public class Duel  {
 
     //@Override
     public GamePlayer getCurrentTurnPlayer() {
-        return currentTurnPlayer;
+        return phaseHandler.getCurrentTurnPlayer();
     }
 
     public GamePlayer getNonTurnPlayer() {
-        return opposingPlayer;
+        return phaseHandler.getNonTurnPlayer();
     }
 
     //@Override
-    public ScriptingFunctions getScriptingFunctions() {
-        return scriptingFunctions;
-    }
 
     public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
@@ -252,5 +231,15 @@ public class Duel  {
                             If character on stage owns the cont ability, when that character was placed on that specific stage position from another zone is it's fundamental order.
                             Else, when the ability is played is its fundamental order.
          */
+    }
+
+    public TimingManager getTimingManager() {
+        return timingManager;
+    }
+
+    public String getRandomGuid(){
+        byte[] byteHolder = new byte[GUID_NAME_COMPLEXITY];
+        getRandom().nextBytes(byteHolder);
+        return UUID.nameUUIDFromBytes(byteHolder).toString();
     }
 }

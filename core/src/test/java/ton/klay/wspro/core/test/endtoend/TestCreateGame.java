@@ -16,7 +16,6 @@ import ton.klay.wspro.core.api.game.player.PlayerDeckPair;
 import ton.klay.wspro.core.api.game.setup.GameConfig;
 import ton.klay.wspro.core.api.game.setup.GameFormat;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
-import ton.klay.wspro.core.game.WeissGame;
 import ton.klay.wspro.core.game.events.gameissued.GameEndEvent;
 import ton.klay.wspro.core.game.formats.standard.StandardWeissFormat;
 import ton.klay.wspro.core.test.game.TestGameConfig;
@@ -24,7 +23,6 @@ import ton.klay.wspro.core.test.game.communication.TestCommandLineCommunicator;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 //test if we can successfully create a game
 public class TestCreateGame {

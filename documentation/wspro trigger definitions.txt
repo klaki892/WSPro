@@ -21,3 +21,49 @@ CARD_MOVE - a card moved from 1 zone to another
 	Destination Visibility
 	Cause of Trigger (Reason for moving)
 	Owner of Trigger (What made it?)
+	
+CARD_DRAWN - a card was drawn from deck
+	Zone owning player
+	Card Drawn
+	Cause of trigger
+	Owner of trigger
+
+CARD_DISCARDED - a card was discarded from hand to waiting room
+	card owner
+	card
+	Cause of trigger
+	Owner of trigger
+
+ZONE_SHUFFLED - the cards in a zone were shuffled
+	shuffled zone
+	list of card references
+	Cause of Trigger
+	Owner of Trigger
+	
+PLAYER_LOSES - declares that a player has lost the game
+	Losing player
+	Loss Reason
+	Cause of Trigger
+	Owner Of Trigger
+GAME_OVER - declares the game to be over.
+	Losing Players
+	cause of Trigger
+	Owner of Trigger
+DECK_EMPTY - A Player's deck no longer has cards inside of it
+	player reference
+	causer of trigger
+	owner of trigger
+REFRESH_POINT_ADDED - A refresh point was added to a player
+	target player
+	causer
+	owner
+CARD_CLOCKED - a card was clocked by a player
+	player
+	clocked card
+	cause
+	caller
+TURN_STARTED - a players turn was starter
+	player
+	cause
+	caller
+	

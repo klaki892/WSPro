@@ -1,14 +1,13 @@
 package ton.klay.wspro.core.api.game.setup;
 
-import ton.klay.wspro.core.api.game.commands.CommandDecoder;
-import ton.klay.wspro.core.api.game.commands.CommandExecutor;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.LoseConditions;
+import ton.klay.wspro.core.api.game.commands.CommandDecoder;
+import ton.klay.wspro.core.api.game.commands.CommandExecutor;
 import ton.klay.wspro.core.api.game.commands.CommandSender;
+import ton.klay.wspro.core.api.game.communication.Communicator;
 import ton.klay.wspro.core.api.game.communication.GameCommunicationManager;
 import ton.klay.wspro.core.api.game.events.EventManager;
-import ton.klay.wspro.core.api.game.events.EventListener;
-import ton.klay.wspro.core.api.game.communication.Communicator;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.scripting.ScriptEngine;
 

@@ -14,6 +14,7 @@ To-Do:
     - Code abilities & effects implementation
         - Code the Abilities & effects scripting system
             - Proof of concept the ability template system
+                - Create a mapping from Triggers to TriggerSubscriber<TriggerName> & Create a reflection invoker for scripting
 
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
         - Code External Communication / Server for input
@@ -24,6 +25,7 @@ To-Do:
     -refactor gameContext into Game
 In-Progress:
     - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
+    - code Levelup Interrupt rule
 
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:

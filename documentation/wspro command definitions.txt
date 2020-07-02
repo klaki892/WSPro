@@ -42,6 +42,7 @@ MoveCard - move a card from one zone to another
 Draw Card - draws a card from the deck
     Args:
         Player Reference
+		Card
         Who/What Caused
     Sudo:
         1. get reference on top card of Player's deck
@@ -53,7 +54,7 @@ Draw Card - draws a card from the deck
             Reason for Draw
         3. Issue Event with reason
 
-Discard Card - player selects a card to move to waiting room
+Discard Card - player moves to waiting room
     Args:
         Player Reference
         Card

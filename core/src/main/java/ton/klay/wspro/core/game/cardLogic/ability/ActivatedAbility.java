@@ -2,7 +2,9 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.abilities.AbilityType;
+import ton.klay.wspro.core.api.game.player.GamePlayer;
 
 /**
  * An AbilityCategory of the category Activation
@@ -23,5 +25,20 @@ public class ActivatedAbility extends BaseAbility {
 
     public Cost getCost() {
         return cost;
+    }
+
+    @Override
+    public AbilityType getAbilityType() {
+        return null;
+    }
+
+    @Override
+    public void performEffect() {
+
+    }
+
+    @Override
+    public GamePlayer getMaster() {
+        return null;
     }
 }

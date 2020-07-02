@@ -4,7 +4,6 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
 
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.List;
 
 /**
  * Interacts with the player area of a particular player.<br/>
@@ -27,9 +26,7 @@ public interface PlayArea {
 
     /**
      * Returns a collection of the {@link PlayZone}'s defined by the {@link EnumSet}.
-     * Refer to {@link ZoneGroup} for common groups of the zones.
      * @return a list of Play Zones, no ordering is guaranteed
-     * @see ZoneGroup
      */
     Collection<PlayZone> getPlayZones(EnumSet<Zones> ZonesSet);
 

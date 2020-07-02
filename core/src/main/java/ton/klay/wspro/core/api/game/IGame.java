@@ -1,15 +1,14 @@
 package ton.klay.wspro.core.api.game;
 
-import ton.klay.wspro.core.api.game.communication.GameCommunicationManager;
-import ton.klay.wspro.core.api.game.player.PlayerDeckPair;
-import ton.klay.wspro.core.api.game.setup.GameContext;
 import ton.klay.wspro.core.api.game.communication.Communicator;
+import ton.klay.wspro.core.api.game.communication.GameCommunicationManager;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.api.game.player.PlayerDeckPair;
 import ton.klay.wspro.core.api.game.setup.GameConfig;
+import ton.klay.wspro.core.api.game.setup.GameContext;
 import ton.klay.wspro.core.api.game.setup.GameFormat;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Represents a Game and all of the interactions that can be done with a game from the outside

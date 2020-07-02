@@ -5,16 +5,19 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.game.Duel;
+import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
+import ton.klay.wspro.core.game.formats.standard.triggers.PhaseStartedTrigger;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
 public abstract class BasePhase implements GamePhase {
 
     private static final Logger log = LogManager.getLogger();
-    private TurnPhase phaseIdentifier;
+    private final TurnPhase phaseIdentifier;
 
     protected final PhaseHandler phaseHandler;
     protected final GamePlayer turnPlayer;
-    protected final Duel game;
+    protected final Game game;
     protected final EventBus triggerSystem;
 
 
@@ -28,11 +31,13 @@ public abstract class BasePhase implements GamePhase {
     }
 
     /**
-     * Declares the start of the phase and performs the corresponding {@link Duel#checkTiming()}
+     * Declares the start of the phase and performs the corresponding {@link Game#checkTiming()}
      */
     protected void beforePhase() {
-        //TODO: Fire PHASE_START
-//        triggerSystem.post();
+        BaseTrigger trigger = new PhaseStartedTrigger(turnPlayer, getIdentifier(), TriggerCause.GAME_ACTION, this);
+        triggerSystem.post(trigger);
+        game.continuousTiming();
+        game.interruptTiming();
         game.checkTiming();
     }
 
@@ -48,5 +53,10 @@ public abstract class BasePhase implements GamePhase {
     @Override
     public TurnPhase getIdentifier() {
         return phaseIdentifier;
+    }
+
+    @Override
+    public GamePlayer getMaster() {
+        return turnPlayer;
     }
 }

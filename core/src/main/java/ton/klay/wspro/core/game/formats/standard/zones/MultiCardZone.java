@@ -71,7 +71,7 @@ public class MultiCardZone extends BasePlayZone {
 
     @Override
     public List<PlayingCard> getContents() {
-        return getCardList();
+        return new ArrayList<>(getCardList());
     }
 
 }

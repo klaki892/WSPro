@@ -1,0 +1,11 @@
+How do we get a trigger to pass the correct Trigger type to Lua?
+    Possibility #1: function for what TriggerName Enum to listen to & Seperate function that takes it as a parameter
+		1. On JavaSide we create a generic subsciber to base event
+			2. on event recieve, call lua function to check if right type
+			3. if right type, pass the trigger into another function for actual handling.
+		Pros:
+			+ Gets around typing problem
+		Cons: Untested 
+		Neutral: see below for help
+        - https://stackoverflow.com/a/39091919
+		

@@ -2,15 +2,12 @@ package ton.klay.wspro.core.game.formats.standard;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.*;
+import ton.klay.wspro.core.api.game.DeckConstructionFormats;
 import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameFormat;
 import ton.klay.wspro.core.api.game.setup.GameFormats;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
-import ton.klay.wspro.core.game.formats.standard.phases.StandPhase;
-import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
-import ton.klay.wspro.core.game.formats.standard.phases.PrepPhase;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -45,8 +42,6 @@ public class StandardWeissFormat implements GameFormat {
 
     private Map<String, GamePhase> initPhaseMap() {
         Map<String, GamePhase> retMap = new HashMap<>();
-        retMap.put(TurnPhase.PREP_PHASE.name(), new PrepPhase());
-        retMap.put(TurnPhase.STAND_PHASE.name(), new StandPhase());
 
         return retMap;
     }
@@ -91,12 +86,6 @@ public class StandardWeissFormat implements GameFormat {
     @Override
     public Collection<String> getErrors() {
         return null;
-    }
-
-    @Override
-    public GamePhase getStartPhase() {
-
-        return new PrepPhase();
     }
 
     @Override

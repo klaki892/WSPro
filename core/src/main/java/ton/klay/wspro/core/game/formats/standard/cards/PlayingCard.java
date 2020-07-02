@@ -8,21 +8,19 @@ import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.api.scripting.cards.CardType;
-import ton.klay.wspro.core.game.Duel;
+import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 public class PlayingCard implements GameEntity, FundamentalOrderable {
 
-    private static final int NAME_COMPLEXITY = 4;
     private static final Logger log = LogManager.getLogger();
-    private final Duel game;
+    private final Game game;
     private final PaperCard baseCard;
-    private final String guid;
+    private String guid;
 
     private final  List<TriggerableAbility> triggerableAbilities = new ArrayList<>();
     private CardOrientation orientation;
@@ -52,7 +50,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
 
 
 
-    public PlayingCard(Duel game, PaperCard card, GamePlayer master, GamePlayer owner){
+    public PlayingCard(Game game, PaperCard card, GamePlayer master, GamePlayer owner){
         this.game = game;
         this.baseCard = card;
         this.owner = owner;
@@ -63,10 +61,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
 
 
         //generate the uniqueID
-        byte[] byteHolder = new byte[NAME_COMPLEXITY];
-        game.getRandom().nextBytes(byteHolder);
-        guid = UUID.nameUUIDFromBytes(byteHolder).toString();
-        log.trace("Assigned " + guid + " to " + baseCard.getID());
+        refreshGUID();
 
         //todo populate abilities
 
@@ -99,6 +94,16 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         //todo set last known information, make all getters immutable from this point on,
         for (TriggerableAbility ability : triggerableAbilities){
             game.getTriggerManager().unregister(ability);
+        }
+    }
+
+    public void refreshGUID(){
+        boolean updating = (guid != null);
+        guid = game.getRandomGuid();
+        if (updating) {
+            log.trace("Updating " + guid + " to " + baseCard.getID());
+        } else {
+            log.trace("Assigned " + guid + " to " + baseCard.getID());
         }
     }
 
@@ -344,7 +349,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         return fundamentalOrder;
     }
 
-    public Duel getGame() {
+    public Game getGame() {
         return game;
     }
 }

@@ -15,6 +15,7 @@ import java.util.Collection;
 public abstract class BaseAbility implements Ability {
 
     private static final Logger log = LogManager.getLogger();
+    private final AbilityKeyword abilityKeyword;
 
     private Collection<AbilityKeyword> keywords;
     private Effect effect = null;
@@ -48,5 +49,9 @@ public abstract class BaseAbility implements Ability {
     @Override
     public Effect getEffect() {
         return effect;
+    }
+
+    public AbilityKeyword getAbilityKeyword() {
+        return abilityKeyword;
     }
 }

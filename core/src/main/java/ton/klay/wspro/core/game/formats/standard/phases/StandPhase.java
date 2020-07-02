@@ -2,7 +2,14 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.cards.CardOrientation;
+import ton.klay.wspro.core.api.game.field.PlayZone;
+import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.formats.standard.commands.Commands;
+import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.triggers.TurnStartedTrigger;
 
 public class StandPhase extends BasePhase  {
 
@@ -14,8 +21,12 @@ public class StandPhase extends BasePhase  {
 
     @Override
     public void beforePhase() {
-        //TODO: FIRE TURN START
+        //announce start of turn
+        BaseTrigger trigger = new TurnStartedTrigger(turnPlayer, TriggerCause.GAME_ACTION, this);
+        game.getTriggerManager().post(trigger);
+        game.continuousTiming();
         game.incrementTurnCount();
+
         super.beforePhase();
     }
 
@@ -23,10 +34,11 @@ public class StandPhase extends BasePhase  {
     public void startPhase() {
         super.startPhase();
 
-        /* TODO
-            4.	Stand all cards that can be stood automatically
-                a.	for each stand, trigger check on stand ability
-         */
+        for (PlayZone stagePosition : turnPlayer.getPlayArea().getPlayZones(Zones.ZONE_CENTER_STAGE)) {
+            stagePosition.getContents().forEach(card -> {
+                Commands.changeCardOrientation(card, CardOrientation.STAND, TriggerCause.GAME_ACTION, this);
+            });
+        }
         game.checkTiming();
     }
 

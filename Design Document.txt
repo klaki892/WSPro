@@ -155,7 +155,7 @@ There should be at least 2 modules
             -add a specific cost to this cost, so the game can handle all at once (in order)
 
     EffectTrigger objects - holds (enums or functions?) for cardTriggers
-        -should be registered by the duel's cardTrigger handler
+        -should be registered by the game's cardTrigger handler
 
     EffectsListener -
 
