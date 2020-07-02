@@ -3,9 +3,11 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 import com.google.common.base.MoreObjects;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ton.klay.wspro.core.api.cards.*;
+import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.IDeck;
 import ton.klay.wspro.core.api.game.communication.Communicator;
 import ton.klay.wspro.core.api.game.field.PlayArea;
@@ -37,29 +39,9 @@ class PhaseHandlerTests  {
     void setUp() {
         player1 = new TestGamePlayer();
         player2 = new TestGamePlayer();
+        EventBus bus = new EventBus();
 
         game = new Game(player1, player2){
-            EventBus bus = new EventBus();
-
-            boolean gameover = false;
-            @Override
-            public void endGame() {
-                gameover = true;
-            }
-
-            public boolean isGameOver() {
-                return gameover;
-            }
-
-            @Override
-            public GamePlayer getCurrentTurnPlayer() {
-                return player1;
-            }
-
-            @Override
-            public GamePlayer getNonTurnPlayer() {
-                return player2;
-            }
 
             @Override
             public EventBus getTriggerManager() {
@@ -95,30 +77,19 @@ class PhaseHandlerTests  {
 //                            throw new GameRuntimeException("ending");
                     }
                 });
-                super.startGame(player1);
+                super.startGame(startingPlayer);
             }
         };
 
     };
 
 
-    PhaseHandler phaseHandler = new PhaseHandler(game){
-        int counter = 0;
-        @Override
-        public GamePlayer getCurrentTurnPlayer() {
-            if (counter < 1)
-                return super.getCurrentTurnPlayer();
-            else{
-                game.endGame();
-                return super.getCurrentTurnPlayer();
-            }
-
-        }
-    };
+    PhaseHandler phaseHandler = new PhaseHandler(game);
 
     @Test
     void blankGameCompletion() {
         game.startGame(player1);
+        Assertions.assertSame(GameStatus.FINISHED_SUCCESSFULLY, game.getGameState() );
 
 
     }
@@ -235,6 +206,11 @@ class PhaseHandlerTests  {
             @Override
             public Optional<PlayingCard> chooseClimaxPhaseCard(List<PlayingCard> climaxCards) {
                 return Optional.empty();
+            }
+
+            @Override
+            public PlayingCard chooseLevelUpCard(List<PlayingCard> clockCards) {
+                return clockCards.get(0);
             }
         };
         @Override

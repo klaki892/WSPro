@@ -5,5 +5,6 @@ public enum GameStatus {
     NOT_READY,
     READY,
     PLAYING,
-    FINISHED
+    FINISHED_SUCCESSFULLY,
+    FINISHED_UNEXPECTEDLY
 }

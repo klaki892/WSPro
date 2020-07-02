@@ -92,7 +92,7 @@ public class Commands {
 
         PlayZone deck = player.getPlayArea().getPlayZone(Zones.ZONE_DECK);
         PlayZone hand = player.getPlayArea().getPlayZone(Zones.ZONE_HAND);
-        PlayingCard topDeckCard = deck.getContents().get(Commands.Utilities.getTopOfZoneIndex(deck)-1);
+        PlayingCard topDeckCard = deck.getContents().get(Commands.Utilities.getTopOfZoneIndex(deck));
 
         //draw card
         CardMovedTrigger cardMovedTrigger = moveCard(topDeckCard, deck, hand, Utilities.getTopOfZoneIndex(hand), CardOrientation.STAND,
@@ -163,10 +163,11 @@ public class Commands {
      * @param caller
      * @return
      */
-    public static PlayerLostTrigger issueGameLoss(GamePlayer player, LoseConditions loseCondition, TriggerCause cause,
-                                                  GameEntity caller){
+    public static PlayerLostTrigger issuePlayerLost(GamePlayer player, LoseConditions loseCondition, TriggerCause cause,
+                                                    GameEntity caller){
 
         //todo change stats in game to indicate this player has lost.
+        player.getGame().getLosingPlayers().add(player);
 
         PlayerLostTrigger trigger = new PlayerLostTrigger(player, loseCondition, cause, caller);
         emitAndTimings(player.getGame(), trigger);
@@ -199,7 +200,7 @@ public class Commands {
 
     public static class Utilities {
         public static int getTopOfZoneIndex(PlayZone zone){
-            return zone.getContents().size();
+            return Math.max(0, zone.getContents().size()-1);
         }
 
         public static int getBottomOfZoneIndex(){

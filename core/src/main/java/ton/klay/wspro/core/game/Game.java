@@ -9,6 +9,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.scripting.ScriptEngine;
 import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
+import ton.klay.wspro.core.game.formats.standard.triggers.listeners.StandardWeissTriggerObservers;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
 
 import java.nio.ByteBuffer;
@@ -32,12 +33,13 @@ public class Game {
     private Random random;
     private int fundamentalOrderCounter = 0;
     private String gameID;
+    private final List<GamePlayer> losingPlayers = new ArrayList<>();
 
     public Game(GamePlayer player1, GamePlayer player2){
 
         this.player1 = player1;
         this.player2 = player2;
-
+        gameStatus = GameStatus.NOT_READY;
         setup();
     }
 
@@ -53,9 +55,13 @@ public class Game {
         //start scripting engine
 //        scriptEngine = new LuaScriptEngine();
 
-        TriggerManager = new EventBus("Game Trigger Manager");
+        TriggerManager = new EventBus("Game Trigger Manager"){
+
+        };
         phaseHandler = new PhaseHandler(this);
         timingManager = new TimingManager(this);
+        new StandardWeissTriggerObservers(this);
+        gameStatus = GameStatus.READY;
     }
 
 
@@ -75,10 +81,13 @@ public class Game {
     }
 
     /**
-     * Starts the duel with a specified player
+     * Starts the duel with a specified player. Blocks until the game is finished
      * @param startingPlayer player to take first turn, if null a random player is chosen
      */
     public void startGame(GamePlayer startingPlayer){
+
+        if (isGameOver()) return;
+
         gameID = getRandomGuid();
         log.debug("Game ID created: " + gameID);
 
@@ -97,7 +106,6 @@ public class Game {
         try {
             pregame(currentTurnPlayer, opposingPlayer);
             phaseHandler.startFirstTurn(currentTurnPlayer, opposingPlayer);
-            endGame();
         } catch (GameRuntimeException exception)
         {
             unexpectedEndGame(exception);
@@ -108,11 +116,15 @@ public class Game {
 
     public void unexpectedEndGame(GameRuntimeException ex){
         log.fatal("Stopping Game " + this + " Due to exception: " + ex.getMessage());
+        gameStatus = GameStatus.FINISHED_UNEXPECTEDLY;
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
     }
 
     public void endGame(){
-        //todo code in endGame functionality, this is called afte GameOver has been declared
+        gameStatus = GameStatus.FINISHED_SUCCESSFULLY;
+        //at this point LosingPlayers have been populated, game status is finished.
+        //todo  preform log dump(?) & cleanup (if any)
+
     }
 
     private void initializePlayingField() {
@@ -155,7 +167,7 @@ public class Game {
     }
 
     public boolean isGameOver() {
-        return getGameState() == GameStatus.FINISHED;
+        return gameStatus == GameStatus.FINISHED_SUCCESSFULLY || gameStatus == GameStatus.FINISHED_UNEXPECTEDLY;
     }
 
     public EventBus getTriggerManager() {
@@ -241,5 +253,9 @@ public class Game {
         byte[] byteHolder = new byte[GUID_NAME_COMPLEXITY];
         getRandom().nextBytes(byteHolder);
         return UUID.nameUUIDFromBytes(byteHolder).toString();
+    }
+
+    public List<GamePlayer> getLosingPlayers() {
+        return losingPlayers;
     }
 }

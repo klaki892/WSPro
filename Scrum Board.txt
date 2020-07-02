@@ -25,7 +25,6 @@ To-Do:
     -refactor gameContext into Game
 In-Progress:
     - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
-    - code Levelup Interrupt rule
 
     -Change command Format from list of strings to a key-value pair of arguments
         ex: playtiming command:
@@ -36,6 +35,9 @@ In-Progress:
             -Meta Arguments?
 
 Done:
+    - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
+    - handle game over
+    - code Levelup Interrupt rule
     - Code Interrupt Rule Action System
     - Coded CheckTiming
     - Code Trigger Handling System

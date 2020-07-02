@@ -5,7 +5,10 @@ import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
+import ton.klay.wspro.core.game.events.LosingVerdictRuleAction;
 import ton.klay.wspro.core.game.events.RuleAction;
+import ton.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +98,7 @@ public class TimingManager {
 
             enableInterruptLock();
             for (RuleAction action : currentRuleActions) {
+                losingVerdictCheck();
                 checkTypeRuleActions.remove(action);
                 action.execute();
             }
@@ -103,18 +107,34 @@ public class TimingManager {
         }
     }
 
+    private void losingVerdictCheck() {
+        List<RuleAction> losingVerdicts = checkTypeRuleActions.stream()
+                .filter(ruleAction -> ruleAction instanceof LosingVerdictRuleAction).collect(Collectors.toList());
+        //if any player fulfills the condition, declare all who have the verdict to have lost the game
+        if (losingVerdicts.size() != 0) {
+            enableInterruptLock();
+            losingVerdicts.forEach(RuleAction::execute);
+
+            GameOverTrigger trigger = new GameOverTrigger(game.getLosingPlayers(), TriggerCause.GAME_ACTION, game.getCurrentTurnPlayer());
+            game.getTriggerManager().post(trigger);
+            disableInterruptLock();
+            throw new GameOverException(game.getLosingPlayers());
+        }
+    }
+
     public void doInterruptTiming() {
         if (isInterruptLocked()) return;
-
-        //performing interrupts during the check would cause repeated actions to happen
-        enableInterruptLock();
 
         for(GamePlayer player : new GamePlayer[]{game.getCurrentTurnPlayer(), game.getNonTurnPlayer()}) {
 
             List<InterruptRuleAction> turnPlayerActions = interruptRuleActions
                     .stream().filter(action -> action.getMaster() == player).collect(Collectors.toList());
 
-            while(!interruptRuleActions.isEmpty()) {
+            while(!turnPlayerActions.isEmpty()) {
+                //performing interrupts during the check would cause repeated actions to happen
+                enableInterruptLock();
+
+                losingVerdictCheck();
                 InterruptRuleAction action;
                 //the player chooses if there is more than one
                 if (turnPlayerActions.size() > 1) {
@@ -124,16 +144,15 @@ public class TimingManager {
                 }
 
                 turnPlayerActions.remove(action);
-                enableInterruptLock();
+                interruptRuleActions.remove(action);
                 action.execute();
-
+                disableInterruptLock();
             }
         }
-        disableInterruptLock();
     }
 
     public boolean isInterruptLocked() {
-        return interruptLocks == 0;
+        return interruptLocks != 0;
     }
 
     /**

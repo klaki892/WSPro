@@ -6,6 +6,7 @@ import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.GameOverException;
 
 /**
  * Manages the flow of a game by holding state information and transitions as the game progresses.
@@ -40,9 +41,12 @@ public class PhaseHandler {
         //main game execution
         while (!game.isGameOver()){
 
-            currentPhase.startPhase();
-            advanceToNextPhase();
-
+            try {
+                currentPhase.startPhase();
+                advanceToNextPhase();
+            } catch (GameOverException gameOver){
+                game.endGame();
+            }
         }
 
     }

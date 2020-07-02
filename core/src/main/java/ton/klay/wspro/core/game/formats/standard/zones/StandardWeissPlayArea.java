@@ -13,7 +13,7 @@ public class StandardWeissPlayArea implements PlayArea {
 
     private static final Logger log = LogManager.getLogger();
     private GamePlayer owner;
-    private Map<Zones, PlayZone> zonesMap;
+    private final Map<Zones, PlayZone> zonesMap;
 
     public StandardWeissPlayArea(GamePlayer owner) {
         this.owner = owner;
