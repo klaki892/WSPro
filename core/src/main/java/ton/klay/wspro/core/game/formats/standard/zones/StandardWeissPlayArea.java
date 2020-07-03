@@ -2,6 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.zones;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.field.PlayArea;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
@@ -14,10 +15,12 @@ public class StandardWeissPlayArea implements PlayArea {
     private static final Logger log = LogManager.getLogger();
     private GamePlayer owner;
     private final Map<Zones, PlayZone> zonesMap;
+    private final Map<Zones, Zones> stageMarkerMap;
 
     public StandardWeissPlayArea(GamePlayer owner) {
         this.owner = owner;
         zonesMap = new EnumMap<>(Zones.class);
+        stageMarkerMap = new EnumMap<>(Zones.class);
 
         zonesMap.put(Zones.ZONE_DECK, new DeckZone(owner));
         zonesMap.put(Zones.ZONE_HAND, new HandZone(owner));
@@ -41,6 +44,12 @@ public class StandardWeissPlayArea implements PlayArea {
         zonesMap.put(Zones.ZONE_BACK_STAGE_LEFT_MARKER, new MarkerZone(owner, Zones.ZONE_BACK_STAGE_LEFT_MARKER));
         zonesMap.put(Zones.ZONE_BACK_STAGE_RIGHT_MARKER, new MarkerZone(owner, Zones.ZONE_BACK_STAGE_RIGHT_MARKER));
 
+
+        stageMarkerMap.put(Zones.ZONE_CENTER_STAGE_LEFT, Zones.ZONE_CENTER_STAGE_LEFT_MARKER);
+        stageMarkerMap.put(Zones.ZONE_CENTER_STAGE_MIDDLE, Zones.ZONE_CENTER_STAGE_MIDDLE_MARKER);
+        stageMarkerMap.put(Zones.ZONE_CENTER_STAGE_RIGHT, Zones. ZONE_CENTER_STAGE_RIGHT_MARKER);
+        stageMarkerMap.put(Zones.ZONE_BACK_STAGE_LEFT, Zones. ZONE_BACK_STAGE_LEFT_MARKER);
+        stageMarkerMap.put(Zones.ZONE_BACK_STAGE_RIGHT, Zones. ZONE_BACK_STAGE_RIGHT_MARKER);
     }
 
     @Override
@@ -68,7 +77,15 @@ public class StandardWeissPlayArea implements PlayArea {
         if (zonesMap.containsKey(zone))
             return zonesMap.get(zone);
         else
-            throw new IllegalArgumentException("Play area didnt contain a specific zone.");
+            throw new GameRuntimeException("Play area didnt contain a specific zone.");
+    }
+
+    @SuppressWarnings("SuspiciousMethodCalls")
+    public PlayZone getCorrespondingMarkerZoneOnStage(PlayZone stageZone){
+        if (!(stageZone instanceof CenterStageZone) &&  !(stageZone instanceof  BackStageZone)){
+            throw new GameRuntimeException("Asked to obtain marker for zone " + stageZone.getZoneName().name());
+        }
+        return getPlayZone(stageMarkerMap.get(stageZone));
     }
 
 

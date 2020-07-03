@@ -3,13 +3,14 @@ package ton.klay.wspro.core.game.formats.standard.cards;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.*;
-import ton.klay.wspro.core.api.cards.abilities.TriggerableAbility;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.cardLogic.ability.DefaultEncoreAbilityListener;
 import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
+import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,35 +19,35 @@ import java.util.List;
 public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     private static final Logger log = LogManager.getLogger();
-    private final Game game;
-    private final PaperCard baseCard;
-    private String guid;
+    protected final Game game;
+    protected final PaperCard baseCard;
+    protected String guid;
 
-    private final  List<TriggerableAbility> triggerableAbilities = new ArrayList<>();
-    private CardOrientation orientation;
-    private final GamePlayer owner;
-    private GamePlayer master;
-    private GameVisibility visibility;
-    private final List<PlayingCard> markers = new ArrayList<>();
+    protected final  List<TriggerableAbilityListener> triggerableAbilities = new ArrayList<>();
+    protected CardOrientation orientation;
+    protected final GamePlayer owner;
+    protected GamePlayer master;
+    protected GameVisibility visibility;
+    protected final List<PlayingCard> markers = new ArrayList<>();
 
-    private boolean canStand = true;
-    private boolean canRest = true;
-    private boolean canBeReversed = true;
-    private boolean canBeTargeted = true;
+    protected boolean canStand = true;
+    protected boolean canRest = true;
+    protected boolean canBeReversed = true;
+    protected boolean canBeTargeted = true;
 
-    private int fundamentalOrder;
+    protected int fundamentalOrder;
 
-    private Collection<LocalizedString> cardName;
-    private int level;
-    private Cost cost;
-    private CardIcon icon;
-    private int power;
-    private int soul;
-    private CardColor color;
-    private CardType cardType;
-    private Collection<LocalizedString> titleName;
-    private String id;
-    private CardAffiliation affiliations;
+    protected Collection<LocalizedString> cardName;
+    protected int level;
+    protected Cost cost;
+    protected CardIcon icon;
+    protected int power;
+    protected int soul;
+    protected CardColor color;
+    protected CardType cardType;
+    protected Collection<LocalizedString> titleName;
+    protected String id;
+    protected CardAffiliation affiliations;
 
 
 
@@ -64,9 +65,11 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         refreshGUID();
 
         //todo populate abilities
+        if (baseCard.getCardType() == CardType.CHARACTER)
+            triggerableAbilities.add(new DefaultEncoreAbilityListener(this));
 
         //register abilities in the game so they start recieving events
-        for (TriggerableAbility ability : triggerableAbilities){
+        for (TriggerableAbilityListener ability : triggerableAbilities){
             ability.register(game.getTriggerManager());
         }
 
@@ -75,7 +78,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     private void copyBaseStats(PaperCard c) {
         setCardName(c.getCardName());
         setLevel(c.getLevel());
-        setCost(c.getCost());
+        setCost(new StockCost(this, c.getCost()));
         setIcon(c.getIcon());
         setPower(c.getPower());
         setSoul(c.getSoul());
@@ -92,7 +95,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
          */
     public void deregister() {
         //todo set last known information, make all getters immutable from this point on,
-        for (TriggerableAbility ability : triggerableAbilities){
+        for (TriggerableAbilityListener ability : triggerableAbilities){
             game.getTriggerManager().unregister(ability);
         }
     }
@@ -174,7 +177,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     }
 
     public Collection<PlayingCard> getMarkers() {
-        return markers;
+        return new ArrayList<>(markers);
     }
 
     public boolean canStand() {
@@ -272,11 +275,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         this.affiliations = affiliations;
     }
 
-    public String getGuid() {
-        return guid;
-    }
-
-    public List<TriggerableAbility> getTriggerableAbilities() {
+    public List<TriggerableAbilityListener> getTriggerableAbilities() {
         return triggerableAbilities;
     }
 

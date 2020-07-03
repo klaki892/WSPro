@@ -1,92 +1,27 @@
 package ton.klay.wspro.core.game.cardLogic.ability;
 
-import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.abilities.AbilityType;
-import ton.klay.wspro.core.api.cards.abilities.TriggerableAbility;
-import ton.klay.wspro.core.api.cards.abilities.components.AbilityConditions;
-import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 
 /**
  * An AbilityCategory of the category Automatic
  * @see <code>Weiss Schwarz Rule 8.1.1.2</code>
  */
-public class AutomaticAbility extends BaseAbility implements TriggerableAbility {
+public abstract class AutomaticAbility extends BaseAbility {
 
     private static final Logger log = LogManager.getLogger();
 
-    private static final AbilityType category = AbilityType.ABILITY_AUTOMATIC;
+    protected final Cost cost;
 
-    /**
-     * Automatic abilities may hav ea cost associated with them
-     * @see <code>Weiss Schwarz Rule 8.1.1.2.2</code>
-     */
-    private Cost cost = null;
-
-    /**
-     * Automatic abiltiies have a condition associated with them for them to be triggered <br>
-     * As noted in the rules, the condition always starts with "When you..." in the description
-     *
-     */
-    private AbilityConditions condition = null;
-
-
-    /**
-     * Defines an automatic abiltiiy that has a cost associated with the condition for activation of the effect.
-     * @param cost - the actions needed to take place so that the effect may begin resolution
-     * @param condition - the condition needed to mark an automatic ability as active
-     * @param effect - the effect that the ability preforms
-     * @see <code>Weiss Schwarz Rule 8.1.1.2.2</code>
-     */
-    public AutomaticAbility(Cost cost, AbilityConditions condition, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect) {
-        super(category, effect);
-        this.condition = condition;
+    public AutomaticAbility(Cost cost){
         this.cost = cost;
-    }
-
-    /**
-     * Defines an automatic abiltiy that does not have a cost associated with the condition for activation of the effect
-     * @param condition - the condition needed to mark an automatic ability as active
-     * @param effect - the effect that the ability preforms
-     * @see <code>Weiss Schwarz Rule 8.1.1.2.1</code>
-     */
-    public AutomaticAbility(AbilityConditions condition, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect){
-        this(null, condition, effect); //FIXME instead of being a null cost, there may be a constant for NO COST
-    }
-
-    public Cost getCost() {
-        return cost;
-    }
-
-    public AbilityConditions getCondition() {
-        return condition;
-    }
-
-    @Override
-    public void triggerReceived(BaseTrigger trigger) {
-
-    }
-
-    @Override
-    public void register(EventBus eventBus) {
-
     }
 
     @Override
     public AbilityType getAbilityType() {
-        return null;
+        return AbilityType.ABILITY_AUTOMATIC;
     }
 
-    @Override
-    public void performEffect() {
-
-    }
-
-    @Override
-    public GamePlayer getMaster() {
-        return null;
-    }
 }

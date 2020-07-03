@@ -18,7 +18,7 @@ public interface PaperCard {
 
     int getLevel();
 
-    Cost getCost();
+    int getCost();
 
     /**
      * @see ton.klay.wspro.core.api.cards.CardIcon

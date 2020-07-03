@@ -38,7 +38,7 @@ public class Commands {
 
 
     /**
-     * Moves a card from one zone to another
+     * Moves a card from one zone to another. Handles special conditions such as move markers with its parent card.
      * @return A Trigger representing the action that occurred
      */
     public static CardMovedTrigger moveCard(PlayingCard card, PlayZone sourceZone, PlayZone destinationZone,
@@ -49,16 +49,32 @@ public class Commands {
         PlayingCard destinationCard;
         Game game = card.getGame();
 
+        if (!sourceZone.contains(card)){
+            log.warn(String.format("Tried to move Card (%s) From Zone(%s) But card is not located there. ",
+                    card.getGUID(), sourceZone.getZoneName().name()) );
+            return null; //may need to throw exception instead as this is an illegal call...
+        }
+
         boolean movingWithinStage = Zones.isOnStage(sourceZone) && Zones.isOnStage(destinationZone)
                 && sourceZone.getMaster().equals(destinationZone.getMaster());
 
         boolean movingWithinZone = sourceZone.equals(destinationZone);
         sourceZone.remove(card);
 
+        game.enableSimultaneousLock();
         if (movingWithinStage){
             //if on stage dont recreate card
             destinationCard = card;
             destinationCard.setFundamentalOrder(game.getNextFundamentalOrder());
+
+            //move markers with the card
+            for (PlayingCard marker : card.getMarkers()) {
+                PlayZone sourceMarkerZone = card.getOwner().getPlayArea().getCorrespondingMarkerZoneOnStage(sourceZone);
+                PlayZone destinationMarkerZone = card.getOwner().getPlayArea().getCorrespondingMarkerZoneOnStage(destinationZone);
+
+                moveCard(marker, sourceMarkerZone, destinationZone, Utilities.getTopOfZoneIndex(destinationMarkerZone),
+                        marker.getOrientation(), marker.getVisibility(), cause, caller);
+            }
         } else if (movingWithinZone) {
             // do not update fundamental order for movement within a zone
             destinationCard = card;
@@ -66,6 +82,16 @@ public class Commands {
             //Re-Create card into a new zone
             card.deregister();
             destinationCard = new PlayingCard(game, card.getPaperCard(), card.getMaster(), card.getOwner());
+
+            //move corresponding markers to waiting room
+            for (PlayingCard marker : card.getMarkers()) {
+                PlayZone sourceMarkerZone = card.getOwner().getPlayArea().getCorrespondingMarkerZoneOnStage(sourceZone);
+                PlayZone waitingRoom = card.getOwner().getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
+
+                moveCard(marker, sourceMarkerZone, waitingRoom, Utilities.getTopOfZoneIndex(waitingRoom),
+                        marker.getOrientation(), marker.getVisibility(), cause, caller);
+            }
+
         }
 
         //set states
@@ -82,6 +108,7 @@ public class Commands {
                 destinationVisibility,
                 cause,
                 caller);
+        game.disableSimultaneousLock();
 
         //announce event
         emitAndTimings(game,trigger);

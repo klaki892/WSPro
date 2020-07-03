@@ -66,4 +66,19 @@ TURN_STARTED - a players turn was starter
 	player
 	cause
 	caller
+STOOD_CARD - a card was changed to standing
+	card
+	why/who
+RESTED_CARD - a card was changed to resting
+	card
+REVERSED_CARD - a card changed to the reversed state
+	card
+CARD_CHANGED_ORIENTATION - a card changed it's orientation
+	card
+	prior orientation
+	set orientation
+CLOCK_FULL - a player's clock has enough cads for a level up
+	source player
+COST_PAID - indicates that a cost for a card, ability, or effect was completed successfully.
+	why/who
 	

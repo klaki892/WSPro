@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Exception that occurs from the game being in an Illegal {@link GameStatus } to preform an action.
  */
-public class IllegalGameState extends GameException {
+public class IllegalGameState extends GameRuntimeException {
 
     private static final Logger log = LogManager.getLogger();
 

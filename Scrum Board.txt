@@ -9,9 +9,9 @@ To-Do:
     - Create the Core functions to do simple abstract action in the game for scripters
         - moving a card from zone to zone, get a certain field on a player side, etc.
 
-    - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
-    - code how cost is checked and played (see CostImpl.txt)
     - Code abilities & effects implementation
+        - Code GamePhases
+            - Code Combat
         - Code the Abilities & effects scripting system
             - Proof of concept the ability template system
                 - Create a mapping from Triggers to TriggerSubscriber<TriggerName> & Create a reflection invoker for scripting
@@ -20,21 +20,15 @@ To-Do:
         - Code External Communication / Server for input
             - Create a GUI to play the game.
 
-    - Code GamePhases
-        - Code Combat
     -refactor gameContext into Game
 In-Progress:
-    - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
+    - Code Player Choices
+    - Code abilities & effects implementation
+    - Code GamePhases
 
-    -Change command Format from list of strings to a key-value pair of arguments
-        ex: playtiming command:
-            - Methodname/commandname
-            - arguments
-                - object
-                - object
-            -Meta Arguments?
 
 Done:
+    - code how cost is checked and played (see CostImpl.txt)
     - Code all basic commands needed for game completion, assuming no player input and default choices for simple choices.
     - handle game over
     - code Levelup Interrupt rule

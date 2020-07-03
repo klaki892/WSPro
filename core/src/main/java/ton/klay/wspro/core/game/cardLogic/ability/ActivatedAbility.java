@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * An AbilityCategory of the category Activation
  * @see <code>Weiss Schwarz Rule 8.1.1.1</code>
  */
-public class ActivatedAbility extends BaseAbility {
+public abstract  class ActivatedAbility extends BaseAbility {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -19,7 +19,6 @@ public class ActivatedAbility extends BaseAbility {
     private Cost cost = null;
 
     public ActivatedAbility(Cost cost, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect) {
-        super(category, effect);
         this.cost = cost;
     }
 

@@ -121,8 +121,8 @@ class PhaseHandlerTests  {
                                 }
 
                                 @Override
-                                public Cost getCost() {
-                                    return null;
+                                public int getCost() {
+                                    return 0;
                                 }
 
                                 @Override
@@ -157,7 +157,7 @@ class PhaseHandlerTests  {
 
                                 @Override
                                 public CardType getCardType() {
-                                    return null;
+                                    return CardType.CHARACTER;
                                 }
 
                                 @Override
@@ -211,6 +211,11 @@ class PhaseHandlerTests  {
             @Override
             public PlayingCard chooseLevelUpCard(List<PlayingCard> clockCards) {
                 return clockCards.get(0);
+            }
+
+            @Override
+            public boolean confirmAbilityUsage() {
+                return true;
             }
         };
         @Override

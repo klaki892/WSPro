@@ -1,5 +1,6 @@
 package ton.klay.wspro.core.api.game.field;
 
+import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 
 import java.util.Collection;
@@ -34,10 +35,17 @@ public interface PlayArea {
      * Returns an an individual Play Zone contained within the Play area.
      * @param zone  - the {@link Zones} constant representing the name of the Zone.
      * @return  -A Play Zone, provided the zone exists inside the area
-     * @throws IllegalArgumentException - if the zone doesnt exist inside the play area
+     * @throws GameRuntimeException - if the zone doesnt exist inside the play area
      */
-    PlayZone getPlayZone(Zones zone) throws IllegalArgumentException;
-    
+    PlayZone getPlayZone(Zones zone) throws GameRuntimeException;
+
+    /**
+     * Gets the Corresponding Marker zone when passed a Stage Zone
+     * @param stageZone - an existing PlayZone on stage
+     * @return Play Zone, provided the zone exists inside the area
+     * @throws GameRuntimeException - if the zone doesnt correlate
+     */
+    public PlayZone getCorrespondingMarkerZoneOnStage(PlayZone stageZone) throws GameRuntimeException;
     
     void setOwner(GamePlayer owner);
     

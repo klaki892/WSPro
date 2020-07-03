@@ -212,37 +212,26 @@ public class Game {
     public void enableInterruptLock() {
         timingManager.enableInterruptLock();
     }
-
     /**
-     * stops the freze on  Interrupt type rule actions and performs a {@link #interruptTiming()}
+     * stops the freeze on  Interrupt type rule actions
      */
     public void disableInterruptLock() {
         timingManager.disableInterruptLock();
     }
 
+    public void enableSimultaneousLock() {
+        timingManager.enableSimultaneousLock();
+    }
+
+    /**
+     * stops the freeze on  Interrupt type rule actions and continious effects from updating.
+     */
+    public void disableSimultaneousLock() {
+        timingManager.disableSimultaneousLock();
+    }
+
     public void continuousTiming() {
-        //todo reset all cards
-        /* TODO:
-            continuous Effect
-            If continious effect affects a specific ZONE instead of a card:
-                the change is applied the moment it enters the zone.
-                If the effect comes from an automatic ability, effects on zones apply before basic resolution.
-            If card stats needed, basic resolve as follows:
-                1. obtain base stats of card
-                2. apply effects that DO NOT change the state of the card.
-                3. apply effects that DO change the state of the card.
-                    3a.Indepedent Effects are resolved in Fundamental Order*
-                    3b.Dependent Effects* are resolved after Indepedent
-                    *Dependent Effects (multiple state changes)
-                        If Effect A applies a State that Effect B needs to be active:
-                            Effect B is labeled a Dependent Effect and always occurs after Indepedent effects.
-                            (A.K.A if an Effect requires a conditional to apply, its dependent)
-                    *Fundamental Order (Multiple Indepedent state changes)
-                        If a Continuous Effect comes from Continuous Ability:
-                            When the card is placed on its current zone is the fundemental order of that card.
-                            If character on stage owns the cont ability, when that character was placed on that specific stage position from another zone is it's fundamental order.
-                            Else, when the ability is played is its fundamental order.
-         */
+        timingManager.doContinuousTiming();
     }
 
     public TimingManager getTimingManager() {

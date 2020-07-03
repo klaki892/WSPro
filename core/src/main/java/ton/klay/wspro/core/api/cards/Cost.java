@@ -2,7 +2,8 @@ package ton.klay.wspro.core.api.cards;
 
 
 public interface Cost {
-    boolean costConditional();
+    void setCostConditional(CostConditional conditional);
+    boolean isPayable();
+    void setCostAction(PayCost payCost);
     void payCost();
-    //TODO verify with CostImpl.txt
 }

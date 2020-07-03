@@ -18,4 +18,6 @@ public interface PlayerController {
     Optional<PlayingCard> chooseClimaxPhaseCard(List<PlayingCard> climaxCards);
 
     PlayingCard chooseLevelUpCard(List<PlayingCard> clockCards);
+
+    boolean confirmAbilityUsage();
 }
