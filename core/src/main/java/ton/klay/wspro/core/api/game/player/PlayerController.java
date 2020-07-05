@@ -1,5 +1,6 @@
 package ton.klay.wspro.core.api.game.player;
 
+import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
@@ -20,4 +21,6 @@ public interface PlayerController {
     PlayingCard chooseLevelUpCard(List<PlayingCard> clockCards);
 
     boolean confirmAbilityUsage();
+
+    PlayChoice makePlayChoice(List<PlayChoice> playChoices);
 }

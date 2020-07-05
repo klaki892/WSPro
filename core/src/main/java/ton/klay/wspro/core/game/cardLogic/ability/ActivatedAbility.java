@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.abilities.AbilityType;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 
 /**
@@ -18,7 +19,7 @@ public abstract  class ActivatedAbility extends BaseAbility {
 
     private Cost cost = null;
 
-    public ActivatedAbility(Cost cost, ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect) {
+    public ActivatedAbility(Cost cost, Effect effect) {
         this.cost = cost;
     }
 

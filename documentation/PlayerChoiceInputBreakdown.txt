@@ -1,0 +1,164 @@
+How can we provide multiple different action choices
+	Possibility #1: Player choice Builder
+		Choose Card(s) Builder
+		Choose Arbitrary Predefined Action Builder
+	
+	
+	
+	
+
+Main Phase Decision Tree:
+	1. Play a Character from Hand
+		Knowledge Requirements:
+			- for all character in hand:
+				- Does it meet level requirement
+				- does it meet color requirement
+				- does it meet cost requirement
+		Choice Selection:
+			1 Choice - Card name / Game ID - Card object
+		1a. What Stage Position?
+				Knowledge Requirements:
+					- None
+				Choice Selection:
+					1 Choice - Name of stage positon (or number)
+	2. Play event card from hand
+		Knowledge Requirements:
+			- for all character in hand:
+				- Does it meet level requirement
+				- does it meet color requirement
+				- does it meet cost requirement
+		Choice Selection:
+			1 Choice - Card name / Game ID - Card object
+
+	3. Play activated ability of character on stage
+		Knowledge Requirements:
+			- for all characters on stage:
+				- Does it have an Act ability?
+				- Is the cost of the ability Payable?
+		Choice Selection
+			1 Choice - Card Name/Game ID & Ability DB Number - Ability Object
+	4. Exchange the contents of two stage positions
+		Knowledge Requirements
+			- None
+		Choice:
+			2 Choices - Stage Position Number / Name, Owner of stage positions
+	5. Do Nothing 
+		Choice Selection
+			1 Choice - None of the above
+			
+Attack Phase Decision Tree:
+	1. Choose A Character to Attack 
+		Knowledge Requirements:
+			- For all cards in Center Stage:
+				- Is the Card Standing?
+				- Are there any effects stopping it from attacking?
+				- Is There A Card Facing it?
+			Choice Selection
+				1 Choice - Stage Position Number/Name & Type of Possible Attack
+Climax Phase Decision Tree:
+	1. Choose a Climax Cad in hand 
+		Knowledge Requirements:
+			- for all Climaxes in hand:
+				- Does it meet level requirement
+				- does it meet color requirement
+		Choice Selection:
+			1 Choice Cad Name / Game ID - Card Object 
+Counter Phase Decision Tree:
+	1. Choose a Counter Card from hand:
+		Knowledge Requirements
+			- for all cards in hand:
+				- Does this card meet level requirement
+				- Does this card have the counter icon
+		Choice:
+			1 Choice - Card Name / Game ID - Card Object
+End Phase card limit Decision Tree:
+	1. Choose cards to discad:
+		Knowledge Requirements
+			none
+		Choice:
+			(hand size - limit) Choices - Card Name / Game ID - Card Object 
+Mulligan Phase Card Decision Tree:
+	1. Choose cards to discard:
+		Knowledge Requirements
+			none
+		(Up to hand size) Choices - Cad Name / Game ID - Card Object 
+	2. Do Nothing 
+		Choice Selection
+			1 choice - "None"
+Card Effect - Reveal Deck card:
+	1. Reveal A Card
+		Knowledge Requirements
+			None
+		Choice Selection
+			1 Choice - "Perform Action" - Arbitrary Yes/No Type Choice
+Check Timing auto effects tree:
+	1. Choose an Abiliy
+		Knowledge Requirements:
+			none
+		Choice Selection
+			1 Choice - Card Name/Game ID & Ability DB Number - Ability Object
+				
+How do we make a builder that takes multiple different independent types, and allows us to get multiple types back with correct typing 
+	- Multiple classes with varying amounts of generics? oneCHoice<E> TwoChoice<E,F> ThreeCHoice<A,B,C>?
+	
+	Choice Map <Int, Object>
+		Object map<Object, 
+- Need a card search filter/builder
+
+
+Map < ActionType, objectToDoAction> -
+    Example: (choose_card, CharacterA)
+             (choose_card, EventA)
+             (choose_ability, AbilityA)
+             (exchange_positions, (StagePosition, StagePosition))
+             (choose_action, affirmative)
+             (choose_Attack, (TypeOfAttack, StagePosition))
+             (play_card_from_hand, ClimaxA)
+             (choose_card, PlayingCardA)
+             (choose_action, negative)
+             (choose_position, StagePosition)
+             (choose_string(choose_trait), "TraitA")
+             (choose_string(choose_name_combo), "nameA & Name B"
+
+
+ Example Building Main Phase:
+    1. Get all playable characters in a list
+    2. Create a new List of PlayChoices
+    3. Add all playable characters to the PlayChoices
+        PlayChoices.add(CharacterX)
+            PlayChoices creates new PlayerChoice(Choose_Card, CharacterX)
+    4. get all playable events in a list
+    5. ADd all playable events to the PlayChoices
+        PlayChoices.add(EventX)
+    6. Get all ACT abilities
+    7. Add all playable abilities
+        PlayChoices.add(AbilityX)
+            Play Chooser creates a new PlayerChoice(choose_ability, AbilityX)
+    8. get all exchangeable stage positions in a list
+    9. Add all stage exchange possibilities
+        PlayChoices.Add(StagePositionPair(PositionA, PositionB))
+            Player CHooser Creaete a new PlayerChoice(exchange_positions StagePositionPair(StagePosition,StagePosition))
+    10. Add do nothing command
+        PlayerCHooser.Add(negative)
+            Player Chooser Creates a new PlayerChoice(choose_action, NEGATIVE)
+    11. send PlayerChoice
+    12. With Recieved Player Choice, get the action type
+    13. switch on actionType:
+        if choose_card
+            PlayChoices.getCardChoice()
+                if character, play the character
+                if event, play the event
+                etc.
+    Pros:
+        + No ned to cast, PlayChoices handles correct typing
+        + end class only needs to call things it knows it can get back
+    Cons:
+        - requires constant updates to PlayChoices for new objects or types
+		
+	TAKEAWAY:
+			
+		PlayChoice
+			- use a builder to keep strong typing during building and recieving
+			- getType returns the ActionType
+			- get[ActionTypeName] returns the strongly typed object
+				

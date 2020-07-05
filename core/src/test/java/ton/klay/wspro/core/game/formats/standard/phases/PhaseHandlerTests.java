@@ -6,7 +6,7 @@ import com.google.common.eventbus.Subscribe;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ton.klay.wspro.core.api.cards.*;
+import ton.klay.wspro.core.api.cards.MockCharacterPaperCard;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.IDeck;
 import ton.klay.wspro.core.api.game.communication.Communicator;
@@ -15,8 +15,9 @@ import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.player.PlayerController;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
+import ton.klay.wspro.core.api.game.player.PlayerControllerTest;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
@@ -25,7 +26,6 @@ import ton.klay.wspro.core.game.formats.standard.triggers.PhaseStartedTrigger;
 import ton.klay.wspro.core.game.formats.standard.zones.DeckZone;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +34,12 @@ class PhaseHandlerTests  {
     GamePlayer player1;
     GamePlayer player2;
     Game game;
+
+    public static void main(String[] args) {
+        PhaseHandlerTests instance = new PhaseHandlerTests();
+        instance.setUp();
+        instance.blankGameCompletion();
+    }
 
     @BeforeEach
     void setUp() {
@@ -109,72 +115,7 @@ class PhaseHandlerTests  {
                         init = true;
                         for (int i = 0; i < 30; i++) {
                             deckZone.add(new PlayingCard(game,
-                                    new PaperCard() {
-                                @Override
-                                public Collection<LocalizedString> getCardName() {
-                                    return null;
-                                }
-
-                                @Override
-                                public int getLevel() {
-                                    return 0;
-                                }
-
-                                @Override
-                                public int getCost() {
-                                    return 0;
-                                }
-
-                                @Override
-                                public CardIcon getIcon() {
-                                    return null;
-                                }
-
-                                @Override
-                                public Collection<CardTrigger> getTriggerIcons() {
-                                    return null;
-                                }
-
-                                @Override
-                                public int getPower() {
-                                    return 0;
-                                }
-
-                                @Override
-                                public int getSoul() {
-                                    return 0;
-                                }
-
-                                @Override
-                                public Collection<LocalizedString> getTraits() {
-                                    return null;
-                                }
-
-                                @Override
-                                public CardColor getColor() {
-                                    return null;
-                                }
-
-                                @Override
-                                public CardType getCardType() {
-                                    return CardType.CHARACTER;
-                                }
-
-                                @Override
-                                public Collection<LocalizedString> getTitleName() {
-                                    return null;
-                                }
-
-                                @Override
-                                public String getID() {
-                                    return null;
-                                }
-
-                                @Override
-                                public CardAffiliation getAffiliations() {
-                                    return null;
-                                }
-                            }, player1, player1));
+                                    new MockCharacterPaperCard(), player1, player1));
                         }
                         return deckZone;
                     } else {
@@ -216,6 +157,11 @@ class PhaseHandlerTests  {
             @Override
             public boolean confirmAbilityUsage() {
                 return true;
+            }
+
+            @Override
+            public PlayChoice makePlayChoice(List<PlayChoice> playChoices) {
+                return PlayerControllerTest.commandLinePlayChoiceMaker(playChoices);
             }
         };
         @Override

@@ -3,7 +3,9 @@ package ton.klay.wspro.core.game.formats.standard.commands;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
+import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.GameVisibility;
+import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.LoseConditions;
 import ton.klay.wspro.core.api.game.field.PlayZone;
@@ -16,6 +18,8 @@ import ton.klay.wspro.core.game.formats.standard.triggers.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static ton.klay.wspro.core.game.formats.standard.commands.Commands.Utilities.getTopOfZoneIndex;
 
 /**
  * Moves a card from one zone to another during a game
@@ -201,7 +205,8 @@ public class Commands {
         return trigger;
     }
 
-    public static Optional<CardOrientedTrigger> changeCardOrientation(PlayingCard card, CardOrientation orientTo, TriggerCause cause, GameEntity caller) {
+    public static Optional<CardOrientedTrigger> changeCardOrientation(PlayingCard card, CardOrientation orientTo,
+                                                                      TriggerCause cause, GameEntity caller) {
         CardOrientation orientedFrom = card.getOrientation();
         //no orientation was done.
         if (orientedFrom == orientTo) return Optional.empty();
@@ -223,6 +228,46 @@ public class Commands {
         CardOrientedTrigger trigger = new CardOrientedTrigger(card, orientedFrom , orientTo, cause, caller);
         emitAndTimings(card.getGame(), trigger);
         return Optional.of(trigger);
+    }
+
+    /**
+     *  Called when a player play's a card from hand or from a card effect.
+     *  (such as {@link AbilityKeyword#KEYWORD_CHANGE})
+     * @param player
+     * @param card
+     * @param cause
+     * @param caller
+     * @return
+     */
+    public static CardPlayedTrigger playCard(GamePlayer player, PlayingCard card, PlayZone sourceZone,
+                                             PlayZone destinationZone, TriggerCause cause, GameEntity caller) {
+        //move the card
+        Commands.moveCard(card, sourceZone, destinationZone, getTopOfZoneIndex(destinationZone),
+                CardOrientation.STAND, destinationZone.getVisibility(), cause, caller);
+
+        CardPlayedTrigger trigger = new CardPlayedTrigger(player, card, sourceZone, destinationZone, cause, caller);
+        emitAndTimings(card.getGame(), trigger);
+        return trigger;
+    }
+
+    /**
+     * Pays a cost while preventing interrupt rule actions from occuring during the cost payment.
+     * @param cost
+     * @param caller
+     * @return
+     */
+    public static CostPaidTrigger payCost(Cost cost, GameEntity caller) {
+        Game game = caller.getMaster().getGame();
+
+        //interrupt actions cant happen during paying a cost
+        game.enableInterruptLock();
+        cost.payCost();
+        game.disableInterruptLock();
+
+        //potential bug: if a card doesnt have a cost, we should/shouldnt emit the trigger (as there was no cost)
+        CostPaidTrigger trigger = new CostPaidTrigger(TriggerCause.GAME_ACTION, caller);
+        emitAndTimings(game, trigger);
+        return trigger;
     }
 
     public static class Utilities {

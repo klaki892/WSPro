@@ -11,7 +11,6 @@ import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
-import ton.klay.wspro.core.game.formats.standard.triggers.CostPaidTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
 /**
@@ -44,8 +43,6 @@ public class StockCost implements Cost {
                 Commands.moveCard(topCard, stockZone, waitingRoom, Commands.Utilities.getTopOfZoneIndex(waitingRoom),
                         CardOrientation.STAND, waitingRoom.getVisibility(), TriggerCause.GAME_ACTION, owner);
             }
-            CostPaidTrigger trigger = new CostPaidTrigger(TriggerCause.GAME_ACTION, owner);
-            game.getTriggerManager().post(trigger);
         };
 
     }

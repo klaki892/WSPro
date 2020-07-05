@@ -8,6 +8,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.cardLogic.ability.ActivatedAbility;
 import ton.klay.wspro.core.game.cardLogic.ability.DefaultEncoreAbilityListener;
 import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
@@ -24,6 +25,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     protected String guid;
 
     protected final  List<TriggerableAbilityListener> triggerableAbilities = new ArrayList<>();
+    protected final  List<ActivatedAbility> activatedAbilities = new ArrayList<>();
     protected CardOrientation orientation;
     protected final GamePlayer owner;
     protected GamePlayer master;
@@ -48,7 +50,8 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     protected Collection<LocalizedString> titleName;
     protected String id;
     protected CardAffiliation affiliations;
-
+    protected Collection<LocalizedString> traits;
+    protected Collection<CardTrigger> triggerIcons;
 
 
     public PlayingCard(Game game, PaperCard card, GamePlayer master, GamePlayer owner){
@@ -87,7 +90,10 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         setTitleName(c.getTitleName());
         setId(c.getID());
         setAffiliations(c.getAffiliations());
+        setTraits(c.getTraits());
+        setTriggerIcons(c.getTriggerIcons());
     }
+
 
     /**
          * Playing Cards are deregistered when they are no longer going to be used in the game (ex: removed becuase card is moving zones) <br/>
@@ -350,5 +356,25 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     public Game getGame() {
         return game;
+    }
+
+    public Collection<LocalizedString> getTraits() {
+        return traits;
+    }
+    public void setTraits(Collection<LocalizedString> traits) {
+
+        this.traits = traits;
+    }
+
+    public Collection<CardTrigger> getTriggerIcons() {
+        return triggerIcons;
+    }
+
+    public void setTriggerIcons(Collection<CardTrigger> triggerIcons) {
+        this.triggerIcons = triggerIcons;
+    }
+
+    public List<ActivatedAbility> getActivatableAbilities() {
+        return activatedAbilities;
     }
 }

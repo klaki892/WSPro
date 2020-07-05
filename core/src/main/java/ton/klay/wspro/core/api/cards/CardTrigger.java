@@ -64,5 +64,7 @@ public enum CardTrigger {
      * Standby. (not commonly known as "pumpkin")
      * @see <code>Weiss Schwarz rule 4.12.2.10</code>
      */
-    STANDBY
+    STANDBY,
+
+    CHOICE
 }

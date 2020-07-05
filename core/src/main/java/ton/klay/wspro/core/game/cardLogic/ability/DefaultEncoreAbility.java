@@ -43,10 +43,11 @@ public class DefaultEncoreAbility extends AutomaticAbility {
 
             PlayZone waitingRoom = master.getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
 
-            cost.payCost();
+            Commands.payCost(cost, this);
             Commands.moveCard(this.card, waitingRoom, varTrigger.getSourceZone(),
                     Commands.Utilities.getTopOfZoneIndex(varTrigger.getSourceZone()), CardOrientation.REST,
                     GameVisibility.VISIBLE_TO_ALL, TriggerCause.CARD_EFFECT, master);
+
             BaseTrigger trigger1 = new CardEncoredTrigger(this.card, TriggerCause.CARD_EFFECT, master);
             master.getGame().getTriggerManager().post(trigger1);
             master.getGame().continuousTiming();
