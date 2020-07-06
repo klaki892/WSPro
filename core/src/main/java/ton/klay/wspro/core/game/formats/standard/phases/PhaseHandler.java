@@ -7,6 +7,7 @@ import ton.klay.wspro.core.api.game.phase.GamePhase;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.GameOverException;
+import ton.klay.wspro.core.game.actions.Combat;
 
 /**
  * Manages the flow of a game by holding state information and transitions as the game progresses.
@@ -16,7 +17,6 @@ public class PhaseHandler {
     private static final Logger log = LogManager.getLogger();
 
     private final Game game;
-    //todo Combat class
 
     private GamePlayer currentTurnPlayer;
     private GamePlayer nonTurnPlayer;
@@ -25,6 +25,8 @@ public class PhaseHandler {
     private GamePhase currentPhase;
 
     private int turnNumber = 0;
+    private Combat combat;
+    private boolean attackedThisTurn;
 
     public PhaseHandler(Game game) {
         this.game = game;
@@ -137,5 +139,21 @@ public class PhaseHandler {
 
     public GamePlayer getNextTurnPlayer() {
         return nextTurnPlayer;
+    }
+
+    public void setCombat(Combat combat) {
+        this.combat = combat;
+    }
+
+    public Combat getCombat() {
+        return combat;
+    }
+
+    public boolean didAttackThisTurn() {
+        return attackedThisTurn;
+    }
+
+    public void setAttackedThisTurn(boolean attackedThisTurn) {
+        this.attackedThisTurn = attackedThisTurn;
     }
 }

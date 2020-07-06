@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import ton.klay.wspro.core.api.cards.MockCharacterPaperCard;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.IDeck;
-import ton.klay.wspro.core.api.game.communication.Communicator;
 import ton.klay.wspro.core.api.game.field.PlayArea;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
@@ -18,8 +17,7 @@ import ton.klay.wspro.core.api.game.player.PlayerController;
 import ton.klay.wspro.core.api.game.player.PlayerControllerTest;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.PlayChoice;
-import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
-import ton.klay.wspro.core.game.events.InterruptRuleAction;
+import ton.klay.wspro.core.game.actions.PlayChooser;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.PhaseStartedTrigger;
@@ -27,7 +25,6 @@ import ton.klay.wspro.core.game.formats.standard.zones.DeckZone;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
 
 import java.util.List;
-import java.util.Optional;
 
 class PhaseHandlerTests  {
 
@@ -36,6 +33,7 @@ class PhaseHandlerTests  {
     Game game;
 
     public static void main(String[] args) {
+        System.setProperty("org.apache.logging.log4j.simplelog.StatusLogger.level", "INFO");
         PhaseHandlerTests instance = new PhaseHandlerTests();
         instance.setUp();
         instance.blankGameCompletion();
@@ -96,7 +94,10 @@ class PhaseHandlerTests  {
     void blankGameCompletion() {
         game.startGame(player1);
         Assertions.assertSame(GameStatus.FINISHED_SUCCESSFULLY, game.getGameState() );
-
+        System.out.print("Losing Players:");
+        if (game.getLosingPlayers().contains(player1)) System.out.print("Player 1");
+        if (game.getLosingPlayers().contains(player2)) System.out.print("Player 2");
+        System.out.println();
 
     }
 
@@ -113,7 +114,7 @@ class PhaseHandlerTests  {
                 if (zone == Zones.ZONE_DECK){
                     if (!init){
                         init = true;
-                        for (int i = 0; i < 30; i++) {
+                        for (int i = 0; i < 50; i++) {
                             deckZone.add(new PlayingCard(game,
                                     new MockCharacterPaperCard(), player1, player1));
                         }
@@ -127,51 +128,13 @@ class PhaseHandlerTests  {
         };
         PlayerController controller = new PlayerController() {
             @Override
-            public InterruptRuleAction chooseInterruptRuleAction(List<InterruptRuleAction> interruptRuleActions) {
-                System.out.println(interruptRuleActions);
-                return null;
-            }
-
-            @Override
-            public AutomaticAbility chooseAutomaticAbilityToPerform(List<AutomaticAbility> interruptRuleActions) {
-                System.out.println(interruptRuleActions);
-                return null;
-            }
-
-            @Override
-            public Optional<PlayingCard> chooseClockCard(List<PlayingCard> cards) {
-//                return Optional.empty();
-                return Optional.of(cards.get(0));
-            }
-
-            @Override
-            public Optional<PlayingCard> chooseClimaxPhaseCard(List<PlayingCard> climaxCards) {
-                return Optional.empty();
-            }
-
-            @Override
-            public PlayingCard chooseLevelUpCard(List<PlayingCard> clockCards) {
-                return clockCards.get(0);
-            }
-
-            @Override
-            public boolean confirmAbilityUsage() {
-                return true;
-            }
-
-            @Override
-            public PlayChoice makePlayChoice(List<PlayChoice> playChoices) {
-                return PlayerControllerTest.commandLinePlayChoiceMaker(playChoices);
+            public List<PlayChoice> makePlayChoice(PlayChooser chooser) {
+                return PlayerControllerTest.commandLinePlayChoiceMaker(chooser);
             }
         };
         @Override
         public PlayArea getPlayArea() {
             return area;
-        }
-
-        @Override
-        public Communicator getCommunicator() {
-            return null;
         }
 
         @Override

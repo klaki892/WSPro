@@ -6,12 +6,14 @@ import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.LeveledUpTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LevelUpRuleAction extends InterruptRuleAction {
 
@@ -36,10 +38,12 @@ public class LevelUpRuleAction extends InterruptRuleAction {
 //        }
 
         //get 7 bottom cards in clock
-        List<PlayingCard> bottomClockCards = clock.getContents().subList(Commands.Utilities.getBottomOfZoneIndex(), 7);
+        List<PlayingCard> bottomClockCards = Commands.Utilities.getBottomOfZoneCards(clock, 7);
+
+        List<PlayChoice> choices = bottomClockCards.stream().map(PlayChoice::makeCardChoice).collect(Collectors.toList());
 
         //have player choose a card to level up
-        PlayingCard levelUpCard = player.getController().chooseLevelUpCard(bottomClockCards);
+        PlayingCard levelUpCard = Commands.makeSinglePlayChoice(player, choices).getCard();
 
         //move card to level, rest to waiting room
         Commands.moveCard(levelUpCard, clock, level, Commands.Utilities.getTopOfZoneIndex(level),

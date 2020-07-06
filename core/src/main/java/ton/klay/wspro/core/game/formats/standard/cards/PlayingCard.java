@@ -36,6 +36,10 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     protected boolean canRest = true;
     protected boolean canBeReversed = true;
     protected boolean canBeTargeted = true;
+    protected boolean canFrontalAttack = true;
+    protected boolean canSideAttack = true;
+    protected boolean canDirectAttack = true;
+
 
     protected int fundamentalOrder;
 
@@ -202,6 +206,31 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         return canBeTargeted;
     }
 
+    public boolean canFrontalAttack() {
+        return canFrontalAttack;
+    }
+
+    public void setCanFrontalAttack(boolean canFrontalAttack) {
+        this.canFrontalAttack = canFrontalAttack;
+    }
+
+    public boolean canSideAttack() {
+        return canSideAttack;
+    }
+
+    public void setCanSideAttack(boolean canSideAttack) {
+        this.canSideAttack = canSideAttack;
+    }
+
+    public boolean canDirectAttack() {
+        return canDirectAttack;
+    }
+
+    public void setCanDirectAttack(boolean canDirectAttack) {
+        this.canDirectAttack = canDirectAttack;
+    }
+
+
     /**
      * Gets a specific card name based on the Locale
      *
@@ -283,22 +312,6 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     public List<TriggerableAbilityListener> getTriggerableAbilities() {
         return triggerableAbilities;
-    }
-
-    public boolean isCanStand() {
-        return canStand;
-    }
-
-    public boolean isCanRest() {
-        return canRest;
-    }
-
-    public boolean isCanBeReversed() {
-        return canBeReversed;
-    }
-
-    public boolean isCanBeTargeted() {
-        return canBeTargeted;
     }
 
     public int getLevel() {

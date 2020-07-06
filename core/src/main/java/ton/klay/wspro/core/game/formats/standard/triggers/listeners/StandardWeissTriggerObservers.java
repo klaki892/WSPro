@@ -3,10 +3,7 @@ package ton.klay.wspro.core.game.formats.standard.triggers.listeners;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.game.Game;
-import ton.klay.wspro.core.game.formats.standard.triggers.listeners.ruleactions.LevelUpRuleIssuer;
-import ton.klay.wspro.core.game.formats.standard.triggers.listeners.ruleactions.LosingVerdictRuleIssuer;
-import ton.klay.wspro.core.game.formats.standard.triggers.listeners.ruleactions.RefreshPointRuleIssuer;
-import ton.klay.wspro.core.game.formats.standard.triggers.listeners.ruleactions.ReshuffleRuleIssuer;
+import ton.klay.wspro.core.game.formats.standard.triggers.listeners.ruleactions.*;
 
 /**
  * Contains the listeners for rule actions and other known game event triggers which are used in a Standard Weiss game
@@ -28,6 +25,8 @@ public class StandardWeissTriggerObservers {
         new ReshuffleRuleIssuer(game);
         new RefreshPointRuleIssuer(game);
         new LosingVerdictRuleIssuer(game);
+        new MultipleCharactersRuleIssuer(game);
+        new MultipleClimaxRuleIssuer(game);
 
         //event listeners
         new ClockFullIssuer(game);

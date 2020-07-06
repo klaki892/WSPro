@@ -1,32 +1,33 @@
 package ton.klay.wspro.core.api.game.player;
 
 import ton.klay.wspro.core.game.actions.PlayChoice;
-import ton.klay.wspro.core.game.actions.PlayChoiceAction;
-import ton.klay.wspro.core.game.actions.PlayChoiceType;
+import ton.klay.wspro.core.game.actions.PlayChooser;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerControllerTest {
 
     //makes the default action of ending a turn or selecting the first item if no END_ACTION is provided
-    public static PlayChoice defaultPlayChoiceMaker(List<PlayChoice> playChoices) {
+    public static List<PlayChoice> defaultPlayChoiceMaker(PlayChooser chooser) {
+        ArrayList<PlayChoice> playChoices = new ArrayList<>(chooser.getChoices());
+
         System.err.println(Arrays.toString(playChoices.toArray()));
-        Optional<PlayChoice> endTurnAction = playChoices.stream().filter(choice -> choice.getChoiceType().equals(PlayChoiceType.CHOOSE_ACTION) && choice.getAction().equals(PlayChoiceAction.END_ACTION)).findFirst();
-        return endTurnAction.orElseGet(() -> playChoices.get(0));
+//        Optional<PlayChoice> endTurnAction = playChoices.stream().filter(choice -> choice.getChoiceType().equals(PlayChoiceType.CHOOSE_ACTION) && choice.getAction().equals(PlayChoiceAction.END_ACTION)).findFirst();
+//        PlayChoice chosen = endTurnAction.orElseGet(() -> playChoices.get(0));
+        PlayChoice chosen = playChoices.get(0);
+        return Collections.singletonList(chosen);
     }
 
 
     /**
      * Asks for input from the command line to get a player choice
-     * @param playChoices
-     * @return
      */
-    public static PlayChoice commandLinePlayChoiceMaker(List<PlayChoice> playChoices) {
+    public static List<PlayChoice> commandLinePlayChoiceMaker(PlayChooser chooser) {
+
+        ArrayList<PlayChoice> playChoices = new ArrayList<>(chooser.getChoices());
         StringBuilder sb = new StringBuilder();
-        sb.append("Play Choice").append(System.lineSeparator())
+        sb.append("Play Choice - " + chooser.getSelectionType() + "- " + chooser.getSelectionCount()).append(System.lineSeparator())
                 .append("-----------").append(System.lineSeparator());
         int choiceNumber = 0;
         for (PlayChoice playChoice : playChoices) {
@@ -34,9 +35,12 @@ public class PlayerControllerTest {
         }
         Scanner in = new Scanner(System.in);
         System.err.println(sb.toString());
-        int choice = in.nextInt();
+        List<Integer> choices = new ArrayList<>();
+        for (String s : in.nextLine().split(" ")) {
+            choices.add(Integer.parseInt(s));
+        }
+        return choices.stream().map(playChoices::get).collect(Collectors.toList());
 
-        return playChoices.get(choice);
 
     }
 

@@ -7,17 +7,20 @@ import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.game.GameEntity;
+import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.LoseConditions;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.actions.PlayChoice;
+import ton.klay.wspro.core.game.actions.PlayChoiceAction;
+import ton.klay.wspro.core.game.actions.PlayChooser;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.triggers.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static ton.klay.wspro.core.game.formats.standard.commands.Commands.Utilities.getTopOfZoneIndex;
 
@@ -54,7 +57,7 @@ public class Commands {
         Game game = card.getGame();
 
         if (!sourceZone.contains(card)){
-            log.warn(String.format("Tried to move Card (%s) From Zone(%s) But card is not located there. ",
+            log.error(String.format("Tried to move Card (%s) From Zone(%s) But card is not located there. ",
                     card.getGUID(), sourceZone.getZoneName().name()) );
             return null; //may need to throw exception instead as this is an illegal call...
         }
@@ -241,6 +244,9 @@ public class Commands {
      */
     public static CardPlayedTrigger playCard(GamePlayer player, PlayingCard card, PlayZone sourceZone,
                                              PlayZone destinationZone, TriggerCause cause, GameEntity caller) {
+
+        //todo reveal card
+
         //move the card
         Commands.moveCard(card, sourceZone, destinationZone, getTopOfZoneIndex(destinationZone),
                 CardOrientation.STAND, destinationZone.getVisibility(), cause, caller);
@@ -270,6 +276,81 @@ public class Commands {
         return trigger;
     }
 
+    public static List<PlayChoice> makePlayChoice(GamePlayer player, PlayChooser chooser){
+
+        List<PlayChoice> decision;
+        boolean invalidSelectionCount;
+
+        if (chooser.getChoices().size() <= 0){
+            log.error("Asked to make a Play choice with 0 choices");
+            return Collections.emptyList();
+        }
+
+        //if they made more/less selections than allowed, log and re ask the question.
+        do {
+            decision = player.getController().makePlayChoice(chooser);
+
+            if (chooser.getSelectionType() == PlayChooser.SelectionType.MULTI ||chooser.getSelectionType() == PlayChooser.SelectionType.SINGLE){
+                invalidSelectionCount = decision.size() != chooser.getSelectionCount();
+            } else{
+                invalidSelectionCount = decision.size() > chooser.getSelectionCount();
+            }
+
+            if (invalidSelectionCount) {
+                log.warn(String.format("Player(%s) Made incorrect number of selections. Requested: %d Made: %d",
+                                player, chooser.getSelectionCount(), decision.size() ));
+            }
+        } while (invalidSelectionCount);
+
+        //todo do we announce that they have made a decision?
+        return decision;
+    }
+
+    public static PlayChoice makeSinglePlayChoice(GamePlayer player, List<PlayChoice> choices){
+        return makePlayChoice(player, new PlayChooser(choices)).get(0);
+    }
+
+    public static DamageProcessedTrigger dealDamage(PlayingCard sourceCard, int amount, GamePlayer receivingPlayer, TriggerCause cause, GameEntity caller) {
+        PlayZone deck = receivingPlayer.getPlayArea().getPlayZone(Zones.ZONE_DECK);
+        PlayZone resolution = receivingPlayer.getPlayArea().getPlayZone(Zones.ZONE_RESOLUTION);
+        PlayZone waitingRoom = receivingPlayer.getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
+        PlayZone clock = receivingPlayer.getPlayArea().getPlayZone(Zones.ZONE_CLOCK);
+
+        ArrayList<PlayingCard> resolutionCards = new ArrayList<>();
+
+        boolean damageSticks = true;
+        for (int i = 0; i < amount; i++) {
+            //move cards from top of deck
+            PlayingCard topDeck = deck.getContents().get(0);
+            CardMovedTrigger cardMovedTrigger = Commands.moveCard(topDeck, deck, resolution, getTopOfZoneIndex(resolution),
+                    CardOrientation.STAND, GameVisibility.VISIBLE_TO_ALL, cause, caller);
+            resolutionCards.add(cardMovedTrigger.getDestinationCard());
+
+            if (topDeck.getCardType() == CardType.CLIMAX) {
+                damageSticks = false;
+                break;
+            }
+        }
+            if (damageSticks){
+                //move cards to clock in the order that they went into resolution
+                for (PlayingCard resolutionCard : resolutionCards) {
+                    Commands.moveCard(resolutionCard, resolution, clock, getTopOfZoneIndex(clock),
+                            CardOrientation.STAND, GameVisibility.VISIBLE_TO_ALL, cause, caller);
+                }
+            } else  {
+                //move to waiting room
+                for (PlayingCard resolutionCard : resolutionCards) {
+                    Commands.moveCard(resolutionCard, resolution, waitingRoom, getTopOfZoneIndex(waitingRoom),
+                            CardOrientation.STAND, GameVisibility.VISIBLE_TO_ALL, cause, caller);
+                }
+            }
+
+        DamageProcessedTrigger trigger = new DamageProcessedTrigger(sourceCard, amount, receivingPlayer, damageSticks, TriggerCause.GAME_ACTION, caller);
+        emitAndTimings(caller.getMaster().getGame(), trigger);
+        return trigger;
+
+    }
+
     public static class Utilities {
         public static int getTopOfZoneIndex(PlayZone zone){
             return Math.max(0, zone.getContents().size()-1);
@@ -277,6 +358,89 @@ public class Commands {
 
         public static int getBottomOfZoneIndex(){
             return 0;
+        }
+
+        public static List<PlayingCard> getBottomOfZoneCards(PlayZone zone, int numCards){
+            numCards = Math.min(zone.size(), numCards);
+            List<PlayingCard> contents = zone.getContents();
+            List<PlayingCard> retList = new ArrayList<>();
+
+            //this loop needs to be fixed if getBottomOfZoneIndex changes
+            for (int i = getBottomOfZoneIndex(); i < numCards; i++) {
+                retList.add(contents.get(i));
+            }
+            return retList;
+        }
+        public static List<PlayingCard> getTopOfZoneCards(PlayZone zone, int numCards){
+            numCards = Math.min(zone.size(), numCards);
+            List<PlayingCard> contents = zone.getContents();
+            List<PlayingCard> retList = new ArrayList<>();
+
+            int bottomOfTop = Math.max(0, getTopOfZoneIndex(zone) - numCards);
+            //this loop needs to be fixed if getBottomOfZoneIndex changes
+            for (int i = bottomOfTop; i <= getTopOfZoneIndex(zone); i++) {
+                retList.add(contents.get(i));
+            }
+            return retList;
+        }
+
+        /**
+         * Asks a player for confirmation of an action by asking a Yes No Quesiton
+         * @param player the one making the decision
+         * @return the response from the player
+         */
+        public static boolean getConfirmationFromPlayer(GamePlayer player){
+            //make choices
+            List<PlayChoice> choices = Arrays.asList(
+                    PlayChoice.makeActionChoice(PlayChoiceAction.AFFIRMATIVE),
+                    PlayChoice.makeActionChoice(PlayChoiceAction.NEGATIVE)
+            );
+            return Commands.makeSinglePlayChoice(player, choices).getAction() == PlayChoiceAction.AFFIRMATIVE;
+        }
+
+        public static PlayZone getFacingZone(PlayZone centerStageZone){
+
+            GamePlayer owner = centerStageZone.getOwner();
+            Game game = owner.getGame();
+
+            GamePlayer facingPlayer;
+            if (game.getCurrentTurnPlayer() == owner) {
+                facingPlayer = game.getNonTurnPlayer();
+            } else {
+                facingPlayer = game.getCurrentTurnPlayer();
+            }
+
+            switch (centerStageZone.getZoneName()) {
+                case ZONE_CENTER_STAGE_LEFT:
+                    return facingPlayer.getPlayArea().getPlayZone(Zones.ZONE_CENTER_STAGE_RIGHT);
+                case ZONE_CENTER_STAGE_MIDDLE:
+                    return facingPlayer.getPlayArea().getPlayZone(Zones.ZONE_CENTER_STAGE_MIDDLE);
+                case ZONE_CENTER_STAGE_RIGHT:
+                    return facingPlayer.getPlayArea().getPlayZone(Zones.ZONE_CENTER_STAGE_LEFT);
+                default:
+                    throw new GameRuntimeException(new IllegalArgumentException(
+                            String.format("Zone (%s) is not in center stage, and we were asked to get its facing zone",
+                                    centerStageZone)
+                    ));
+            }
+        }
+
+        public static Optional<PlayingCard> getFacingCard(PlayZone centerStageZone){
+
+            PlayZone facingZone;
+            try {
+                facingZone = getFacingZone(centerStageZone);
+                if (facingZone.getContents().size() <= 0)
+                    return Optional.empty();
+                else
+                    return Optional.ofNullable(facingZone.getContents().get(0));
+            } catch (GameRuntimeException ex){
+                if (ex.getCause() instanceof IllegalArgumentException){
+                    return Optional.empty();
+                } else {
+                    throw ex;
+                }
+            }
         }
     }
 

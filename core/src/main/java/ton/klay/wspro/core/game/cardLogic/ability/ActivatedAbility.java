@@ -11,7 +11,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * An AbilityCategory of the category Activation
  * @see <code>Weiss Schwarz Rule 8.1.1.1</code>
  */
-public abstract  class ActivatedAbility extends BaseAbility {
+public abstract class ActivatedAbility extends BaseAbility {
 
     private static final Logger log = LogManager.getLogger();
 

@@ -5,8 +5,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.GameStatus;
+import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.scripting.ScriptEngine;
+import ton.klay.wspro.core.game.actions.PlayChoice;
+import ton.klay.wspro.core.game.actions.PlayChoiceAction;
+import ton.klay.wspro.core.game.actions.PlayChooser;
+import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.StandardWeissTriggerObservers;
@@ -15,6 +20,10 @@ import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static ton.klay.wspro.core.game.actions.PlayChooser.SelectionType.UP_TO;
+import static ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause.GAME_ACTION;
 
 public class Game {
 
@@ -75,9 +84,41 @@ public class Game {
 
      */
     private void pregame(GamePlayer currentTurnPlayer, GamePlayer opposingPlayer) {
-        //todo pregame setup as listed in docs
-        //todo MULLIGAN MUST BE DONE.
 
+        //todo place respective decks into respective deck zones
+        //todo shuffle the decks
+        List<GamePlayer> players = Arrays.asList(currentTurnPlayer, opposingPlayer);
+
+        //shuffle the decks and draw the starting hand
+        for (GamePlayer gamePlayer : players ) {
+            Commands.shuffleZone(gamePlayer.getPlayArea().getPlayZone(Zones.ZONE_DECK), GAME_ACTION, gamePlayer);
+            for (int i = 0; i < 5; i++) {
+                Commands.drawCard(gamePlayer, GAME_ACTION, gamePlayer);
+            }
+        }
+
+        //choose any amount of cards in hand to exchange
+        for (GamePlayer player : players) {
+            List<PlayChoice> choices = player.getPlayArea().getPlayZone(Zones.ZONE_HAND).getContents()
+                    .stream().map(PlayChoice::makeCardChoice).collect(Collectors.toList());
+            PlayChoice noMulliganChoice = PlayChoice.makeActionChoice(PlayChoiceAction.END_ACTION);
+            choices.add(noMulliganChoice);
+            PlayChooser chooser = new PlayChooser(choices, UP_TO, choices.size()-1);
+
+            //ask player
+            List<PlayChoice> decisions = Commands.makePlayChoice(player, chooser);
+
+            if (!decisions.contains(noMulliganChoice)){
+                // send cards to waiting room, draw an equal amount back
+                for (PlayChoice decision : decisions) {
+                    Commands.discardCard(player, decision.getCard(), GAME_ACTION, player);
+                }
+
+                for (PlayChoice decision : decisions) {
+                    Commands.drawCard(player, GAME_ACTION, player);
+                }
+            }
+        }
     }
 
     /**
@@ -115,7 +156,7 @@ public class Game {
 
 
     public void unexpectedEndGame(GameRuntimeException ex){
-        log.fatal("Stopping Game " + this + " Due to exception: " + ex.getMessage());
+        log.error("Stopping Game " + this + " Due to exception: " + ex.getMessage());
         gameStatus = GameStatus.FINISHED_UNEXPECTEDLY;
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
     }

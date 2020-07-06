@@ -16,7 +16,7 @@ public class PlayChoice {
     private InterruptRuleAction interruptRuleAction;
     private Ability ability;
     private PlayZonePair stagePositionPair;
-    private AttackType attackType;
+    private AttackPositionPair attackPositionPair;
     private PlayZone stagePosition;
     private LocalizedString string;
 
@@ -39,9 +39,9 @@ public class PlayChoice {
         this(choiceType);
         this.action = action;
     }
-    private PlayChoice(PlayChoiceType choiceType, AttackType attackType){
+    private PlayChoice(PlayChoiceType choiceType, AttackPositionPair attackPositionPair){
         this(choiceType);
-        this.attackType = attackType;
+        this.attackPositionPair = attackPositionPair;
     }
     private PlayChoice(PlayChoiceType choiceType, PlayZone stagePosition){
         this(choiceType);
@@ -73,8 +73,8 @@ public class PlayChoice {
     public static PlayChoice makeActionChoice(PlayChoiceAction action) {
         return new PlayChoice(PlayChoiceType.CHOOSE_ACTION, action);
     }
-    public static PlayChoice makeAttackChoice(AttackType attackType) {
-        return new PlayChoice(PlayChoiceType.CHOOSE_ATTACK, attackType);
+    public static PlayChoice makeAttackChoice(AttackPositionPair attackPositionPair) {
+        return new PlayChoice(PlayChoiceType.CHOOSE_ATTACK, attackPositionPair);
     }
     public static PlayChoice makeZoneChoice(PlayZone zone) {
         return new PlayChoice(PlayChoiceType.CHOOSE_POSITION, zone);
@@ -108,8 +108,8 @@ public class PlayChoice {
         return stagePositionPair;
     }
 
-    public AttackType getAttackType() {
-        return attackType;
+    public AttackPositionPair getAttackPositionPair() {
+        return attackPositionPair;
     }
 
     public PlayZone getStagePosition() {
@@ -132,7 +132,7 @@ public class PlayChoice {
                 .add("interruptRuleAction", interruptRuleAction)
                 .add("ability", ability)
                 .add("stagePositionPair", stagePositionPair)
-                .add("attackType", attackType)
+                .add("attackPositionPair", attackPositionPair)
                 .add("stagePosition", stagePosition)
                 .add("string", string)
                 .add("card", card)

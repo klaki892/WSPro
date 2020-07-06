@@ -3,10 +3,12 @@ package ton.klay.wspro.core.game;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.events.LosingVerdictRuleAction;
 import ton.klay.wspro.core.game.events.RuleAction;
+import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
@@ -81,7 +83,8 @@ public class TimingManager {
         AutomaticAbility ability;
 
         if (playerActions.size() > 1) {
-            ability = player.getController().chooseAutomaticAbilityToPerform(playerActions);
+            List<PlayChoice> playChoices = playerActions.stream().map(PlayChoice::makeAbilityChoice).collect(Collectors.toList());
+            ability = (AutomaticAbility) Commands.makeSinglePlayChoice(player, playChoices).getAbility();
         } else {
             ability = playerActions.get(0);
         }
@@ -131,6 +134,8 @@ public class TimingManager {
             List<InterruptRuleAction> turnPlayerActions = interruptRuleActions
                     .stream().filter(action -> action.getMaster() == player).collect(Collectors.toList());
 
+
+
             while(!turnPlayerActions.isEmpty()) {
                 //performing interrupts during the check would cause repeated actions to happen
                 enableInterruptLock();
@@ -139,7 +144,8 @@ public class TimingManager {
                 InterruptRuleAction action;
                 //the player chooses if there is more than one
                 if (turnPlayerActions.size() > 1) {
-                    action = player.getController().chooseInterruptRuleAction(interruptRuleActions);
+                    List<PlayChoice> playChoices = turnPlayerActions.stream().map(PlayChoice::MakeRuleActionChoice).collect(Collectors.toList());
+                    action = Commands.makeSinglePlayChoice(player, playChoices).getInterruptRuleAction();
                 } else {
                     action = turnPlayerActions.get(0);
                 }

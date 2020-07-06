@@ -37,7 +37,9 @@ public class DefaultEncoreAbility extends AutomaticAbility {
         cardMovedTrigger = trigger;
         effect = vars -> {
             if (!cost.isPayable()) return;
-            if (!master.getController().confirmAbilityUsage()) return;
+
+            //confirm ability usage
+            if (!Commands.Utilities.getConfirmationFromPlayer(master)) return;
 
             CardMovedTrigger varTrigger = (CardMovedTrigger)vars[0];
 

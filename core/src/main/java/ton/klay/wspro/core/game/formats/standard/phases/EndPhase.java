@@ -6,8 +6,14 @@ import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.actions.PlayChoice;
+import ton.klay.wspro.core.game.actions.PlayChooser;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EndPhase extends BasePhase  {
 
@@ -28,9 +34,18 @@ public class EndPhase extends BasePhase  {
         boolean somethingRemains = false;
         do {
             //hand size check
-            while (hand.size() > 7){
-                //FIXME build playtiming as described in ClimaxPhase
-                Commands.discardCard(turnPlayer, hand.getContents().get(0), TriggerCause.GAME_ACTION, this);
+            if (hand.size() > 7){
+                int numToDiscard = hand.size() - 7;
+
+                //ask player for discard choices
+                List<PlayChoice> choices = hand.getContents().stream().map(PlayChoice::makeCardChoice).collect(Collectors.toList());
+                PlayChooser chooser = new PlayChooser(choices, PlayChooser.SelectionType.MULTI, numToDiscard);
+                List<PlayingCard> chosenCards = Commands.makePlayChoice(turnPlayer, chooser)
+                        .stream().map(PlayChoice::getCard).collect(Collectors.toList());
+
+                chosenCards.forEach(card -> {
+                    Commands.discardCard(turnPlayer, card, TriggerCause.GAME_ACTION, this);
+                });
             }
 
             if (climax.size() > 0){

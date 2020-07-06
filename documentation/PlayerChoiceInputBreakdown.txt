@@ -113,7 +113,7 @@ Map < ActionType, objectToDoAction> -
              (exchange_positions, (StagePosition, StagePosition))
              (choose_action, affirmative)
              (choose_Attack, (TypeOfAttack, StagePosition))
-             (play_card_from_hand, ClimaxA)
+             (choose_card, ClimaxA)
              (choose_card, PlayingCardA)
              (choose_action, negative)
              (choose_position, StagePosition)
@@ -126,22 +126,24 @@ Map < ActionType, objectToDoAction> -
     2. Create a new List of PlayChoices
     3. Add all playable characters to the PlayChoices
         PlayChoices.add(CharacterX)
-            PlayChoices creates new PlayerChoice(Choose_Card, CharacterX)
+            PlayChoices creates new PlayChoice(Choose_Card, CharacterX)
     4. get all playable events in a list
     5. ADd all playable events to the PlayChoices
         PlayChoices.add(EventX)
     6. Get all ACT abilities
     7. Add all playable abilities
         PlayChoices.add(AbilityX)
-            Play Chooser creates a new PlayerChoice(choose_ability, AbilityX)
+            PlayChoice creates a new PlayChoice(choose_ability, AbilityX)
     8. get all exchangeable stage positions in a list
     9. Add all stage exchange possibilities
         PlayChoices.Add(StagePositionPair(PositionA, PositionB))
-            Player CHooser Creaete a new PlayerChoice(exchange_positions StagePositionPair(StagePosition,StagePosition))
+            PlayChoice Creaete a new PlayChoice(exchange_positions StagePositionPair(StagePosition,StagePosition))
     10. Add do nothing command
-        PlayerCHooser.Add(negative)
-            Player Chooser Creates a new PlayerChoice(choose_action, NEGATIVE)
-    11. send PlayerChoice
+        PlayChoices.Add(negative)
+            PlayChoice Creates a new PlayChoice(choose_action, NEGATIVE)
+	11. Create a new PlayChooser
+		PlayChooser (list of choices, SINGLE_SELECTION, 1)
+    11. send PlayChooser
     12. With Recieved Player Choice, get the action type
     13. switch on actionType:
         if choose_card
@@ -156,7 +158,14 @@ Map < ActionType, objectToDoAction> -
         - requires constant updates to PlayChoices for new objects or types
 		
 	TAKEAWAY:
-			
+		PlayCooser
+			- has a list of already made PlayChoices
+			- has a selection Type:
+				SINGLE
+				MULTI
+				UPTO
+			- has a numeric indicator for the amount of selection that can be made (Single overrides to 1)
+			- returns a list of choices
 		PlayChoice
 			- use a builder to keep strong typing during building and recieving
 			- getType returns the ActionType

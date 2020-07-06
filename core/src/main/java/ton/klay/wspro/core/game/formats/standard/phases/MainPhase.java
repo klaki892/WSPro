@@ -2,7 +2,6 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.CardColor;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
@@ -53,10 +52,10 @@ public class MainPhase extends BasePhase  {
             //get all playable Actions
             playChoices.addAll(getPlayableCards());
             playChoices.addAll(getPlayableActAbilities());
-            playChoices.addAll(getExchangeableStagePositions());
+//            playChoices.addAll(getExchangeableStagePositions());
             playChoices.add(PlayChoice.makeActionChoice(END_ACTION));
 
-            PlayChoice choice = turnPlayer.getController().makePlayChoice(playChoices);
+            PlayChoice choice = Commands.makeSinglePlayChoice(turnPlayer, playChoices);
 
             //determine what to do with the player's choice
             switch (choice.getChoiceType()){
@@ -93,21 +92,12 @@ public class MainPhase extends BasePhase  {
          */
         List<PlayingCard> handCards = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_HAND).getContents();
 
-        List<PlayingCard> clockCards = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_CLOCK).getContents();
-        List<PlayingCard> levelCards = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_LEVEL).getContents();
-
-        int playerLevel = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_LEVEL).size();
-
-        ArrayList<PlayingCard> colorCheckCards = new ArrayList<>(clockCards);
-        colorCheckCards.addAll(levelCards);
-
-        List<CardColor> playableColors = colorCheckCards.stream().map(PlayingCard::getColor).collect(Collectors.toList());
-
-        //combine color filters
-        List<CardFilter> colorFilterList = playableColors.stream().map(ColorFilter::new).collect(Collectors.toList());
+        PlayZone clock = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_CLOCK);
+        PlayZone level = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_LEVEL);
+        int playerLevel = level.size();
 
         //level 0 cards dont need color requirement
-        CardFilter colorFilter = CardFilter.orFilter(CardFilter.orFilter(colorFilterList), new LevelFilter(EQUAL_TO, 0));
+        CardFilter colorFilter = CardFilter.orFilter(ColorFilter.getPlayableColors(clock, level), new LevelFilter(EQUAL_TO, 0));
 
         CardFilter levelFilter = new LevelFilter(LESS_THAN_OR_EQUAL, playerLevel);
 
@@ -147,11 +137,12 @@ public class MainPhase extends BasePhase  {
         if (card.getCardType() == CHARACTER){
 
             //ask for stage position
-            ArrayList<PlayChoice> stageChoice = new ArrayList<>();
+            List<PlayChoice> stageChoices = new ArrayList<>();
             turnPlayer.getPlayArea().getPlayZones(Zones.ZONE_STAGE).forEach(zone -> {
-                stageChoice.add(PlayChoice.makeZoneChoice(zone));
+                stageChoices.add(PlayChoice.makeZoneChoice(zone));
             });
-            PlayZone stagePosition = turnPlayer.getController().makePlayChoice(stageChoice).getStagePosition();
+
+            PlayZone stagePosition = Commands.makeSinglePlayChoice(turnPlayer, stageChoices).getStagePosition();
 
             //All Choices resolved, pay cost and put on stage.
             Commands.payCost(card.getCost(), this);

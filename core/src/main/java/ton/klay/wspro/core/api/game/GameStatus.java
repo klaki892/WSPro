@@ -1,6 +1,8 @@
 package ton.klay.wspro.core.api.game;
 
-//todo define the states of progress of a game
+/**
+ * defines the states of progress in a game
+ */
 public enum GameStatus {
     NOT_READY,
     READY,
