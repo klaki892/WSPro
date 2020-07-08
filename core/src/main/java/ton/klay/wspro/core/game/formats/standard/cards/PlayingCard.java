@@ -6,10 +6,10 @@ import ton.klay.wspro.core.api.cards.*;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.cardLogic.ability.ActivatedAbility;
-import ton.klay.wspro.core.game.cardLogic.ability.DefaultEncoreAbilityListener;
+import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
+import ton.klay.wspro.core.game.cards.CardType;
 import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
 
@@ -72,8 +72,14 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         refreshGUID();
 
         //todo populate abilities
-        if (baseCard.getCardType() == CardType.CHARACTER)
-            triggerableAbilities.add(new DefaultEncoreAbilityListener(this));
+        TypedAbilityList abilities = game.getAbilityFinder().getAbilitiesForCard(game, this);
+        triggerableAbilities.addAll(abilities.getTriggerableAbilityListeners());
+        activatedAbilities.addAll(abilities.getActivateAbilities());
+
+
+        //todo remove this, all abilities should be sourced from external source
+//        if (baseCard.getCardType() == CardType.CHARACTER)
+//            triggerableAbilities.add(new DefaultEncoreAbilityListener(this));
 
         //register abilities in the game so they start recieving events
         for (TriggerableAbilityListener ability : triggerableAbilities){
@@ -85,7 +91,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     private void copyBaseStats(PaperCard c) {
         setCardName(c.getCardName());
         setLevel(c.getLevel());
-        setCost(new StockCost(this, c.getCost()));
+        setCost(new StockCost.Builder().setOwner(this).setCostCount(c.getCost()).createStockCost());
         setIcon(c.getIcon());
         setPower(c.getPower());
         setSoul(c.getSoul());

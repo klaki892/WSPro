@@ -82,11 +82,31 @@ public class TimingManager {
     private void resolvePlayerAction(GamePlayer player, List<AutomaticAbility> playerActions){
         AutomaticAbility ability;
 
-        if (playerActions.size() > 1) {
-            List<PlayChoice> playChoices = playerActions.stream().map(PlayChoice::makeAbilityChoice).collect(Collectors.toList());
+        /*
+         * Opinionated choice below that doesnt follow the rules.
+         * If the ability isnt payable, at the check timing
+         */
+        List<AutomaticAbility> playableActions = new ArrayList<>();
+        for (int i = playerActions.size() - 1; i >= 0; i--) {
+            AutomaticAbility action = playerActions.get(i);
+            if (action.getCost().isPayable()) {
+                playableActions.add(action);
+            } else {
+                playerActions.remove(action);
+                playableActions.remove(action);
+                automaticAbilities.remove(action);
+            }
+        }
+        if (playableActions.size() == 0) {
+
+            return;
+        }
+
+        if (playableActions.size() > 1) {
+            List<PlayChoice> playChoices = playableActions.stream().map(PlayChoice::makeAbilityChoice).collect(Collectors.toList());
             ability = (AutomaticAbility) Commands.makeSinglePlayChoice(player, playChoices).getAbility();
         } else {
-            ability = playerActions.get(0);
+            ability = playableActions.get(0);
         }
 
         automaticAbilities.remove(ability);

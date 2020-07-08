@@ -34,7 +34,7 @@ public interface CardFilter {
             Set<PlayingCard> finalSet = new HashSet<>();
             for (CardFilter cardFilter : filters) {
                 HashSet<PlayingCard> filteredSet = new HashSet<>(cardFilter.filter(cards));
-                finalSet = Sets.union(finalSet, filteredSet);
+                finalSet = Sets.intersection(finalSet, filteredSet);
             }
             return new ArrayList<>(finalSet);
         };

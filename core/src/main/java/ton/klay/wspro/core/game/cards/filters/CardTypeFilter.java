@@ -2,7 +2,7 @@ package ton.klay.wspro.core.game.cards.filters;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
+import ton.klay.wspro.core.game.cards.CardType;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 public class CardTypeFilter extends BaseFilter {

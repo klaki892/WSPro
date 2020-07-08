@@ -12,11 +12,11 @@ import ton.klay.wspro.core.api.game.LoseConditions;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChoiceAction;
 import ton.klay.wspro.core.game.actions.PlayChooser;
+import ton.klay.wspro.core.game.cards.CardType;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.triggers.*;
 
@@ -345,7 +345,7 @@ public class Commands {
                 }
             }
 
-        DamageProcessedTrigger trigger = new DamageProcessedTrigger(sourceCard, amount, receivingPlayer, damageSticks, TriggerCause.GAME_ACTION, caller);
+        DamageProcessedTrigger trigger = new DamageProcessedTrigger(sourceCard, amount, receivingPlayer, !damageSticks, TriggerCause.GAME_ACTION, caller);
         emitAndTimings(caller.getMaster().getGame(), trigger);
         return trigger;
 
@@ -441,6 +441,28 @@ public class Commands {
                     throw ex;
                 }
             }
+        }
+
+        public static Optional<PlayingCard> getFacingCard(PlayingCard card){
+            //find the card in the stage
+            Optional<PlayZone> ourStageZone = findCardOnStage(card);
+            if (ourStageZone.isPresent() && Zones.isOnCenterStage(ourStageZone.get())){
+                return getFacingCard(ourStageZone.get());
+            } else{
+                return Optional.empty();
+            }
+        }
+
+        public static Optional<PlayZone> findCardOnStage(PlayingCard card){
+            List<PlayZone> stageZones = new ArrayList<>();
+            stageZones.addAll(card.getGame().getCurrentTurnPlayer().getPlayArea().getPlayZones(Zones.ZONE_STAGE));
+            stageZones.addAll(card.getGame().getNonTurnPlayer().getPlayArea().getPlayZones(Zones.ZONE_STAGE));
+
+            for (PlayZone stageZone : stageZones) {
+                if (stageZone.contains(card))
+                    return Optional.of(stageZone);
+            }
+            return Optional.empty();
         }
     }
 

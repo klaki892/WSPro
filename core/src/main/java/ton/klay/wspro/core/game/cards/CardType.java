@@ -1,4 +1,4 @@
-package ton.klay.wspro.core.api.scripting.cards;
+package ton.klay.wspro.core.game.cards;
 
 /**
  * The Types of cards available in the game

@@ -13,15 +13,10 @@ public abstract class AutomaticAbility extends BaseAbility {
 
     private static final Logger log = LogManager.getLogger();
 
-    protected final Cost cost;
-
-    public AutomaticAbility(Cost cost){
-        this.cost = cost;
-    }
-
     @Override
     public AbilityType getAbilityType() {
         return AbilityType.ABILITY_AUTOMATIC;
     }
 
+    public abstract Cost getCost();
 }

@@ -2,14 +2,13 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChoiceAction;
 import ton.klay.wspro.core.game.actions.PlayChoiceType;
+import ton.klay.wspro.core.game.cards.CardType;
 import ton.klay.wspro.core.game.cards.filters.CardFilter;
 import ton.klay.wspro.core.game.cards.filters.ColorFilter;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
@@ -55,8 +54,7 @@ public class ClimaxPhase extends BasePhase  {
 
         if (choice.getChoiceType() == PlayChoiceType.CHOOSE_CARD) {
             PlayingCard climaxCard = choice.getCard();
-            Commands.moveCard(climaxCard, hand, climaxZone, Commands.Utilities.getTopOfZoneIndex(climaxZone),
-                    CardOrientation.STAND, climaxZone.getVisibility(), TriggerCause.GAME_ACTION, this);
+            Commands.playCard(turnPlayer, climaxCard, hand, climaxZone, TriggerCause.GAME_ACTION, this);
         }
         game.checkTiming();
     }

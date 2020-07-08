@@ -3,6 +3,7 @@ package ton.klay.wspro.core.game.actions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class Combat {
     public Combat(AttackType attackType, PlayingCard attackingCharacter) {
         this.attackType = attackType;
         this.attackingCharacter = attackingCharacter;
-
+        this.defendingCharacter = Commands.Utilities.getFacingCard(attackingCharacter).orElse(null);
         //todo assign battle states
     }
 

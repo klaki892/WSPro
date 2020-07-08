@@ -27,15 +27,6 @@ public class EncoreStep extends BasePhase  {
     @Override
     public void startPhase() {
         super.startPhase();
-        /* TODO:
-            3.	Turn player Repeat (for all owned reversed characters):
-                	Choose character, put into waiting room
-                	Check timing
-            4.	Non-turn player performs all of #3 for 1 character, then go back to step 3
-            5.	Check timing
-            6.	Go back to Step 3 if reversed characters on any player stage
-            7.	Advance to end phase
-        */
 
         //repeat as long as characters are reversed on the game boad
         Collection<PlayZone> turnPlayerStage = turnPlayer.getPlayArea().getPlayZones(Zones.ZONE_STAGE);

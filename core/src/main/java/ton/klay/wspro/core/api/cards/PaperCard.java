@@ -1,7 +1,7 @@
 package ton.klay.wspro.core.api.cards;
 
 import ton.klay.wspro.core.api.game.setup.GameLocale;
-import ton.klay.wspro.core.api.scripting.cards.CardType;
+import ton.klay.wspro.core.game.cards.CardType;
 
 import java.util.Collection;
 

@@ -7,7 +7,6 @@ import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
-import ton.klay.wspro.core.api.scripting.ScriptEngine;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChoiceAction;
 import ton.klay.wspro.core.game.actions.PlayChooser;
@@ -16,6 +15,7 @@ import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.StandardWeissTriggerObservers;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
+import ton.klay.wspro.core.game.scripting.AbilityFinder;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -31,8 +31,8 @@ public class Game {
     private static final int GUID_NAME_COMPLEXITY = 4;
 
 
-    public GamePlayer player1, player2;
-    private ScriptEngine scriptEngine;
+    private final GamePlayer player1, player2;
+    private final AbilityFinder abilityFinder;
     private EventBus TriggerManager;
     private PhaseHandler phaseHandler;
     private TimingManager timingManager;
@@ -44,10 +44,11 @@ public class Game {
     private String gameID;
     private final List<GamePlayer> losingPlayers = new ArrayList<>();
 
-    public Game(GamePlayer player1, GamePlayer player2){
+    public Game(GamePlayer player1, GamePlayer player2, AbilityFinder abilityFinder){
 
         this.player1 = player1;
         this.player2 = player2;
+        this.abilityFinder = abilityFinder;
         gameStatus = GameStatus.NOT_READY;
         setup();
     }
@@ -60,9 +61,6 @@ public class Game {
         initializePlayingField();
 
         //todo obtain decks
-
-        //start scripting engine
-//        scriptEngine = new LuaScriptEngine();
 
         TriggerManager = new EventBus("Game Trigger Manager"){
 
@@ -287,5 +285,9 @@ public class Game {
 
     public List<GamePlayer> getLosingPlayers() {
         return losingPlayers;
+    }
+
+    public AbilityFinder getAbilityFinder() {
+        return abilityFinder;
     }
 }

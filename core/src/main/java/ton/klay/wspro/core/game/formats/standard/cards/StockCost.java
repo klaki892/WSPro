@@ -9,7 +9,6 @@ import ton.klay.wspro.core.api.cards.PayCost;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
-import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 
@@ -19,14 +18,12 @@ import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 public class StockCost implements Cost {
 
     private static final Logger log = LogManager.getLogger();
-    private final Game game;
     private final GameEntity owner;
     private final int costCount;
     private CostConditional costConditional;
     private PayCost payCost;
 
     public StockCost(GameEntity owner, int costCount){
-        this.game = owner.getMaster().getGame();
         this.owner = owner;
         this.costCount = costCount;
 
@@ -73,5 +70,32 @@ public class StockCost implements Cost {
 
     public int getCostCount() {
         return costCount;
+    }
+
+    public CostConditional getCostConditional() {
+        return costConditional;
+    }
+
+    public PayCost getPayCost() {
+        return payCost;
+    }
+
+    public static class Builder {
+        private GameEntity owner;
+        private int costCount;
+
+        public Builder setOwner(GameEntity owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Builder setCostCount(int costCount) {
+            this.costCount = costCount;
+            return this;
+        }
+
+        public StockCost createStockCost() {
+            return new StockCost(owner, costCount);
+        }
     }
 }

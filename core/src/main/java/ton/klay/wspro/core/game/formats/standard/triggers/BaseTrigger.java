@@ -1,5 +1,6 @@
 package ton.klay.wspro.core.game.formats.standard.triggers;
 
+import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.GameEntity;
@@ -23,5 +24,13 @@ public abstract class BaseTrigger {
 
     public GameEntity getCaller() {
         return caller;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("cause", cause)
+                .add("caller", caller)
+                .toString();
     }
 }

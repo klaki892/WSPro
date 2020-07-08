@@ -59,7 +59,7 @@ public class EndPhase extends BasePhase  {
             somethingRemains = ((hand.size() > 7));
 
         } while (somethingRemains);
-        phaseHandler.setCurrentTurnPlayer(phaseHandler.getNextTurnPlayer());
+        phaseHandler.advanceTurnPlayer();
     }
 
 }

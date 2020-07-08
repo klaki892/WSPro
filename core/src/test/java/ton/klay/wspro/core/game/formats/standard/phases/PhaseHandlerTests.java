@@ -3,10 +3,12 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 import com.google.common.base.MoreObjects;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ton.klay.wspro.core.api.cards.MockCharacterPaperCard;
+import ton.klay.wspro.core.api.cards.MockClimaxPaperCard;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.IDeck;
 import ton.klay.wspro.core.api.game.field.PlayArea;
@@ -23,7 +25,9 @@ import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.PhaseStartedTrigger;
 import ton.klay.wspro.core.game.formats.standard.zones.DeckZone;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
+import ton.klay.wspro.core.game.scripting.lua.TestLocalStorageLuaAbilityFinder;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 class PhaseHandlerTests  {
@@ -45,7 +49,7 @@ class PhaseHandlerTests  {
         player2 = new TestGamePlayer();
         EventBus bus = new EventBus();
 
-        game = new Game(player1, player2){
+        game = new Game(player1, player2, new TestLocalStorageLuaAbilityFinder()){
 
             @Override
             public EventBus getTriggerManager() {
@@ -57,22 +61,31 @@ class PhaseHandlerTests  {
                 bus.register(new Object(){
                     @Subscribe
                     public void deadListener(BaseTrigger t){
-                        if (t instanceof PhaseStartedTrigger){
-                            PhaseStartedTrigger t1 = (PhaseStartedTrigger) t;
-                            System.out.println(MoreObjects.toStringHelper(t1)
-                                    .add("name", t.getTriggerName().name())
-                                    .add("Cause", t.getCause())
-                                    .add("caller", t.getCaller().getClass().getSimpleName())
-                                    .add("turnPlayer", t1.getTurnPlayer())
-                                    .toString());
-                            return;
+//                        if (t instanceof PhaseStartedTrigger){
+//                            PhaseStartedTrigger t1 = (PhaseStartedTrigger) t;
+//                            System.out.println(MoreObjects.toStringHelper(t1)
+//                                    .add("name", t.getTriggerName().name())
+//                                    .add("Cause", t.getCause())
+//                                    .add("caller", t.getCaller().getClass().getSimpleName())
+//                                    .add("turnPlayer", t1.getTurnPlayer())
+//                                    .toString());
+//                            return;
+//
+//                        }
 
+                        Field[] allFields = FieldUtils.getAllFields(t.getClass());
+                        MoreObjects.ToStringHelper toStringHelper = MoreObjects.toStringHelper(t);
+                        for (Field field : allFields) {
+                            if (field.getName().equals("log")) continue;
+
+                            try {
+                                toStringHelper.add(field.getName(),
+                                        FieldUtils.getField(t.getClass(), field.getName(), true).get(t));
+                            } catch (IllegalAccessException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        System.out.println(MoreObjects.toStringHelper(t)
-                                .add("name", t.getTriggerName().name())
-                                .add("Cause", t.getCause())
-                                .add("caller", t.getCaller().getClass().getSimpleName())
-                                .toString());
+                        System.out.println(toStringHelper);
                     }
 
                     @Subscribe
@@ -114,10 +127,15 @@ class PhaseHandlerTests  {
                 if (zone == Zones.ZONE_DECK){
                     if (!init){
                         init = true;
-                        for (int i = 0; i < 50; i++) {
+                        for (int i = 0; i < 42; i++) {
                             deckZone.add(new PlayingCard(game,
-                                    new MockCharacterPaperCard(), player1, player1));
+                                    new MockCharacterPaperCard(),  this.getOwner(), this.getOwner()));
                         }
+                        for (int i = 0; i < 8; i++) {
+                            deckZone.add(new PlayingCard(game,
+                                    new MockClimaxPaperCard(), this.getOwner(), this.getOwner()));
+                        }
+
                         return deckZone;
                     } else {
                         return deckZone;
@@ -129,7 +147,7 @@ class PhaseHandlerTests  {
         PlayerController controller = new PlayerController() {
             @Override
             public List<PlayChoice> makePlayChoice(PlayChooser chooser) {
-                return PlayerControllerTest.commandLinePlayChoiceMaker(chooser);
+                return PlayerControllerTest.defaultPlayChoiceMaker(chooser);
             }
         };
         @Override
@@ -160,6 +178,11 @@ class PhaseHandlerTests  {
         @Override
         public GamePlayer getMaster() {
             return this;
+        }
+
+        @Override
+        public String toString() {
+            return getClass().getSimpleName() + "@" + Integer.toHexString(hashCode());
         }
     }
 }

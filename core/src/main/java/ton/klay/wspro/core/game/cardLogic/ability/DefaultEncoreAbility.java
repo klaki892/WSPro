@@ -3,6 +3,7 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
+import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
@@ -25,35 +26,40 @@ public class DefaultEncoreAbility extends AutomaticAbility {
     private static final Logger log = LogManager.getLogger();
     private final GamePlayer master;
 
-    private final Effect effect;
     private final CardMovedTrigger cardMovedTrigger;
     private final PlayingCard card;
+    protected final Cost cost;
 
 
     public DefaultEncoreAbility(PlayingCard card, CardMovedTrigger trigger) {
-        super(new StockCost(card.getOwner(), 3));
         this.card = card;
         master = card.getMaster();
         cardMovedTrigger = trigger;
-        effect = vars -> {
-            if (!cost.isPayable()) return;
+        cost = new StockCost.Builder().setOwner(card.getOwner()).setCostCount(3).createStockCost();
+        effect = new BaseEffect(this) {
+            @Override
+            public void execute(Object... vars) {
+                if (!cost.isPayable()) return;
 
-            //confirm ability usage
-            if (!Commands.Utilities.getConfirmationFromPlayer(master)) return;
 
-            CardMovedTrigger varTrigger = (CardMovedTrigger)vars[0];
+                //todo effects/abilties should announce that they are performing?
+                //confirm ability usage
+                if (!Commands.Utilities.getConfirmationFromPlayer(master)) return;
 
-            PlayZone waitingRoom = master.getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
+                CardMovedTrigger varTrigger = (CardMovedTrigger)vars[0];
 
-            Commands.payCost(cost, this);
-            Commands.moveCard(this.card, waitingRoom, varTrigger.getSourceZone(),
-                    Commands.Utilities.getTopOfZoneIndex(varTrigger.getSourceZone()), CardOrientation.REST,
-                    GameVisibility.VISIBLE_TO_ALL, TriggerCause.CARD_EFFECT, master);
+                PlayZone waitingRoom = master.getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
 
-            BaseTrigger trigger1 = new CardEncoredTrigger(this.card, TriggerCause.CARD_EFFECT, master);
-            master.getGame().getTriggerManager().post(trigger1);
-            master.getGame().continuousTiming();
-            master.getGame().interruptTiming();
+                Commands.payCost(cost, this);
+                Commands.moveCard(card, waitingRoom, varTrigger.getSourceZone(),
+                        Commands.Utilities.getTopOfZoneIndex(varTrigger.getSourceZone()), CardOrientation.REST,
+                        GameVisibility.VISIBLE_TO_ALL, TriggerCause.CARD_EFFECT, master);
+
+                BaseTrigger trigger1 = new CardEncoredTrigger(card, TriggerCause.CARD_EFFECT, master);
+                master.getGame().getTriggerManager().post(trigger1);
+                master.getGame().continuousTiming();
+                master.getGame().interruptTiming();
+            }
         };
     }
 
@@ -75,5 +81,10 @@ public class DefaultEncoreAbility extends AutomaticAbility {
     @Override
     public GamePlayer getMaster() {
         return card.getMaster();
+    }
+
+    @Override
+    public Cost getCost() {
+        return cost;
     }
 }

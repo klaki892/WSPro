@@ -7,9 +7,9 @@ import ton.klay.wspro.core.game.cards.CardType;
 import java.util.Collection;
 import java.util.Collections;
 
-public class MockCharacterPaperCard implements PaperCard{
+public class MockClimaxPaperCard implements PaperCard{
 
-    public MockCharacterPaperCard(){};
+    public MockClimaxPaperCard(){};
 
     @Override
     public Collection<LocalizedString> getCardName() {
@@ -21,7 +21,7 @@ public class MockCharacterPaperCard implements PaperCard{
 
             @Override
             public String getString() {
-                return "Test Card";
+                return "Test Climax Card";
             }
 
             @Override
@@ -53,12 +53,12 @@ public class MockCharacterPaperCard implements PaperCard{
 
     @Override
     public int getPower() {
-        return 3000;
+        return 0;
     }
 
     @Override
     public int getSoul() {
-        return 1;
+        return 0;
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MockCharacterPaperCard implements PaperCard{
 
     @Override
     public CardType getCardType() {
-        return CardType.CHARACTER;
+        return CardType.CLIMAX;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class MockCharacterPaperCard implements PaperCard{
 
     @Override
     public String getID() {
-        return "TestEncoreAbility";
+        return "TEST/TEST";
     }
 
     @Override

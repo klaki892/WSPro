@@ -19,9 +19,9 @@ import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ton.klay.wspro.core.api.scripting.cards.CardType.CHARACTER;
-import static ton.klay.wspro.core.api.scripting.cards.CardType.EVENT;
 import static ton.klay.wspro.core.game.actions.PlayChoiceAction.END_ACTION;
+import static ton.klay.wspro.core.game.cards.CardType.CHARACTER;
+import static ton.klay.wspro.core.game.cards.CardType.EVENT;
 import static ton.klay.wspro.core.game.cards.filters.NumericFilter.Operation.EQUAL_TO;
 import static ton.klay.wspro.core.game.cards.filters.NumericFilter.Operation.LESS_THAN_OR_EQUAL;
 

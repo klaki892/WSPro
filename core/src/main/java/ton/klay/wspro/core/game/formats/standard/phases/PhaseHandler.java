@@ -156,4 +156,12 @@ public class PhaseHandler {
     public void setAttackedThisTurn(boolean attackedThisTurn) {
         this.attackedThisTurn = attackedThisTurn;
     }
+
+
+    public void advanceTurnPlayer() {
+
+        nonTurnPlayer = (nextTurnPlayer == currentTurnPlayer) ? nonTurnPlayer : currentTurnPlayer;
+        setCurrentTurnPlayer(nextTurnPlayer);
+
+    }
 }
