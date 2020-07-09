@@ -1,4 +1,4 @@
-package ton.klay.wspro.core.game.cardLogic.ability;
+package ton.klay.wspro.core.game.cardLogic.ability.defaults;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +10,8 @@ import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
+import ton.klay.wspro.core.game.effects.OwnableBaseEffect;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.cards.StockCost;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
@@ -36,7 +38,7 @@ public class DefaultEncoreAbility extends AutomaticAbility {
         master = card.getMaster();
         cardMovedTrigger = trigger;
         cost = new StockCost.Builder().setOwner(card.getOwner()).setCostCount(3).createStockCost();
-        effect = new BaseEffect(this) {
+        effect = new OwnableBaseEffect(this) {
             @Override
             public void execute(Object... vars) {
                 if (!cost.isPayable()) return;

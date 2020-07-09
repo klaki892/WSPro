@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.game.cards.CardType;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -48,7 +49,7 @@ public class MockClimaxPaperCard implements PaperCard{
 
     @Override
     public Collection<CardTrigger> getTriggerIcons() {
-        return Collections.singleton(CardTrigger.SOUL);
+        return Arrays.asList(CardTrigger.SOUL, CardTrigger.SOUL);
     }
 
     @Override

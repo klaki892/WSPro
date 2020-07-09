@@ -15,7 +15,9 @@ import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.StandbyTriggerIconEffect;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
+import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerName;
 import ton.klay.wspro.core.game.scripting.lua.utilities.AbilityFactory;
@@ -93,6 +95,7 @@ public class LuaScriptEngine {
         coerceAndSet(engine, EffectFactory.class, "Effect");
         coerceAndSet(engine, Commands.class);
         coerceAndSet(engine, Commands.Utilities.class);
+        coerceAndSet(engine, StandbyTriggerIconEffect.class);
 
         //Enums
         coerceAndSet(engine, TriggerName.values());
@@ -101,6 +104,8 @@ public class LuaScriptEngine {
         coerceAndSet(engine, CardOrientation.values());
         coerceAndSet(engine, GameVisibility.values());
         coerceAndSet(engine, AbilityKeyword.values());
+        coerceAndSet(engine, TurnPhase.values());
+
 
     }
 

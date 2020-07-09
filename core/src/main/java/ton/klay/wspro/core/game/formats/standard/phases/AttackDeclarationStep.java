@@ -3,14 +3,18 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.ContinuousEffect;
+import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.actions.*;
+import ton.klay.wspro.core.game.effects.AttackTypeSoulChangeEffect;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerName;
 import ton.klay.wspro.core.game.formats.standard.triggers.WillAttackTrigger;
 
 import java.util.ArrayList;
@@ -49,28 +53,46 @@ public class AttackDeclarationStep extends BasePhase  {
         AttackPositionPair attackChoice = choice.getAttackPositionPair();
         PlayingCard attackingCard = attackChoice.getZone().getContents().get(0);
 
-        BaseTrigger trigger = new WillAttackTrigger(attackingCard, attackChoice.getAttackType(), TriggerCause.GAME_ACTION, this);
-        triggerSystem.post(trigger);
-        game.continuousTiming();
-        game.interruptTiming();
+
 
         phaseHandler.setAttackedThisTurn(true);
 
         //start combat
-        Combat combat = new Combat(attackChoice.getAttackType(), attackingCard);
 
-        //todo replacement action eligible (changes attacktype and target)
+        Combat combat = new Combat(attackChoice.getAttackType(), attackingCard);
         phaseHandler.setCombat(combat);
 
-        if (attackChoice.getAttackType() == AttackType.SIDE){
+        //replace us announcing the attack, as the attack type (and defender might
+        // change (e.g. great performance)
+        if (!game.getTimingManager().replaceableAction(TriggerName.ATTACK_SETUP)){
+            BaseTrigger trigger = new WillAttackTrigger(combat.getAttackingCharacter().get(), combat.getAttackType(),
+                    TriggerCause.GAME_ACTION, this);
+            triggerSystem.post(trigger);
+            game.continuousTiming();
+            game.interruptTiming();
+        }
 
-            //todo minus soul by level of facing character til end of turn
-        }  else if (attackChoice.getAttackType() == AttackType.DIRECT){
-            //todo add a soul to the character til end of turn
+        combat.setBattleStates();
+        PlayingCard defendingCard = combat.getDefendingCharacter().orElse(null);
+
+        if (attackChoice.getAttackType() == AttackType.SIDE){
+            if (defendingCard == null) {
+                throw new GameRuntimeException(new IllegalStateException("Side attack declared with no defending character"));
+            }
+
+            //subtract soul based on defending level
+            ContinuousEffect effect = new AttackTypeSoulChangeEffect(
+                    attackingCard, AttackType.SIDE, phaseHandler.getTurnNumber(), defendingCard.getLevel());
+            game.getTimingManager().add(effect);
+
+        } else if (attackChoice.getAttackType() == AttackType.DIRECT){
+            //add a soul to the character til end of turn
+            game.getTimingManager().add(new AttackTypeSoulChangeEffect(attackingCard, AttackType.DIRECT,
+                    phaseHandler.getTurnNumber(), 1));
         }
 
         //rest the attacker
-        Commands.changeCardOrientation(attackingCard, CardOrientation.REST, TriggerCause.GAME_ACTION, this);
+        Commands.changeCardOrientation(combat.getAttackingCharacter().get(), CardOrientation.REST, TriggerCause.GAME_ACTION, this);
 
         phaseHandler.setNextPhase(TurnPhase.TRIGGER_STEP);
         game.checkTiming();
@@ -107,6 +129,10 @@ public class AttackDeclarationStep extends BasePhase  {
             }
         }
         return attackChoices;
+    }
+
+    private void defaultCombatSetup(){
+
     }
 
 }

@@ -1,17 +1,16 @@
-package ton.klay.wspro.core.game.cardLogic.ability;
+package ton.klay.wspro.core.game.effects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.abilities.Ability;
-import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 
-public abstract class BaseEffect implements Effect {
+public abstract class OwnableBaseEffect implements OwnableEffect {
 
     private static final Logger log = LogManager.getLogger();
     private final Ability owningAbility;
 
-    public BaseEffect(Ability owningAbility){
+    public OwnableBaseEffect(Ability owningAbility){
         this.owningAbility = owningAbility;
     }
 

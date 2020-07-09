@@ -11,6 +11,7 @@ import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerName;
 
 /**
  * A Cost that consists of Moving stock cards to the waiting room
@@ -30,15 +31,16 @@ public class StockCost implements Cost {
         PlayZone stockZone = owner.getMaster().getPlayArea().getPlayZone(Zones.ZONE_STOCK);
         PlayZone waitingRoom = owner.getMaster().getPlayArea().getPlayZone(Zones.ZONE_WAITING_ROOM);
         costConditional = () -> stockZone.size() >= costCount;
-        //todo Replaceable Action - can be exchanged for an effect of paying something else than stock
-        payCost = () -> {
+         payCost = () -> {
             //if cost doesnt exist, we dont do anything
             if (costCount <= 0) return;
 
             for (int i = 0; i < costCount; i++) {
-                PlayingCard topCard = stockZone.getContents().get(Commands.Utilities.getTopOfZoneIndex(stockZone));
-                Commands.moveCard(topCard, stockZone, waitingRoom, Commands.Utilities.getTopOfZoneIndex(waitingRoom),
-                        CardOrientation.STAND, waitingRoom.getVisibility(), TriggerCause.GAME_ACTION, owner);
+                if (!owner.getMaster().getGame().getTimingManager().replaceableAction(TriggerName.WILL_PAY_STOCK)) {
+                    PlayingCard topCard = stockZone.getContents().get(Commands.Utilities.getTopOfZoneIndex(stockZone));
+                    Commands.moveCard(topCard, stockZone, waitingRoom, Commands.Utilities.getTopOfZoneIndex(waitingRoom),
+                            CardOrientation.STAND, waitingRoom.getVisibility(), TriggerCause.GAME_ACTION, owner);
+                }
             }
         };
 

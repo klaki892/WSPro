@@ -3,19 +3,19 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
-import ton.klay.wspro.core.api.cards.CardTrigger;
 import ton.klay.wspro.core.api.cards.GameVisibility;
+import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.TimingManager;
 import ton.klay.wspro.core.game.actions.AttackType;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.*;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCheckedTrigger;
-
-import java.util.Collection;
 
 public class TriggerStep extends BasePhase  {
 
@@ -45,8 +45,8 @@ public class TriggerStep extends BasePhase  {
         PlayingCard triggerCardInReso = Commands.moveCard(triggerCard, deck, resolution, Commands.Utilities.getTopOfZoneIndex(resolution),
                 CardOrientation.STAND, GameVisibility.VISIBLE_TO_ALL, TriggerCause.GAME_ACTION, this).getDestinationCard();
 
-        Collection<CardTrigger> triggers = triggerCard.getTriggerIcons();
-        //todo resolve trigger icons
+        //noinspection OptionalGetWithoutIsPresent
+        applyTriggerIcons(triggerCard, phaseHandler.getCombat().getAttackingCharacter().get());
         BaseTrigger trigger = new TriggerCheckedTrigger(triggerCardInReso, TriggerCause.GAME_ACTION, this);
         triggerSystem.post(trigger);
         game.continuousTiming();
@@ -54,11 +54,54 @@ public class TriggerStep extends BasePhase  {
         game.checkTiming();
 
 
-        //put in stock
-        Commands.moveCard(triggerCardInReso, resolution, stock, Commands.Utilities.getTopOfZoneIndex(stock),
-                CardOrientation.REST, GameVisibility.HIDDEN, TriggerCause.GAME_ACTION, this);
-
+        //put in stock if it still exists (ex: it wasn't returned by icon effect)
+        if (resolution.size() == 1) {
+            Commands.moveCard(triggerCardInReso, resolution, stock, Commands.Utilities.getTopOfZoneIndex(stock),
+                    CardOrientation.REST, GameVisibility.HIDDEN, TriggerCause.GAME_ACTION, this);
+        }
         game.checkTiming();
+    }
+
+    private void applyTriggerIcons(PlayingCard triggerCard, PlayingCard attackingCard) {
+        TimingManager timingManager = game.getTimingManager();
+        triggerCard.getTriggerIcons().forEach(icon -> {
+            switch (icon){
+                case NONE:
+                    break;
+                case SOUL:
+                    timingManager.add(new SoulTriggerIconEffect(triggerCard, attackingCard));
+                    break;
+                case RETURN:
+                    new ReturnTriggerIconEffect(triggerCard).execute();
+                    break;
+                case POOL:
+                    new PoolTriggerIconEffect(triggerCard);
+                    break;
+                case COMEBACK:
+                    new ComebackTriggerIconEffect(triggerCard);
+                    break;
+                case DRAW:
+                    new DrawTriggerIconEffect(triggerCard);
+                    break;
+                case SHOT:
+                    new ShotTriggerIconEffect(triggerCard, attackingCard);
+                    break;
+                case TREASURE:
+                    new TreasureTriggerIconEffect(triggerCard);
+                    break;
+                case GATE:
+                    new GateTriggerIconEffect(triggerCard);
+                    break;
+                case STANDBY:
+                    StandbyTriggerIconEffect.execute(triggerCard);
+                    break;
+                case CHOICE:
+                    new ChoiceTriggerIconEffect(triggerCard);
+                    break;
+                default:
+                    throw new GameRuntimeException(new IllegalStateException("Unsupported Trigger Icon: " + icon));
+            }
+        });
     }
 
 }

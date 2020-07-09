@@ -2,37 +2,32 @@ package ton.klay.wspro.core.game.cardLogic.ability;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.api.cards.abilities.AbilityType;
-import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
+import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 
 /**
  * An AbilityCategory of the category Continious
  *
  * @see <code>Weiss Schwarz Rule 8.1.1.3</code>
  */
-public abstract class ContinuousAbility extends BaseAbility implements Ability {
+public abstract class ContinuousAbility extends BaseAbility implements FundamentalOrderable {
 
     private static final Logger log = LogManager.getLogger();
 
     private static final AbilityType category = AbilityType.ABILITY_CONTINUOUS;
 
-    public ContinuousAbility(ton.klay.wspro.core.api.cards.abilities.components.effects.Effect effect) {
+    public ContinuousAbility(Effect effect) {
     }
 
 
     @Override
     public AbilityType getAbilityType() {
-        return null;
+        return category;
     }
 
     @Override
-    public void performEffect() {
+    public abstract void performEffect();
 
-    }
 
-    @Override
-    public GamePlayer getMaster() {
-        return null;
-    }
 }

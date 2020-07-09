@@ -4,9 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The Phases of a turn during a normal game<br/>
+ *  Also Includes the sub-sets for the Attack Phase.
+ */
 public enum TurnPhase {
-
-    //todo: Add javadocs for this
 
     STAND_PHASE,
     DRAW_PHASE,

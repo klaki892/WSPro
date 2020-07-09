@@ -1,4 +1,4 @@
-package ton.klay.wspro.core.game.cardLogic.ability;
+package ton.klay.wspro.core.game.cardLogic.ability.defaults;
 
 import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;

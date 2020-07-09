@@ -1,6 +1,7 @@
 package ton.klay.wspro.core.api.game.player;
 
 import ton.klay.wspro.core.game.actions.PlayChoice;
+import ton.klay.wspro.core.game.actions.PlayChoiceType;
 import ton.klay.wspro.core.game.actions.PlayChooser;
 
 import java.util.*;
@@ -8,8 +9,19 @@ import java.util.stream.Collectors;
 
 public class PlayerControllerTest {
 
-    //makes the default action of ending a turn or selecting the first item if no END_ACTION is provided
+    //makes the default action of  selecting the first item. (Ignores exchange position
     public static List<PlayChoice> defaultPlayChoiceMaker(PlayChooser chooser) {
+        ArrayList<PlayChoice> playChoices = new ArrayList<>(chooser.getChoices());
+
+        List<PlayChoice> actualPlayChoices = playChoices.stream().filter(choice -> choice.getChoiceType() != PlayChoiceType.EXCHANGE_POSITIONS).collect(Collectors.toList());
+
+        System.err.println(Arrays.toString(actualPlayChoices.toArray()));
+        PlayChoice chosen = actualPlayChoices.get(0);
+        return Collections.singletonList(chosen);
+    }
+
+    //makes the default action of ending a turn or selecting the first item if no END_ACTION is provided
+    public static List<PlayChoice> doNothingPlayChoiceMaker(PlayChooser chooser) {
         ArrayList<PlayChoice> playChoices = new ArrayList<>(chooser.getChoices());
 
         System.err.println(Arrays.toString(playChoices.toArray()));

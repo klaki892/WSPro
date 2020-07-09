@@ -116,7 +116,7 @@ Map < ActionType, objectToDoAction> -
              (choose_card, ClimaxA)
              (choose_card, PlayingCardA)
              (choose_action, negative)
-             (choose_position, StagePosition)
+             (choose_zone, StagePosition)
              (choose_string(choose_trait), "TraitA")
              (choose_string(choose_name_combo), "nameA & Name B"
 

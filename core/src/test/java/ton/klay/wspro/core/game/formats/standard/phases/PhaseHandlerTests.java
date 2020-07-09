@@ -17,6 +17,7 @@ import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.player.PlayerController;
 import ton.klay.wspro.core.api.game.player.PlayerControllerTest;
+import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChooser;
@@ -173,6 +174,11 @@ class PhaseHandlerTests  {
         @Override
         public Game getGame() {
             return game;
+        }
+
+        @Override
+        public GameLocale getPlayerLocale() {
+            return GameLocale.EN;
         }
 
         @Override

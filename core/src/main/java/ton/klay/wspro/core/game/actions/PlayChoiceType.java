@@ -6,7 +6,7 @@ package ton.klay.wspro.core.game.actions;
 public enum PlayChoiceType {
     CHOOSE_CARD,
     CHOOSE_ABILITY,
-    CHOOSE_POSITION,
+    CHOOSE_ZONE,
     EXCHANGE_POSITIONS,
     CHOOSE_ACTION,
     CHOOSE_STRING,

@@ -52,7 +52,7 @@ public class MainPhase extends BasePhase  {
             //get all playable Actions
             playChoices.addAll(getPlayableCards());
             playChoices.addAll(getPlayableActAbilities());
-//            playChoices.addAll(getExchangeableStagePositions());
+            playChoices.addAll(getExchangeableStagePositions());
             playChoices.add(PlayChoice.makeActionChoice(END_ACTION));
 
             PlayChoice choice = Commands.makeSinglePlayChoice(turnPlayer, playChoices);
@@ -142,7 +142,7 @@ public class MainPhase extends BasePhase  {
                 stageChoices.add(PlayChoice.makeZoneChoice(zone));
             });
 
-            PlayZone stagePosition = Commands.makeSinglePlayChoice(turnPlayer, stageChoices).getStagePosition();
+            PlayZone stagePosition = Commands.makeSinglePlayChoice(turnPlayer, stageChoices).getZone();
 
             //All Choices resolved, pay cost and put on stage.
             Commands.payCost(card.getCost(), this);

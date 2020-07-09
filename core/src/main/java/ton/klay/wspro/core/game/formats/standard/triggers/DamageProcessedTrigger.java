@@ -41,7 +41,7 @@ public class DamageProcessedTrigger extends BaseTrigger {
         return receivingPlayer;
     }
 
-    public boolean isWasCancelled() {
+    public boolean wasCancelled() {
         return wasCancelled;
     }
 

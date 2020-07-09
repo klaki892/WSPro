@@ -248,10 +248,10 @@ public class Commands {
         //todo reveal card
 
         //move the card
-        Commands.moveCard(card, sourceZone, destinationZone, getTopOfZoneIndex(destinationZone),
+        CardMovedTrigger cardMovedTrigger = Commands.moveCard(card, sourceZone, destinationZone, getTopOfZoneIndex(destinationZone),
                 CardOrientation.STAND, destinationZone.getVisibility(), cause, caller);
 
-        CardPlayedTrigger trigger = new CardPlayedTrigger(player, card, sourceZone, destinationZone, cause, caller);
+        CardPlayedTrigger trigger = new CardPlayedTrigger(player, cardMovedTrigger.getDestinationCard(), sourceZone, destinationZone, cause, caller);
         emitAndTimings(card.getGame(), trigger);
         return trigger;
     }
@@ -445,7 +445,7 @@ public class Commands {
 
         public static Optional<PlayingCard> getFacingCard(PlayingCard card){
             //find the card in the stage
-            Optional<PlayZone> ourStageZone = findCardOnStage(card);
+            Optional<PlayZone> ourStageZone = getCardOnStage(card);
             if (ourStageZone.isPresent() && Zones.isOnCenterStage(ourStageZone.get())){
                 return getFacingCard(ourStageZone.get());
             } else{
@@ -453,7 +453,7 @@ public class Commands {
             }
         }
 
-        public static Optional<PlayZone> findCardOnStage(PlayingCard card){
+        public static Optional<PlayZone> getCardOnStage(PlayingCard card){
             List<PlayZone> stageZones = new ArrayList<>();
             stageZones.addAll(card.getGame().getCurrentTurnPlayer().getPlayArea().getPlayZones(Zones.ZONE_STAGE));
             stageZones.addAll(card.getGame().getNonTurnPlayer().getPlayArea().getPlayZones(Zones.ZONE_STAGE));

@@ -10,20 +10,22 @@ To-Do:
         - moving a card from zone to zone, get a certain field on a player side, etc.
 
     - Code the Abilities & effects scripting system
-            - Create a mapping from Triggers to TriggerSubscriber<TriggerName> & Create a reflection invoker for scripting
-            -Look into: can we make an annotation on classes and methods that need to be exposed to scripting so they automatically are? (potentially using eventhub? our annotation listens for a scriptengine to be emitted and then registers itself and its name)
-    - finish todos in combat
+        - test making abilities from Utility/abilityTemplate lua library
+        - Create a mapping from Triggers to TriggerSubscriber<TriggerName> & Create a reflection invoker for scripting
+        -Look into: can we make an annotation on classes and methods that need to be exposed to scripting so they automatically are? (potentially using eventhub? our annotation listens for a scriptengine to be emitted and then registers itself and its name)
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
         - Code External Communication / Server for input
+            - find a way to tell externally what effects are being applied (and by what)
             - Create a GUI to play the game.
 
     -refactor gameContext into Game
 In-Progress:
-    - Code Combat
-        - finish todos in combat
+    - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
+
     - Code the Abilities & effects scripting system
 
 Done:
+    - Code Combat
     - Proof of concept the ability template system
     - Code Player Choices
     - Code GamePhases

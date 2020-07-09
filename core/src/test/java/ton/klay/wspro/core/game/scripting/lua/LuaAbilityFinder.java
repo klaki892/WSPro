@@ -12,20 +12,26 @@ import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.scripting.AbilityFinder;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
 
 public abstract class LuaAbilityFinder  implements AbilityFinder {
 
+    private static Duration totalTime = Duration.ZERO;
     private static final Logger log = LogManager.getLogger();
 
     public abstract Optional<String> getLuaScript(PaperCard card);
 
     @Override
     public TypedAbilityList getAbilitiesForCard(Game game, PlayingCard card) {
-
+        Instant start = Instant.now();
         Optional<String> potentialLuaScript = getLuaScript(card.getPaperCard());
+        Instant end = Instant.now();
+        totalTime = totalTime.plus(Duration.between(start, end));
+        log.debug("Total time retrieving card scripts so far:" + totalTime.toMillis());
         log.warn("No Scripts found for " + card + "It will be initialized without abilities");
         if (!potentialLuaScript.isPresent()) return new TypedAbilityList(Collections.emptyList());
 

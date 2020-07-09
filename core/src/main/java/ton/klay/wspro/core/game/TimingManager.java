@@ -2,17 +2,24 @@ package ton.klay.wspro.core.game;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.ContinuousEffect;
+import ton.klay.wspro.core.api.cards.abilities.components.effects.ReplacementEffect;
+import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.events.LosingVerdictRuleAction;
 import ton.klay.wspro.core.game.events.RuleAction;
+import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerName;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +34,8 @@ public class TimingManager {
     private final List<RuleAction> checkTypeRuleActions = new ArrayList<>();
     private final List<InterruptRuleAction> interruptRuleActions = new ArrayList<>();
     private final List<AutomaticAbility> automaticAbilities = new ArrayList<>();
+    private final List<ContinuousEffect> continuousEffects = new ArrayList<>();
+    private final List<ReplacementEffect> replacementEffects = new ArrayList<>();
     private int interruptLocks = 0;
     private int simultaneousLocks = 0;
 
@@ -44,6 +53,12 @@ public class TimingManager {
 
     public void add(AutomaticAbility ability){
         automaticAbilities.add(ability);
+    }
+    public void add(ContinuousEffect continuousEffect){
+        continuousEffects.add(continuousEffect);
+    }
+    public void add(ReplacementEffect replacementEffect){
+        replacementEffects.add(replacementEffect);
     }
 
 
@@ -164,7 +179,7 @@ public class TimingManager {
                 InterruptRuleAction action;
                 //the player chooses if there is more than one
                 if (turnPlayerActions.size() > 1) {
-                    List<PlayChoice> playChoices = turnPlayerActions.stream().map(PlayChoice::MakeRuleActionChoice).collect(Collectors.toList());
+                    List<PlayChoice> playChoices = turnPlayerActions.stream().map(PlayChoice::makeRuleActionChoice).collect(Collectors.toList());
                     action = Commands.makeSinglePlayChoice(player, playChoices).getInterruptRuleAction();
                 } else {
                     action = turnPlayerActions.get(0);
@@ -225,8 +240,38 @@ public class TimingManager {
     }
 
     public void doContinuousTiming() {
-        //todo reset all cards
-        /* TODO:
+        //reset all cards
+        for (GamePlayer player : game.getPlayers()) {
+            for (PlayZone zone : player.getPlayArea().getAllPlayZones()) {
+                for (PlayingCard card : zone.getContents()) {
+                    card.reset();
+                }
+            }
+        }
+
+        //compare continuous effects by specific rules
+        Comparator<ContinuousEffect> comparator = Comparator
+                .comparing(ContinuousEffect::isZoneEffect) //zone effects happen first
+                .thenComparing(e -> !e.isStateChanging()) // then effects that do NOT change state, (followed by ones that do)
+                .thenComparing(e -> !e.isDependent()) //then effects that are NOT dependent (then dependent effects)
+                .thenComparing(FundamentalOrderable::getFundamentalOrder, Comparator.naturalOrder()); //lastly, their fundamental order (sooner is better)
+
+
+        ArrayList<ContinuousEffect> effectsToRemove = new ArrayList<>();
+
+        //apply all continuous effects in their specific ordering
+        this.continuousEffects.sort(comparator);
+        this.continuousEffects.forEach(effect -> {
+            if (effect.meetsCondition()) {
+                effect.execute();
+            } else if (effect.shouldUnregister()) {
+                effectsToRemove.add(effect);
+            }
+        });
+
+        effectsToRemove.forEach(continuousEffects::remove);
+
+        /*
             continuous Effect
             If continious effect affects a specific ZONE instead of a card:
                 the change is applied the moment it enters the zone.
@@ -247,5 +292,41 @@ public class TimingManager {
                             If character on stage owns the cont ability, when that character was placed on that specific stage position from another zone is it's fundamental order.
                             Else, when the ability is played is its fundamental order.
          */
+    }
+
+    /**
+     * Replaces action(s) from normal game execution with those from a {@link ReplacementEffect}
+     * @param triggerName - the trigger that replacement actions are waiting for
+     * @return true - if the game should no longer execute the original action. false otherwise
+     */
+    public boolean replaceableAction(TriggerName triggerName){
+
+        boolean wasOriginalActionAffected = false;
+
+        ArrayList<ReplacementEffect> activeEffects = new ArrayList<>();
+        for (ReplacementEffect effect : this.replacementEffects) {
+            if (effect.getTrigger().getTriggerName() == triggerName) {
+                activeEffects.add(effect);
+            }
+        }
+
+        //todo "consequence of action" determination for replacement effects
+
+        //sort the attack types by current turn player then non-turn player
+        activeEffects.sort(Comparator.comparing(effect -> {
+            return effect.getMaster() == game.getCurrentTurnPlayer();
+        }));
+
+        //perform effects
+        for (ReplacementEffect effect : activeEffects) {
+            if (effect.isOverridingOriginalAction()){
+                wasOriginalActionAffected = true;
+            }
+
+            effect.execute();
+            replacementEffects.remove(effect);
+        }
+
+        return wasOriginalActionAffected;
     }
 }

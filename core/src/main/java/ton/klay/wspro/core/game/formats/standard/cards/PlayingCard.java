@@ -319,6 +319,9 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     public List<TriggerableAbilityListener> getTriggerableAbilities() {
         return triggerableAbilities;
     }
+    public void addTriggerableAbility(TriggerableAbilityListener triggerableAbilityListener){
+        triggerableAbilities.add(triggerableAbilityListener);
+    }
 
     public int getLevel() {
         return level;

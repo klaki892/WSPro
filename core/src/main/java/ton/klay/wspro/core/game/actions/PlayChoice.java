@@ -17,7 +17,7 @@ public class PlayChoice {
     private Ability ability;
     private PlayZonePair stagePositionPair;
     private AttackPositionPair attackPositionPair;
-    private PlayZone stagePosition;
+    private PlayZone zone;
     private LocalizedString string;
 
     private PlayingCard card;
@@ -43,9 +43,9 @@ public class PlayChoice {
         this(choiceType);
         this.attackPositionPair = attackPositionPair;
     }
-    private PlayChoice(PlayChoiceType choiceType, PlayZone stagePosition){
+    private PlayChoice(PlayChoiceType choiceType, PlayZone zone){
         this(choiceType);
-        this.stagePosition = stagePosition;
+        this.zone = zone;
     }
     private PlayChoice(PlayChoiceType choiceType, LocalizedString string){
         this(choiceType);
@@ -77,12 +77,12 @@ public class PlayChoice {
         return new PlayChoice(PlayChoiceType.CHOOSE_ATTACK, attackPositionPair);
     }
     public static PlayChoice makeZoneChoice(PlayZone zone) {
-        return new PlayChoice(PlayChoiceType.CHOOSE_POSITION, zone);
+        return new PlayChoice(PlayChoiceType.CHOOSE_ZONE, zone);
     }
-    public static PlayChoice MakeStringChoice(LocalizedString string) {
+    public static PlayChoice makeStringChoice(LocalizedString string) {
         return new PlayChoice(PlayChoiceType.CHOOSE_STRING, string);
     }
-    public static PlayChoice MakeRuleActionChoice(InterruptRuleAction interruptRuleAction) {
+    public static PlayChoice makeRuleActionChoice(InterruptRuleAction interruptRuleAction) {
         return new PlayChoice(PlayChoiceType.CHOOSE_RULE_ACTION, interruptRuleAction);
     }
 
@@ -112,8 +112,8 @@ public class PlayChoice {
         return attackPositionPair;
     }
 
-    public PlayZone getStagePosition() {
-        return stagePosition;
+    public PlayZone getZone() {
+        return zone;
     }
 
     public LocalizedString getLocalizedString() {
@@ -133,7 +133,7 @@ public class PlayChoice {
                 .add("ability", ability)
                 .add("stagePositionPair", stagePositionPair)
                 .add("attackPositionPair", attackPositionPair)
-                .add("stagePosition", stagePosition)
+                .add("zone", zone)
                 .add("string", string)
                 .add("card", card)
                 .add("action", action)

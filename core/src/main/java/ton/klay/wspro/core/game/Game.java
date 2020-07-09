@@ -3,7 +3,6 @@ package ton.klay.wspro.core.game;
 import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
@@ -43,11 +42,14 @@ public class Game {
     private int fundamentalOrderCounter = 0;
     private String gameID;
     private final List<GamePlayer> losingPlayers = new ArrayList<>();
+    private final List<GamePlayer> players;
 
     public Game(GamePlayer player1, GamePlayer player2, AbilityFinder abilityFinder){
 
         this.player1 = player1;
         this.player2 = player2;
+        players = Arrays.asList(player1, player2);
+
         this.abilityFinder = abilityFinder;
         gameStatus = GameStatus.NOT_READY;
         setup();
@@ -145,15 +147,15 @@ public class Game {
         try {
             pregame(currentTurnPlayer, opposingPlayer);
             phaseHandler.startFirstTurn(currentTurnPlayer, opposingPlayer);
-        } catch (GameRuntimeException exception)
-        {
+        } catch (RuntimeException exception) {
+            //arguably, this should only catch GameRuntimeExceptions...
             unexpectedEndGame(exception);
         }
     }
 
 
 
-    public void unexpectedEndGame(GameRuntimeException ex){
+    public void unexpectedEndGame(RuntimeException ex){
         log.error("Stopping Game " + this + " Due to exception: " + ex.getMessage());
         gameStatus = GameStatus.FINISHED_UNEXPECTEDLY;
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
@@ -289,5 +291,13 @@ public class Game {
 
     public AbilityFinder getAbilityFinder() {
         return abilityFinder;
+    }
+
+    public List<GamePlayer> getPlayers() {
+        return Collections.unmodifiableList(players);
+    }
+
+    public int getCurrentTurnNumber() {
+        return phaseHandler.getTurnNumber();
     }
 }

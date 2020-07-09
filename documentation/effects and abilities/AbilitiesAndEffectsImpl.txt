@@ -443,6 +443,7 @@ Automatic Abilities (and the effects that come from them):
             - Need to be able to pass data from the Trigger Conditional into effects for memory, variables and targeting purposes.
 Continuous Abilities/effects:
     Continious Effects have the following parts:
+        GUID - used for externally tracking effects between resets
         Condition - one or more checks that resolve if the effect should be active or not.
         Actions - A sequence of actions that should be performed once conditional is true
         UnRegister - Conditionals or checks that determine if the effect should be unregistered from the Continious Check system.
