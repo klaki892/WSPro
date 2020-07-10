@@ -1,10 +1,10 @@
 package scripting;
 
-import helperClasses.InstanceClass;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.LuaValue;
 import org.luaj.vm2.lib.jse.CoerceLuaToJava;
 import org.luaj.vm2.lib.jse.JsePlatform;
+import scripting.helperClasses.InstanceClass;
 
 import java.io.File;
 import java.net.URISyntaxException;

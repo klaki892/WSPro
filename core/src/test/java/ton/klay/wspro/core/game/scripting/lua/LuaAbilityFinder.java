@@ -7,28 +7,34 @@ import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.CoerceLuaToJava;
 import ton.klay.wspro.core.api.cards.PaperCard;
 import ton.klay.wspro.core.api.cards.abilities.Ability;
+import ton.klay.wspro.core.game.AbilityFinder;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
-import ton.klay.wspro.core.game.scripting.AbilityFinder;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 
 public abstract class LuaAbilityFinder  implements AbilityFinder {
 
-    private static Duration totalTime = Duration.ZERO;
     private static final Logger log = LogManager.getLogger();
-
+    private Duration totalTime = Duration.ZERO;
+    private HashMap<String, String> idToScriptMap = new HashMap<>(100);
     public abstract Optional<String> getLuaScript(PaperCard card);
 
     @Override
     public TypedAbilityList getAbilitiesForCard(Game game, PlayingCard card) {
         Instant start = Instant.now();
-        Optional<String> potentialLuaScript = getLuaScript(card.getPaperCard());
+        Optional<String> potentialLuaScript;
+        if (idToScriptMap.containsKey(card.getID())) {
+            potentialLuaScript = Optional.of(idToScriptMap.get(card.getID()));
+        } else {
+            potentialLuaScript = getLuaScript(card.getPaperCard());
+        }
         Instant end = Instant.now();
         totalTime = totalTime.plus(Duration.between(start, end));
         log.debug("Total time retrieving card scripts so far:" + totalTime.toMillis());
@@ -36,6 +42,7 @@ public abstract class LuaAbilityFinder  implements AbilityFinder {
         if (!potentialLuaScript.isPresent()) return new TypedAbilityList(Collections.emptyList());
 
         String scriptContent = potentialLuaScript.get();
+        idToScriptMap.putIfAbsent(card.getID(), scriptContent);
 
         Globals engine = LuaScriptEngine.initLuaJEngine(game);
 

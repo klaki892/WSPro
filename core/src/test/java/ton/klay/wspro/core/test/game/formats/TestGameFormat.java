@@ -40,11 +40,6 @@ public class TestGameFormat implements GameFormat {
     }
 
     @Override
-    public GamePhase getStartPhase() {
-        return null;
-    }
-
-    @Override
     public GamePhase getPhase(String phaseName) {
         return null;
     }

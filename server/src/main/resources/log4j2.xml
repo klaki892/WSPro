@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="ERROR">
+    <Appenders>
+        <RollingFile name="log"
+                     fileName="WSProServer.log"
+                     filePattern="WSProServer-%d{MM-dd-yy}.log.gz">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100M" />
+            </Policies>
+        </RollingFile>
+        <Console name="stdout">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="to.klay.wspro" level="INFO" additivity="false">
+            <AppenderRef ref="stdout"/>
+            <AppenderRef ref="log"/>
+        </Logger>
+        <Root level="WARN" additivity="true">
+            <AppenderRef ref="stdout" />
+        </Root>
+    </Loggers>
+</Configuration>

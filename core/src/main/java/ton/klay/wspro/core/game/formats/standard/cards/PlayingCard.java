@@ -71,7 +71,6 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         //generate the uniqueID
         refreshGUID();
 
-        //todo populate abilities
         TypedAbilityList abilities = game.getAbilityFinder().getAbilitiesForCard(game, this);
         triggerableAbilities.addAll(abilities.getTriggerableAbilityListeners());
         activatedAbilities.addAll(abilities.getActivateAbilities());

@@ -3,18 +3,19 @@ package ton.klay.wspro.core.game;
 import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ton.klay.wspro.core.api.cards.PaperCard;
 import ton.klay.wspro.core.api.game.GameStatus;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChoiceAction;
 import ton.klay.wspro.core.game.actions.PlayChooser;
+import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.StandardWeissTriggerObservers;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
-import ton.klay.wspro.core.game.scripting.AbilityFinder;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -44,11 +45,11 @@ public class Game {
     private final List<GamePlayer> losingPlayers = new ArrayList<>();
     private final List<GamePlayer> players;
 
-    public Game(GamePlayer player1, GamePlayer player2, AbilityFinder abilityFinder){
+    public Game(Player player1, Player player2, AbilityFinder abilityFinder){
 
-        this.player1 = player1;
-        this.player2 = player2;
-        players = Arrays.asList(player1, player2);
+        this.player1 = new GamePlayer(this, player1);
+        this.player2 = new GamePlayer(this, player2);
+        players = Arrays.asList(this.player1, this.player2);
 
         this.abilityFinder = abilityFinder;
         gameStatus = GameStatus.NOT_READY;
@@ -85,15 +86,19 @@ public class Game {
      */
     private void pregame(GamePlayer currentTurnPlayer, GamePlayer opposingPlayer) {
 
-        //todo place respective decks into respective deck zones
-        //todo shuffle the decks
+        //place respective decks into respective deck zones
         List<GamePlayer> players = Arrays.asList(currentTurnPlayer, opposingPlayer);
+        for (GamePlayer player : players) {
+            for (PaperCard paperCard : player.getPaperDeck().getCards()) {
+                player.getPlayArea().getPlayZone(Zones.ZONE_DECK).add(new PlayingCard(this, paperCard, player, player));
+            }
+        }
 
         //shuffle the decks and draw the starting hand
-        for (GamePlayer gamePlayer : players ) {
-            Commands.shuffleZone(gamePlayer.getPlayArea().getPlayZone(Zones.ZONE_DECK), GAME_ACTION, gamePlayer);
+        for (GamePlayer player1 : players ) {
+            Commands.shuffleZone(player1.getPlayArea().getPlayZone(Zones.ZONE_DECK), GAME_ACTION, player1);
             for (int i = 0; i < 5; i++) {
-                Commands.drawCard(gamePlayer, GAME_ACTION, gamePlayer);
+                Commands.drawCard(player1, GAME_ACTION, player1);
             }
         }
 
@@ -122,6 +127,15 @@ public class Game {
     }
 
     /**
+     * Starts the duel, choosing a random starting player. Blocks until the game is finished.
+     */
+    public void startGame() {
+        List<GamePlayer> player1s = new ArrayList<>(getPlayers());
+        Collections.shuffle(player1s, getRandom());
+        startGame(player1s.get(0));
+    }
+
+    /**
      * Starts the duel with a specified player. Blocks until the game is finished
      * @param startingPlayer player to take first turn, if null a random player is chosen
      */
@@ -132,17 +146,8 @@ public class Game {
         gameID = getRandomGuid();
         log.debug("Game ID created: " + gameID);
 
-        GamePlayer currentTurnPlayer, opposingPlayer;
-
-        if (startingPlayer == null){
-            List<GamePlayer> gamePlayers = Arrays.asList(player1, player2);
-            Collections.shuffle(gamePlayers, getRandom());
-            currentTurnPlayer = gamePlayers.get(0);
-            opposingPlayer = gamePlayers.get(1);
-        } else {
-            currentTurnPlayer = (player1 == startingPlayer) ? player1 : player2;
-            opposingPlayer = (player1 == startingPlayer) ? player2 : player1;
-        }
+        GamePlayer currentTurnPlayer = (player1 == startingPlayer) ? player1 : player2;
+        GamePlayer opposingPlayer = (player1 == startingPlayer) ? player2 : player1;
 
         try {
             pregame(currentTurnPlayer, opposingPlayer);
@@ -156,7 +161,7 @@ public class Game {
 
 
     public void unexpectedEndGame(RuntimeException ex){
-        log.error("Stopping Game " + this + " Due to exception: " + ex.getMessage());
+        log.error("Stopping Game " + this + " Due to exception: " + ex.getMessage(), ex);
         gameStatus = GameStatus.FINISHED_UNEXPECTEDLY;
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
     }

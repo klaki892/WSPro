@@ -1,0 +1,57 @@
+How do we make a game?
+	- need Players
+	- 	need their decks in papercard format
+			- need to convert thier format to papercard
+		- need a way to communicate the game with them
+			- (see wsprocommunication)
+			- pass game events to them 
+			- pass and receive playChoice input from them
+	- need a way to find cards
+	- need a way to find abilities
+What do we need to lookup a card?
+	- just the ID?
+	- a database based id? 
+what do we need to lookup abilities?
+	- just a card ID?
+		- card ID's arent valid filenames
+	- a database specific ID tying it to a card?
+	
+How do we store cards?
+	- database 
+		Pros:
+			- centralized dynamic lookup
+		Cons:
+		Neutral
+			- whats the update process for a card's stats?
+		
+How do we store ability scripts?
+	- database
+		Pros:
+			+ centralized location
+			+ no worries about invalid filenames
+		Cons:
+			- 
+		Neutral:
+			- whats the update process for an ability
+			
+What is the process flow from server start to Game Start
+	1. Check Configuration
+		a. Test connection to CardFinder and AbilityFinder
+		b. Start up other services depending on arguments (e.g. kubernetes = health check)
+	2. Start server listening for connections
+	3. First connection should give us game configuration details
+		a. give us name of players & their deck lists
+		b. use configuation to source cards & abilities
+		c. Pull from sources all cards & abilities and setup game 
+		d. return confirmation of game setup with any warnings or errros(missing cards) 
+	4. Await for connections from players (or timeout?)
+	5. When player connected
+		a. determine identity of player
+		b. hook connection into respective controller for game
+	6. when both players connected
+		a. obtain ready-up flag from each
+	7. Start game, await game over.
+	8. When game is over
+		a. save/log game stats? (and other hooks)
+		b. close all connections
+	9. end program or stay alive for more games

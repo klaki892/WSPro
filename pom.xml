@@ -13,25 +13,41 @@
     <modules>
         <module>core</module>
         <module>desktop-client</module>
+        <module>server</module>
         <!--<module>api</module>-->
     </modules>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <build>
+        <!-- plugin management pushes all plugins down, does NOT use it at the current level-->
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
                     <configuration>
                         <source>1.8</source>
                         <target>1.8</target>
                     </configuration>
                 </plugin>
-                <!--<plugin>-->
-                    <!--<groupId>org.apache.maven.plugins</groupId>-->
-                    <!--<artifactId>maven-release-plugin</artifactId>-->
-                <!--<version>2.5.3</version>-->
-                <!--</plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M5</version>
+<!--                    <configuration>-->
+<!--                        <testFailureIgnore>false</testFailureIgnore>-->
+<!--                    </configuration>-->
+                </plugin>
+
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-release-plugin</artifactId>-->
+<!--                <version>2.5.3</version>-->
+<!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
@@ -46,6 +62,11 @@
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>2.11.0</version>
         </dependency>
     </dependencies>
 
