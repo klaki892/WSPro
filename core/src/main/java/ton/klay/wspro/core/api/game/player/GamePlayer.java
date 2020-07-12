@@ -28,7 +28,7 @@ public class GamePlayer implements GameEntity {
     }
 
     public String getPlayerName(){
-        return player.getPlayerName();
+        return player.getName();
     }
 
     public PaperDeck getPaperDeck(){

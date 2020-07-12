@@ -8,7 +8,7 @@ public interface Player {
 
     PaperDeck getDeck();
 
-    String getPlayerName();
+    String getName();
 
     GameLocale getPlayerLocale();
 

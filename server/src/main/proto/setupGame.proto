@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "to.klay.wspro.server.grpc.setupgame";
+option java_outer_classname = "SetupGameProto";
+
+
+package setupgame;
+
+service SetupGame {
+  rpc requestGame(SetupGameRequest) returns (GameSetupStatus);
+  rpc startGame(GrpcGameStartRequest) returns (GrpcGameStartResponse);
+}
+
+message SetupGameRequest {
+  PlayerInfo player1 = 1;
+  PlayerInfo player2 = 2;
+}
+
+message PlayerInfo {
+  Deck deck = 1;
+  string playerName = 2;
+}
+
+message Deck {
+  CardIdList cardList = 1;
+  string deckName = 2;
+}
+message CardIdList {
+    repeated string cardID = 1;
+}
+
+message GameSetupStatus{
+  bool gameReady = 1;
+  CardIdList unknownCards = 2;
+  CardIdList nonScriptedCards = 3;
+  string errorMessage = 4;
+  string gameIdentifier = 5;
+}
+
+message GrpcGameStartRequest {
+  string gameIdentifier = 1;
+}
+
+message GrpcGameStartResponse{
+  bool didGameStart = 1;
+}
+
+

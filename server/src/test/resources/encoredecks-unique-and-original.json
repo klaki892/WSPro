@@ -1,0 +1,1654 @@
+{
+  "description": "Bushiroad Spring Fest 2018 (USA/Atlanta) – 2nd Place Team Deck ",
+  "valid": true,
+  "cards": [{
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+        "name": "Last Shot, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a534924933a",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+    "name": "Last Shot, Sinon",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 10000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E076",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+        "name": "Comforting Moment, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e7d7ef9a5349249387",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+    "name": "Comforting Moment, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E103",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+        "name": "Comforting Moment, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e7d7ef9a5349249387",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+    "name": "Comforting Moment, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E103",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 Your other character in the middle position of the center stage with \"Yuuki(ユウキ)\" or \"Asuna(アスナ)\" in its card name gets +1 level and +1000 power.", "【ACT】 Brainstorm [(1) 【REST】 two of your characters] Reveal four cards from the top of your deck, and put them into your waiting room. For each climax revealed, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuffle your deck."],
+        "name": "《Sleeping Knights》 Talken & Nori & Jun"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b167a7cd9b718cdbd0a54",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06c8e1ce69532bbc8fcb",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 Your other character in the middle position of the center stage with \"Yuuki(ユウキ)\" or \"Asuna(アスナ)\" in its card name gets +1 level and +1000 power.", "【ACT】 Brainstorm [(1) 【REST】 two of your characters] Reveal four cards from the top of your deck, and put them into your waiting room. For each climax revealed, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuffle your deck."],
+    "name": "《Sleeping Knights》 Talken & Nori & Jun",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E26",
+    "sid": "E09",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 This ability activates up to one time per turn. When you use an 【ACT】, choose one of your characters, and that character gets +1000 power until end of turn.", "【AUTO】 [(1)] When a climax is put on your climax area, you may pay the cost. If you do, look at up to four cards from the top of your deck, choose up to one 《Avatar》 or 《Net》 character from among them, reveal it to your opponent, put it into your hand, and put the rest into your waiting room."],
+        "name": "Sister Fond of Her Brother, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d4f8d7a5533eeaa09b",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 This ability activates up to one time per turn. When you use an 【ACT】, choose one of your characters, and that character gets +1000 power until end of turn.", "【AUTO】 [(1)] When a climax is put on your climax area, you may pay the cost. If you do, look at up to four cards from the top of your deck, choose up to one 《Avatar》 or 《Net》 character from among them, reveal it to your opponent, put it into your hand, and put the rest into your waiting room."],
+    "name": "Sister Fond of Her Brother, Leafa",
+    "rarity": "RR",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E021",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 This ability activates up to one time per turn. When you use an 【ACT】, choose one of your characters, and that character gets +1000 power until end of turn.", "【AUTO】 [(1)] When a climax is put on your climax area, you may pay the cost. If you do, look at up to four cards from the top of your deck, choose up to one 《Avatar》 or 《Net》 character from among them, reveal it to your opponent, put it into your hand, and put the rest into your waiting room."],
+        "name": "Sister Fond of Her Brother, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d4f8d7a5533eeaa09b",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 This ability activates up to one time per turn. When you use an 【ACT】, choose one of your characters, and that character gets +1000 power until end of turn.", "【AUTO】 [(1)] When a climax is put on your climax area, you may pay the cost. If you do, look at up to four cards from the top of your deck, choose up to one 《Avatar》 or 《Net》 character from among them, reveal it to your opponent, put it into your hand, and put the rest into your waiting room."],
+    "name": "Sister Fond of Her Brother, Leafa",
+    "rarity": "RR",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E021",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Net", "Sports"],
+        "ability": ["【CONT】 All of your other characters get the following ability. \"【CONT】 This card cannot side attack.\"", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuflle your deck."],
+        "name": "Kendo Boot Camp, Suguha"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d5f8d7a5533eeaa0a8",
+    "attributes": ["Net", "Sports"],
+    "ability": ["【CONT】 All of your other characters get the following ability. \"【CONT】 This card cannot side attack.\"", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuflle your deck."],
+    "name": "Kendo Boot Camp, Suguha",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 3000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E023",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Net", "Sports"],
+        "ability": ["【CONT】 All of your other characters get the following ability. \"【CONT】 This card cannot side attack.\"", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuflle your deck."],
+        "name": "Kendo Boot Camp, Suguha"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d5f8d7a5533eeaa0a8",
+    "attributes": ["Net", "Sports"],
+    "ability": ["【CONT】 All of your other characters get the following ability. \"【CONT】 This card cannot side attack.\"", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, search your deck for up to one 《Avatar》 or 《Net》 character, reveal it to your opponent, put it into your hand, and shuflle your deck."],
+    "name": "Kendo Boot Camp, Suguha",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 3000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E023",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【AUTO】 When this card becomes 【REVERSE】, if this card's battle opponent is level 0 or lower, you may 【REVERSE】 that character."],
+        "name": "Gathering Materials, Silica"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b165b7cd9b718cdbd0a4a",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06ad7a9f27531272547c",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【AUTO】 When this card becomes 【REVERSE】, if this card's battle opponent is level 0 or lower, you may 【REVERSE】 that character."],
+    "name": "Gathering Materials, Silica",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E23",
+    "sid": "E07",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "RED",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【AUTO】 When this card becomes 【REVERSE】, if this card's battle opponent is level 0 or lower, you may 【REVERSE】 that character."],
+        "name": "Gathering Materials, Silica"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b165b7cd9b718cdbd0a4a",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06ad7a9f27531272547c",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【AUTO】 When this card becomes 【REVERSE】, if this card's battle opponent is level 0 or lower, you may 【REVERSE】 that character."],
+    "name": "Gathering Materials, Silica",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E23",
+    "sid": "E07",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "RED",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 Assist All of your characters in front of this card get +500 power.", "【AUTO】 When a climax is placed on your climax area, choose one of your characters, and that character gets +1000 power until end of turn."],
+        "name": "Mission in the Twilight, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b165b7cd9b718cdbd0a4a",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06ad7a9f2753127254ad",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 Assist All of your characters in front of this card get +500 power.", "【AUTO】 When a climax is placed on your climax area, choose one of your characters, and that character gets +1000 power until end of turn."],
+    "name": "Mission in the Twilight, Sinon",
+    "rarity": "PR",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E23",
+    "sid": "PE01",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 Assist All of your characters in front of this card get +500 power.", "【AUTO】 When a climax is placed on your climax area, choose one of your characters, and that character gets +1000 power until end of turn."],
+        "name": "Mission in the Twilight, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b165b7cd9b718cdbd0a4a",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06ad7a9f2753127254ad",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 Assist All of your characters in front of this card get +500 power.", "【AUTO】 When a climax is placed on your climax area, choose one of your characters, and that character gets +1000 power until end of turn."],
+    "name": "Mission in the Twilight, Sinon",
+    "rarity": "PR",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E23",
+    "sid": "PE01",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+        "name": "Temporary Alliance, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249354",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+    "name": "Temporary Alliance, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E077",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+        "name": "Temporary Alliance, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249354",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+    "name": "Temporary Alliance, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E077",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+        "name": "Temporary Alliance, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249354",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+    "name": "Temporary Alliance, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E077",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+        "name": "Temporary Alliance, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249354",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card attacks, choose one of your other characters with \"Sinon(シノン)\" in its card name, and that character gets +1000 power until end of turn.", "【AUTO】 At the beginning of your opponent's attack phase, you may put the top card of your deck into your waiting room. If that card is an 《Avatar》 or 《Net》 character, you may move this card to an open position of your center stage."],
+    "name": "Temporary Alliance, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E077",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +1500 power until end of turn.", "【AUTO】 When this card's battle opponent becomes 【REVERSE】, choose one of your other 《Avatar》 or 《Net》 characters, 【REST】 it, and move it to an open position of your back stage."],
+        "name": "\"Time to Get Serious\" Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d4f8d7a5533eeaa09f",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +1500 power until end of turn.", "【AUTO】 When this card's battle opponent becomes 【REVERSE】, choose one of your other 《Avatar》 or 《Net》 characters, 【REST】 it, and move it to an open position of your back stage."],
+    "name": "\"Time to Get Serious\" Kirito",
+    "rarity": "RR",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E071",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+        "name": "Vice Commander, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a534924935e",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+    "name": "Vice Commander, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E007",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+        "name": "Vice Commander, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a534924935e",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+    "name": "Vice Commander, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E007",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+        "name": "Vice Commander, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a534924935e",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When you use this card's \"Backup\", if the number of 《Avatar》 or 《Net》 characters you have is two or more, choose one of your characters, and that character gets +1000 power until end of turn.", "【ACT】 【COUNTER】 Backup 1000, Level 1 ［Put this card from your hand into your waiting room] （Choose one of your characters that is being frontal attacked, and that character gets +1000 power until end of turn)"],
+    "name": "Vice Commander, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E007",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+        "name": "《Zekken》 Yuuki"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b167a7cd9b718cdbd0a54",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06c8e1ce69532bbc8fcc",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+    "name": "《Zekken》 Yuuki",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E26",
+    "sid": "E10",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+        "name": "《Zekken》 Yuuki"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b167a7cd9b718cdbd0a54",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06c8e1ce69532bbc8fcc",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+    "name": "《Zekken》 Yuuki",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E26",
+    "sid": "E10",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+        "name": "《Zekken》 Yuuki"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b167a7cd9b718cdbd0a54",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06c8e1ce69532bbc8fcc",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+    "name": "《Zekken》 Yuuki",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E26",
+    "sid": "E10",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+        "name": "《Zekken》 Yuuki"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b167a7cd9b718cdbd0a54",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06c8e1ce69532bbc8fcc",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [(1) Put a card from your hand into your waiting room] When this card attacks, if a card named \"《Mother's Rosario》\" is in your climax area, you may pay the cost. If you do, search your deck for up to two 《Avatar》 or 《Net》 characters, reveal them to your opponent, and put them into your hand. Then, shuffle your deck, and this card gets +1 level until the end of your opponent's next turn."],
+    "name": "《Zekken》 Yuuki",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "E26",
+    "sid": "E10",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+        "name": "Determination with Life on the Line, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249356",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+    "name": "Determination with Life on the Line, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E114",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+        "name": "Determination with Life on the Line, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249356",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+    "name": "Determination with Life on the Line, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E114",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+        "name": "Determination with Life on the Line, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249356",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+    "name": "Determination with Life on the Line, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E114",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+        "name": "Determination with Life on the Line, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e6d7ef9a5349249356",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, this card gets +2000 power until end of turn. (The revealed card is returned to its original place)", "【AUTO】 When this card is put into your waiting room from the stage, you may reveal up to three cards from the top of your deck. If you revealed one or more cards, choose up to one 《Avatar》 or 《Net》 character from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+    "name": "Determination with Life on the Line, Kirito",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 4500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E114",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Net", "-"],
+        "ability": ["【CONT】 During your opponent's turn, all of your other 《Avatar》 or 《Net》 characters get +1000 power.", "【AUTO】 When this card is placed on the stage from your hand, look at up to two cards from the top of your deck, choose up to one card from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+        "name": "《SAO Survivor》 Asuna & Kazuto"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06d5f8d7a5533eeaa0b2",
+    "attributes": ["Net", "-"],
+    "ability": ["【CONT】 During your opponent's turn, all of your other 《Avatar》 or 《Net》 characters get +1000 power.", "【AUTO】 When this card is placed on the stage from your hand, look at up to two cards from the top of your deck, choose up to one card from among them, put it into your hand, put the rest into your waiting room, choose a card in your hand, and put it into your waiting room."],
+    "name": "《SAO Survivor》 Asuna & Kazuto",
+    "rarity": "R",
+    "side": "S",
+    "level": 1,
+    "cost": 0,
+    "power": 1500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E075",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When you use this card's \"Backup\", reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【ACT】 【COUNTER】 Backup 2500, Level 2 [(1) Put this card from your hand into your waiting room] (Choose one of your characters that is being frontal attacked, and that character gets +2500 power until end of turn.)"],
+        "name": "Gathering Materials, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e7d7ef9a5349249380",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When you use this card's \"Backup\", reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【ACT】 【COUNTER】 Backup 2500, Level 2 [(1) Put this card from your hand into your waiting room] (Choose one of your characters that is being frontal attacked, and that character gets +2500 power until end of turn.)"],
+    "name": "Gathering Materials, Leafa",
+    "rarity": "C",
+    "side": "S",
+    "level": 2,
+    "cost": 1,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E041",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When you use this card's \"Backup\", reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【ACT】 【COUNTER】 Backup 2500, Level 2 [(1) Put this card from your hand into your waiting room] (Choose one of your characters that is being frontal attacked, and that character gets +2500 power until end of turn.)"],
+        "name": "Gathering Materials, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e7d7ef9a5349249380",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When you use this card's \"Backup\", reveal the top card of your deck. If that card is an 《Avatar》 or 《Net》 character, put it into your hand, choose a card in your hand, and put it into your waiting room. (If it is not, return the revealed card to its original place)", "【ACT】 【COUNTER】 Backup 2500, Level 2 [(1) Put this card from your hand into your waiting room] (Choose one of your characters that is being frontal attacked, and that character gets +2500 power until end of turn.)"],
+    "name": "Gathering Materials, Leafa",
+    "rarity": "C",
+    "side": "S",
+    "level": 2,
+    "cost": 1,
+    "power": 2000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E041",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 Assist All of your characters in front of this card get +1000 power.", "【ACT】 [【REST】 this card] Choose one of your oppponent's characters, and that character gets the following ability until end of turn. \"【CONT】 During this card's battle, you cannot play event cards and \"Backup\" from your hand.\""],
+        "name": "\"Machine of Ice\" Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a5349249355",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 Assist All of your characters in front of this card get +1000 power.", "【ACT】 [【REST】 this card] Choose one of your oppponent's characters, and that character gets the following ability until end of turn. \"【CONT】 During this card's battle, you cannot play event cards and \"Backup\" from your hand.\""],
+    "name": "\"Machine of Ice\" Sinon",
+    "rarity": "R",
+    "side": "S",
+    "level": 2,
+    "cost": 1,
+    "power": 3000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E079",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 [(1) Put a climax from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, choose a climax in your waiting room, and return it to your hand.", "【AUTO】 When this card attacks, if the character facing this card is level 3 or higher, this card gets +X power until end of turn. X is equal to 1000 multiplied by the number of 《Avatar》 or 《Net》 characters you have."],
+        "name": "Adventure with Everyone, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e7d7ef9a5349249374",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 [(1) Put a climax from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost. If you do, choose a climax in your waiting room, and return it to your hand.", "【AUTO】 When this card attacks, if the character facing this card is level 3 or higher, this card gets +X power until end of turn. X is equal to 1000 multiplied by the number of 《Avatar》 or 《Net》 characters you have."],
+    "name": "Adventure with Everyone, Sinon",
+    "rarity": "U",
+    "side": "S",
+    "level": 2,
+    "cost": 1,
+    "power": 7500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E119",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card becomes 【REVERSE】, if the level of this card’s battle opponent is higher than your opponent’s level, you may put that character on the bottom of your opponent's deck."],
+        "name": "The Reason I Won't Lose, Kirito"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06d6f8d7a5533eeaa0ff",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card becomes 【REVERSE】, if the level of this card’s battle opponent is higher than your opponent’s level, you may put that character on the bottom of your opponent's deck."],
+    "name": "The Reason I Won't Lose, Kirito",
+    "rarity": "PR",
+    "side": "S",
+    "level": 2,
+    "cost": 1,
+    "power": 6500,
+    "soul": 1,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E104",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 This card gets +500 power for each of your other 《Avatar》 or 《Net》 characters.", "【AUTO】 When this card is placed on the stage from your hand, look at up to X cards from the top of your deck, choose up to one card from among them, put it into your hand, and put the rest into your waiting room. X is equal to the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two characters from your hand into your waiting room] When this card's battle opponent becomes 【REVERSE】, you may pay the cost. If you do, put that battle opponent into your opponent's clock."],
+        "name": "Adventure with Everyone, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a5349249342",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 This card gets +500 power for each of your other 《Avatar》 or 《Net》 characters.", "【AUTO】 When this card is placed on the stage from your hand, look at up to X cards from the top of your deck, choose up to one card from among them, put it into your hand, and put the rest into your waiting room. X is equal to the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two characters from your hand into your waiting room] When this card's battle opponent becomes 【REVERSE】, you may pay the cost. If you do, put that battle opponent into your opponent's clock."],
+    "name": "Adventure with Everyone, Leafa",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 9000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E107",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【CONT】 This card gets +500 power for each of your other 《Avatar》 or 《Net》 characters.", "【AUTO】 When this card is placed on the stage from your hand, look at up to X cards from the top of your deck, choose up to one card from among them, put it into your hand, and put the rest into your waiting room. X is equal to the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two characters from your hand into your waiting room] When this card's battle opponent becomes 【REVERSE】, you may pay the cost. If you do, put that battle opponent into your opponent's clock."],
+        "name": "Adventure with Everyone, Leafa"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a5349249342",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【CONT】 This card gets +500 power for each of your other 《Avatar》 or 《Net》 characters.", "【AUTO】 When this card is placed on the stage from your hand, look at up to X cards from the top of your deck, choose up to one card from among them, put it into your hand, and put the rest into your waiting room. X is equal to the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two characters from your hand into your waiting room] When this card's battle opponent becomes 【REVERSE】, you may pay the cost. If you do, put that battle opponent into your opponent's clock."],
+    "name": "Adventure with Everyone, Leafa",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 9000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E107",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Net", "Music"],
+        "ability": ["【CONT】 If the number of climax in your waiting room is two or less, this card gets -1 level while in your hand.", "【AUTO】 When this card is placed on the stage from your hand, you may put the top card of your clock into your waiting room.", "【AUTO】 When this card attacks, choose one of your other 《Avatar》 or 《Net》 characters, and that character gets +X power until end of turn. X is equal to 500 multiplied by the number of other 《Avatar》 or 《Net》 characters you have."],
+        "name": "《Songstress》 Yuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06d4f8d7a5533eeaa09d",
+    "attributes": ["Net", "Music"],
+    "ability": ["【CONT】 If the number of climax in your waiting room is two or less, this card gets -1 level while in your hand.", "【AUTO】 When this card is placed on the stage from your hand, you may put the top card of your clock into your waiting room.", "【AUTO】 When this card attacks, choose one of your other 《Avatar》 or 《Net》 characters, and that character gets +X power until end of turn. X is equal to 500 multiplied by the number of other 《Avatar》 or 《Net》 characters you have."],
+    "name": "《Songstress》 Yuna",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 9500,
+    "soul": 2,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E022",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Net", "-"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two cards from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost, If you do, put all of your opponent's stock into your opponent's waiting room, and your opponent puts the same number of cards from the top of his or her deck into the stock.", "【AUTO】 During your opponent's turn, when the damage you received is not canceled, if this card is in your center stage, look at the top card of your deck, and put it on the top of your deck or into your waiting room."],
+        "name": "Full of Vigor, Yui"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b169d7cd9b718cdbd0a61",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06d5f8d7a5533eeaa0b8",
+    "attributes": ["Net", "-"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand, this card gets +X power until end of turn. X is equal to 500 multiplied by the number of 《Avatar》 or 《Net》 characters you have.", "【AUTO】 [Put two cards from your hand into your waiting room] When this card is placed on the stage from your hand, you may pay the cost, If you do, put all of your opponent's stock into your opponent's waiting room, and your opponent puts the same number of cards from the top of his or her deck into the stock.", "【AUTO】 During your opponent's turn, when the damage you received is not canceled, if this card is in your center stage, look at the top card of your deck, and put it on the top of your deck or into your waiting room."],
+    "name": "Full of Vigor, Yui",
+    "rarity": "R",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 9500,
+    "soul": 2,
+    "set": "SAO",
+    "release": "51",
+    "sid": "E079",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+        "name": "Comforting Moment, Asuna"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": [],
+    "_id": "5c7b06e7d7ef9a5349249387",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 [Return two characters in your waiting room to your deck, and shuffle your deck] When this card is placed on the stage from your hand, you may pay the cost. If you do, this card gets +1 soul until end of turn.", "【AUTO】 When this card becomes 【REVERSE】 in battle, reveal the top card of your deck. If that card is level 1 or higher, you may put this card into your stock. (Climax are regarded as level 0. The revealed card is returned to its original place)"],
+    "name": "Comforting Moment, Asuna",
+    "rarity": "U",
+    "side": "S",
+    "level": 0,
+    "cost": 0,
+    "power": 1000,
+    "soul": 1,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E103",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "YELLOW",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+        "name": "Last Shot, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a534924933a",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+    "name": "Last Shot, Sinon",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 10000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E076",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+        "name": "Last Shot, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a534924933a",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+    "name": "Last Shot, Sinon",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 10000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E076",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["Avatar", "Weapon"],
+        "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+        "name": "Last Shot, Sinon"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["SOUL"],
+    "_id": "5c7b06e6d7ef9a534924933a",
+    "attributes": ["Avatar", "Weapon"],
+    "ability": ["【AUTO】 When this card is placed on the stage from your hand or by a \"Change\" effect, you may put the top card of your clock into your waiting room.", "【AUTO】 [(2) Put a card from your hand into your waiting room] When this card attacks, if a card named \"Phantom Bullet\" is in your climax area, you may pay the cost. If you do, deal four damage to your opponent. When this damage is canceled, this card gets +3500 power until the end of your opponent's next turn. (This damage may be canceled)", "【AUTO】 When this card becomes 【REVERSE】 in battle, put this card into your memory."],
+    "name": "Last Shot, Sinon",
+    "rarity": "RR",
+    "side": "S",
+    "level": 3,
+    "cost": 2,
+    "power": 10000,
+    "soul": 2,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E076",
+    "lang": "EN",
+    "cardtype": "CH",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+        "name": "《Mother's Rosario》"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["TREASURE"],
+    "_id": "5c7b06e7d7ef9a53492493b0",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+    "name": "《Mother's Rosario》",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E048",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+        "name": "《Mother's Rosario》"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["TREASURE"],
+    "_id": "5c7b06e7d7ef9a53492493b0",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+    "name": "《Mother's Rosario》",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E048",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+        "name": "《Mother's Rosario》"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["TREASURE"],
+    "_id": "5c7b06e7d7ef9a53492493b0",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+    "name": "《Mother's Rosario》",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E048",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+        "name": "《Mother's Rosario》"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["TREASURE"],
+    "_id": "5c7b06e7d7ef9a53492493b0",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【TREASURE】: When this card triggers, return this card to your hand. You may put the top card of your deck into your stock.)"],
+    "name": "《Mother's Rosario》",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E048",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "GREEN",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+        "name": "Phantom Bullet"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["DRAW"],
+    "_id": "5c7b06e7d7ef9a534924939f",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+    "name": "Phantom Bullet",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E098",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+        "name": "Phantom Bullet"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["DRAW"],
+    "_id": "5c7b06e7d7ef9a534924939f",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+    "name": "Phantom Bullet",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E098",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+        "name": "Phantom Bullet"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["DRAW"],
+    "_id": "5c7b06e7d7ef9a534924939f",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+    "name": "Phantom Bullet",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E098",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "BLUE",
+    "__v": 1
+  }, {
+    "locale": {
+      "EN": {
+        "attributes": ["-", "-"],
+        "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+        "name": "Phantom Bullet"
+      },
+      "NP": {
+        "attributes": [],
+        "ability": []
+      }
+    },
+    "series": "5c7b16cb7cd9b718cdbd0a72",
+    "equivilantcard": null,
+    "trigger": ["DRAW"],
+    "_id": "5c7b06e7d7ef9a534924939f",
+    "attributes": ["-", "-"],
+    "ability": ["【CONT】 All of your characters get +1000 power and +1 soul.", "(【DRAW】: When this card triggers, you may draw a card.)"],
+    "name": "Phantom Bullet",
+    "rarity": "CR",
+    "side": "S",
+    "level": null,
+    "cost": null,
+    "power": null,
+    "soul": 0,
+    "set": "SAO",
+    "release": "47",
+    "sid": "E098",
+    "lang": "EN",
+    "cardtype": "CX",
+    "colour": "BLUE",
+    "__v": 1
+  }],
+  "sets": [{
+    "enabled": true,
+    "_id": "5c7b16cb7cd9b718cdbd0a72",
+    "set": "SAO",
+    "side": "S",
+    "release": "47",
+    "name": "Sword Art Online Re: Edit",
+    "lang": "EN",
+    "hash": "5d222b578e71584b5f7d17b5"
+  }, {
+    "enabled": true,
+    "_id": "5c7b167a7cd9b718cdbd0a54",
+    "set": "SAO",
+    "side": "S",
+    "release": "E26",
+    "name": "Sword Art Online II Vol.2",
+    "lang": "EN",
+    "hash": "5d222b578e71584b5f7d17b3"
+  }, {
+    "enabled": true,
+    "_id": "5c7b169d7cd9b718cdbd0a61",
+    "set": "SAO",
+    "side": "S",
+    "release": "51",
+    "name": "Sword Art Online The Movie -Ordinal Scale-",
+    "lang": "EN",
+    "hash": "5d222b578e71584b5f7d17b4"
+  }, {
+    "enabled": true,
+    "_id": "5c7b165b7cd9b718cdbd0a4a",
+    "set": "SAO",
+    "side": "S",
+    "release": "E23",
+    "name": "Sword Art Online II",
+    "lang": "EN",
+    "hash": "5d222b578e71584b5f7d17b2"
+  }],
+  "neo_fail": null,
+  "views": 61,
+  "attributes": [],
+  "favoritecount": 0,
+  "myfavorite": false,
+  "name": "Unique and Original",
+  "userid": {
+    "_id": "5e02b2dd5a0d601a0cc8b3fd",
+    "name": "Klaki892"
+  },
+  "deckid": "rtJoTS6Hj",
+  "datemodified": "2019-12-25T01:00:42.041Z"
+}

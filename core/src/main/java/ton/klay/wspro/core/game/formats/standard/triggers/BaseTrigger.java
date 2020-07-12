@@ -29,6 +29,7 @@ public abstract class BaseTrigger {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("Name", getTriggerName())
                 .add("cause", cause)
                 .add("caller", caller)
                 .toString();

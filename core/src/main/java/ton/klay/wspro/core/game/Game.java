@@ -14,12 +14,19 @@ import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.phases.PhaseHandler;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
+import ton.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
+import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.StandardWeissTriggerObservers;
 import ton.klay.wspro.core.game.formats.standard.zones.StandardWeissPlayArea;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static ton.klay.wspro.core.game.actions.PlayChooser.SelectionType.UP_TO;
@@ -71,6 +78,10 @@ public class Game {
         phaseHandler = new PhaseHandler(this);
         timingManager = new TimingManager(this);
         new StandardWeissTriggerObservers(this);
+
+        gameID = getRandomGuid();
+        log.debug("Game ID created: " + gameID);
+
         gameStatus = GameStatus.READY;
     }
 
@@ -143,9 +154,6 @@ public class Game {
 
         if (isGameOver()) return;
 
-        gameID = getRandomGuid();
-        log.debug("Game ID created: " + gameID);
-
         GamePlayer currentTurnPlayer = (player1 == startingPlayer) ? player1 : player2;
         GamePlayer opposingPlayer = (player1 == startingPlayer) ? player2 : player1;
 
@@ -163,6 +171,9 @@ public class Game {
     public void unexpectedEndGame(RuntimeException ex){
         log.error("Stopping Game " + this + " Due to exception: " + ex.getMessage(), ex);
         gameStatus = GameStatus.FINISHED_UNEXPECTEDLY;
+        //announce game over to everyone regardless of their state
+        GameOverTrigger trigger = new GameOverTrigger(Collections.emptyList(), TriggerCause.GAME_ACTION, getCurrentTurnPlayer());
+        getTriggerManager().post(trigger);
         //todo code in unexpected endGame functionality, no winner, preform log dump & cleanup (if any)
     }
 
@@ -170,7 +181,6 @@ public class Game {
         gameStatus = GameStatus.FINISHED_SUCCESSFULLY;
         //at this point LosingPlayers have been populated, game status is finished.
         //todo  preform log dump(?) & cleanup (if any)
-
     }
 
     private void initializePlayingField() {
@@ -304,5 +314,9 @@ public class Game {
 
     public int getCurrentTurnNumber() {
         return phaseHandler.getTurnNumber();
+    }
+
+    public String getGameID() {
+        return gameID;
     }
 }

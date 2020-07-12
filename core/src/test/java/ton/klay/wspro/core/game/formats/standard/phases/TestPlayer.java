@@ -31,7 +31,7 @@ public class TestPlayer implements Player {
     }
 
     @Override
-    public String getPlayerName() {
+    public String getName() {
         return playerName;
     }
 

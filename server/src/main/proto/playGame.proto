@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "to.klay.wspro.server.grpc.gameplay";
+option java_outer_classname = "GamePlayProto";
+
+import "google/protobuf/empty.proto";
+package gameplay;
+
+service PlayWeissService{
+  rpc connectToGame(GrpcGameConnectRequest) returns (GrpcGameConnectResponse);
+  rpc readyUp(GrpcPlayerToken) returns (GrpcSuccessResponse);
+  //todo all the playgame rpcs....
+  rpc listenToGameEvents(GrpcPlayerToken) returns (stream GrpcGameMessage);
+  rpc answerPlayRequest(GrpcPlayResponse) returns (google.protobuf.Empty);
+}
+
+message GrpcGameConnectRequest{
+  string gameIdentifier = 1;
+  string playerName = 2;
+
+}
+message GrpcGameConnectResponse{
+  bool connectionAccepted = 1;
+  GrpcPlayerToken token = 2;
+}
+
+message GrpcGameMessage {
+  oneof gameEvent {
+    GrpcPlayRequest request = 1;
+    GrpcGameTrigger trigger = 2;
+  }
+}
+
+message GrpcPlayRequest {
+  string choiceBlock = 1;
+
+}
+
+message GrpcPlayResponse {
+    GrpcPlayerToken token = 1;
+    repeated int32 choiceNumber = 2;
+}
+
+message GrpcGameTrigger {
+  string triggerText = 1;
+}
+
+message GrpcPlayerToken{
+  string token = 1;
+  string playerName = 2;
+}
+
+message GrpcSuccessResponse {
+  bool wasSuccessful = 1;
+}
+
+

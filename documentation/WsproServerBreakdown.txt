@@ -30,9 +30,9 @@ How do we store ability scripts?
 			+ centralized location
 			+ no worries about invalid filenames
 		Cons:
-			- 
+			-
 		Neutral:
-			- whats the update process for an ability
+			- whats the update process for an ability?
 			
 What is the process flow from server start to Game Start
 	1. Check Configuration
@@ -55,3 +55,48 @@ What is the process flow from server start to Game Start
 		a. save/log game stats? (and other hooks)
 		b. close all connections
 	9. end program or stay alive for more games
+
+What are the game configuration details? (Step 3 above)
+	receives "setupGame" call
+		player x2
+			List of cards
+			Player ID or other unique ID token
+	returns:
+		setupDetails
+			list of cards with no scripts
+			list of unknown cards
+			boolean - is game ready for connections?
+
+How do we connect players to a ready game?
+    1. Once game is made await player connections
+    2. upon player connection check ID against waiting games
+        (or, on game creation make GUID's that the player must know)
+    3. if game exists, set connector to player, else error out player
+    4. player should start listening for game events / send ready-up
+
+How do we turn requests for the player over to them?
+    Possbility #1: Encapsulate all events and put in a queue
+        - game event List /output stream
+            - Any triggers made are placed into this List
+            - The list maintains all game events received
+                - allows for pulling events at a later time
+            - all events are also put into a queue
+                - the stream pulls these events as they happen
+        - player choice queue
+            - Requests are wrapped in a Completable future
+                - they are given an ID for uniqueness
+                - the completable future goes into the output stream
+                - the method is then blocked waiting for a response
+                    - the wait is blocked for X amount of time before a default AI will make the choice.
+                    - reminder stream messages should be sent to warn the player of remaining time.
+            - any pending choices are placed into a queue
+            - when a choice response is recieved, it checks the queue
+                - after matching ID's, the response is paired to the choice
+                - the future is completed with the response, and request removed from queue
+        Pros:
+            + correctly handles events
+            + if two players disconnect, game is guaranteed to finish eventually
+        Cons:
+            - Concede/ INterrupt events are undefiend.
+        Neutral:
+            - if both players disconnect, whats the procedure? (double loss?)
