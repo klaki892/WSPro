@@ -4,7 +4,6 @@ import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.game.PaperDeck;
-import ton.klay.wspro.core.api.game.player.PlayerController;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.game.Player;
 
@@ -14,7 +13,7 @@ public class ServerPlayer implements Player {
     private final String name;
     private PaperDeck deck;
     private GameLocale playerLocale;
-    private PlayerController controller;
+    private ServerPlayerController controller;
 
     public ServerPlayer(String name ){
         this.name = name;
@@ -26,7 +25,7 @@ public class ServerPlayer implements Player {
         this.playerLocale = playerLocale;
     }
 
-    public void setController(PlayerController controller) {
+    public void setController(ServerPlayerController controller) {
         this.controller = controller;
     }
 
@@ -52,7 +51,7 @@ public class ServerPlayer implements Player {
     }
 
     @Override
-    public PlayerController getController() {
+    public ServerPlayerController getController() {
         return controller;
     }
 

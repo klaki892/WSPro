@@ -38,12 +38,23 @@ class WsEngDbCardPaperCardAdapter implements PaperCard {
 
     @Override
     public int getLevel() {
-        return Integer.parseInt(serializedCard.getLevel());
+        try {
+            return Integer.parseInt(serializedCard.getLevel());
+        } catch (NumberFormatException ex){
+            //events and climaxes, dont worry about this
+            return 0;
+        }
     }
 
     @Override
     public int getCost() {
-        return Integer.parseInt(serializedCard.getCost());
+        try {
+            return Integer.parseInt(serializedCard.getCost());
+        } catch (NumberFormatException ex){
+            //events and climaxes, dont worry about this
+            return 0;
+        }
+
     }
 
     @Override
@@ -65,7 +76,12 @@ class WsEngDbCardPaperCardAdapter implements PaperCard {
 
     @Override
     public int getPower() {
-        return Integer.parseInt(serializedCard.getPower());
+        try {
+            return Integer.parseInt(serializedCard.getPower());
+        } catch (NumberFormatException ex){
+            //events and climaxes, dont worry about this
+            return 0;
+        }
     }
 
     @Override

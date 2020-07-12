@@ -50,7 +50,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
         if (controller != null){
             controller.setPlayerReadied(true);
             responseBuilder.setWasSuccessful(true);
-            log.info(String.format("Player (%s) Readied up for Game", request.getPlayerName() ));
+            log.info(String.format("Player (%s) Readied up for Game %s", request.getPlayerName() ));
         } else {
             responseBuilder.setWasSuccessful(false);
             log.error(String.format("Player (%s) attempted to ready up but no controller assoicated with token (%s)",

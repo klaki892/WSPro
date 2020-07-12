@@ -7,7 +7,6 @@ import to.klay.wspro.server.grpc.gameplay.GrpcGameMessage;
 import to.klay.wspro.server.grpc.gameplay.GrpcGameTrigger;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayRequest;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayResponse;
-import ton.klay.wspro.core.api.game.player.PlayerController;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.PlayChoice;
 import ton.klay.wspro.core.game.actions.PlayChooser;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
-public class GrpcPlayerController implements PlayerController {
+public class GrpcPlayerController implements ServerPlayerController {
 
     private static final Logger log = LogManager.getLogger();
     private final Game game;
@@ -81,6 +80,7 @@ public class GrpcPlayerController implements PlayerController {
         }
     }
 
+    @Override
     public void setPlayerReadied(boolean playerReadied) {
         this.playerReadied = playerReadied;
     }

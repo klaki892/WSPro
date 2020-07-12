@@ -19,14 +19,12 @@ import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
 import to.klay.wspro.server.grpc.PlayWeissService;
 import to.klay.wspro.server.grpc.SetupGameService;
-import to.klay.wspro.server.setup.finders.abilities.QueryableAbilityFinder;
-import to.klay.wspro.server.setup.finders.cards.CardFinder;
 import to.klay.wspro.server.setup.modules.ServerOptions;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public class ServerMain {
+public class ArmeriaServer {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -47,7 +45,8 @@ public class ServerMain {
     int gameLimit;
 
 
-    public void startServer(CardFinder cardFinder, QueryableAbilityFinder abilityFinder) {
+
+    public void startServer(ServerGameManager gameManager) {
 
         setLoggerConfig();
         log.info("WSPro Server Starting");
@@ -61,10 +60,6 @@ public class ServerMain {
         sb.service("/", (ctx, req) -> HttpResponse.of("WSPro Server"));
         sb.accessLogWriter(AccessLogWriter.combined(), true);
 
-
-        //Setup Game Service
-        ServerGameManager gameManager = new ServerGameManager(gameLimit,
-                abilityFinder, cardFinder);
 
 
         GrpcServiceBuilder grpcGameService = GrpcService.builder()

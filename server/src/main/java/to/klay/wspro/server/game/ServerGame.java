@@ -41,6 +41,7 @@ public class ServerGame extends Thread {
 
     public boolean isStartable(){
         if (player1 == null || player2 == null) return false;
+        if (player1.getController() == null || player2.getController() == null) return false;
 
 
         if (weissGame.getGameState() != GameStatus.READY) return false;
@@ -67,6 +68,7 @@ public class ServerGame extends Thread {
 
     public void forceStartGame(){
         log.info("Starting Weiss Game " + gameID);
+        setName("Weiss Game " + gameID);
         start();
     }
 

@@ -2,7 +2,6 @@ package to.klay.wspro.server.grpc;
 
 import com.google.rpc.DebugInfo;
 import io.grpc.Metadata;
-import io.grpc.Status;
 import io.grpc.protobuf.ProtoUtils;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
@@ -55,12 +54,6 @@ public class SetupGameService extends SetupGameGrpc.SetupGameImplBase {
 
         responseObserver.onNext(validateGameRequest(request));
         responseObserver.onCompleted();
-
-        Metadata trailers = new Metadata();
-        trailers.put(DEBUG_INFO_TRAILER_KEY, DEBUG_INFO);
-        responseObserver.onError(Status.INTERNAL.withDescription(DEBUG_DESC)
-                .asRuntimeException(trailers));
-
 
     }
 
@@ -145,7 +138,7 @@ public class SetupGameService extends SetupGameGrpc.SetupGameImplBase {
         player1.setDeck(PaperDeckBuilder.createPaperDeck(requestPlayer1.getDeck().getDeckName(), decks.get(0)));
 
         ServerPlayer player2 = new ServerPlayer(requestPlayer2.getPlayerName());
-        player2.setDeck(PaperDeckBuilder.createPaperDeck(requestPlayer2.getDeck().getDeckName(), decks.get(0)));
+        player2.setDeck(PaperDeckBuilder.createPaperDeck(requestPlayer2.getDeck().getDeckName(), decks.get(1)));
 
         ServerGame game = new ServerGame(serverGameManager, player1, player2);
 

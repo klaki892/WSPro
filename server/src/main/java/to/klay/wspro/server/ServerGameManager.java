@@ -87,6 +87,7 @@ public class ServerGameManager {
         ServerGame serverGame = pendingGames.get(gameID);
 
         if (serverGame != null){
+            pendingGames.remove(gameID);
             activeGames.put(gameID, serverGame);
         } else {
             log.error("Was told to start game " + gameID + " but it was not pending.");

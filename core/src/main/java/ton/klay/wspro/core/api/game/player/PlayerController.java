@@ -9,6 +9,4 @@ public interface PlayerController {
 
     List<PlayChoice> makePlayChoice(PlayChooser chooser);
 
-    boolean isPlayerReady();
-
 }

@@ -35,18 +35,24 @@ public class ServerOptions extends AbstractModule {
     public static final String ABILITY_SOURCE_DIRECTORY_PATH_KEY    = "wspro.server.ability.directory";
     public static final String PORT_KEY                             = "wspro.server.port" ;
     private static final Logger log = LogManager.getLogger();
+    private CommandLineArgumentOptions commandLineArgumentOptions;
 
-    private Configuration config;
+    protected Configuration config;
+
+    protected ServerOptions(){};
 
     public ServerOptions(CommandLineArgumentOptions commandLineArgumentOptions){
+        this.commandLineArgumentOptions = commandLineArgumentOptions;
+    }
 
+    public void initConfig() {
         config = null;
 
-        commandLineArgumentOptions.populateMap();
-        if (commandLineArgumentOptions.getPropertiesFile().exists()){
+        this.commandLineArgumentOptions.populateMap();
+        if (this.commandLineArgumentOptions.getPropertiesFile().exists()){
             Properties propertiesFile = new Properties();
             try {
-                propertiesFile.load(new FileReader(commandLineArgumentOptions.getPropertiesFile()));
+                propertiesFile.load(new FileReader(this.commandLineArgumentOptions.getPropertiesFile()));
                 config = Configuration.from(Configuration.properties(propertiesFile));
             } catch (RuntimeException | IOException ex0){
                 log.error(ex0);
@@ -56,14 +62,14 @@ public class ServerOptions extends AbstractModule {
 
         //enable command line, then environment argument retireval
         if (config == null) {
-            config = Configuration.from(commandLineArgumentOptions);
+            config = Configuration.from(this.commandLineArgumentOptions);
         } else{
-            config.or(commandLineArgumentOptions);
+            config.or(this.commandLineArgumentOptions);
         }
         //environment variable search
         config.or((key -> System.getenv(key.replace(".", "_")).toLowerCase()));
-
     }
+
     @Provides
     @Named(PORT_KEY)
     @Singleton

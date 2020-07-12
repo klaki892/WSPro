@@ -1,18 +1,18 @@
 package to.klay.wspro.server.setup.modules;
 
-import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import picocli.CommandLine;
-import to.klay.wspro.server.ServerMain;
+import to.klay.wspro.server.ArmeriaServer;
+import to.klay.wspro.server.ServerGameManager;
 import to.klay.wspro.server.setup.CommandLineArgumentOptions;
 
 /**
  * Responsible for starting the program from a standard command line / IDE
  */
-public class MainModule extends AbstractModule {
+public class MainModule {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -28,15 +28,24 @@ public class MainModule extends AbstractModule {
         }
 
         ServerOptions serverOptions = new ServerOptions(commandLineArgumentOptions);
+        serverOptions.initConfig();
+        new MainModule().injectAndStart(serverOptions);
+
+    }
+
+    protected Injector getServerInjector(ServerOptions serverOptions) {
         Injector injector = Guice.createInjector(serverOptions);
         FinderModule finderModule = injector.getInstance(FinderModule.class);
 
         //injectors that need the starting configuration information to do thier job:
-        Injector level2Injector = injector.createChildInjector(finderModule);
+        return injector.createChildInjector(finderModule);
+    }
 
+    protected void injectAndStart(ServerOptions serverOptions) {
+        Injector level2Injector = getServerInjector(serverOptions);
+        ServerGameManager manager = level2Injector.getInstance(ServerGameManager.class);
         //start server
-        level2Injector.getInstance(ServerMain.class).startServer(finderModule.getCardSource(), finderModule.getAbilitySource());
-
+        level2Injector.getInstance(ArmeriaServer.class).startServer(manager);
     }
 
 }
