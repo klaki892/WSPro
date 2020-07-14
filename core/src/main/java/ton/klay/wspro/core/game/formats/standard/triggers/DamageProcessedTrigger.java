@@ -1,27 +1,35 @@
 package ton.klay.wspro.core.game.formats.standard.triggers;
 
 import com.google.common.base.MoreObjects;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoDamageProcessedTrigger;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
+@ProtoClass(ProtoDamageProcessedTrigger.class)
 public class DamageProcessedTrigger extends BaseTrigger {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField
     private final PlayingCard sourceCard;
+    @ProtoField
     private final int amount;
+    @ProtoField
     private final GamePlayer receivingPlayer;
-    private final boolean wasCancelled;
+    @ProtoField
+    private final boolean damageCancelled;
 
     public DamageProcessedTrigger(PlayingCard sourceCard, int amount, GamePlayer receivingPlayer,
-                                  boolean wasCancelled, TriggerCause cause, GameEntity caller) {
+                                  boolean damageCancelled, TriggerCause cause, GameEntity caller) {
         super(cause, caller);
         this.sourceCard = sourceCard;
         this.amount = amount;
         this.receivingPlayer = receivingPlayer;
-        this.wasCancelled = wasCancelled;
+        this.damageCancelled = damageCancelled;
     }
 
     @Override
@@ -41,8 +49,8 @@ public class DamageProcessedTrigger extends BaseTrigger {
         return receivingPlayer;
     }
 
-    public boolean wasCancelled() {
-        return wasCancelled;
+    public boolean isDamageCancelled() {
+        return damageCancelled;
     }
 
     @Override
@@ -51,7 +59,7 @@ public class DamageProcessedTrigger extends BaseTrigger {
                 .add("sourceCard", sourceCard)
                 .add("amount", amount)
                 .add("receivingPlayer", receivingPlayer)
-                .add("wasCancelled", wasCancelled)
+                .add("wasCancelled", damageCancelled)
                 .toString();
     }
 }

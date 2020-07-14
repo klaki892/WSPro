@@ -84,28 +84,28 @@ public class TriggerStep extends BasePhase  {
                     new ReturnTriggerIconEffect(triggerCard).execute();
                     break;
                 case POOL:
-                    new PoolTriggerIconEffect(triggerCard);
+                    new PoolTriggerIconEffect(triggerCard).execute();
                     break;
                 case COMEBACK:
-                    new ComebackTriggerIconEffect(triggerCard);
+                    new ComebackTriggerIconEffect(triggerCard).execute();
                     break;
                 case DRAW:
-                    new DrawTriggerIconEffect(triggerCard);
+                    new DrawTriggerIconEffect(triggerCard).execute();
                     break;
                 case SHOT:
-                    new ShotTriggerIconEffect(triggerCard, attackingCard);
+                    new ShotTriggerIconEffect(triggerCard, attackingCard).execute();
                     break;
                 case TREASURE:
-                    new TreasureTriggerIconEffect(triggerCard);
+                    new TreasureTriggerIconEffect(triggerCard).execute();
                     break;
                 case GATE:
-                    new GateTriggerIconEffect(triggerCard);
+                    new GateTriggerIconEffect(triggerCard).execute();
                     break;
                 case STANDBY:
-                    StandbyTriggerIconEffect.execute(triggerCard);
+                    StandbyTriggerIconEffect.execute(triggerCard).execute();
                     break;
                 case CHOICE:
-                    new ChoiceTriggerIconEffect(triggerCard);
+                    new ChoiceTriggerIconEffect(triggerCard).execute();
                     break;
                 default:
                     throw new GameRuntimeException(new IllegalStateException("Unsupported Trigger Icon: " + icon));

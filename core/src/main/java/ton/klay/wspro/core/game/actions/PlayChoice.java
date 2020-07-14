@@ -1,26 +1,40 @@
 package ton.klay.wspro.core.game.actions;
 
 import com.google.common.base.MoreObjects;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoPlayChoice;
 import ton.klay.wspro.core.api.cards.LocalizedString;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
+import ton.klay.wspro.core.game.proto.PlayChoiceActionProtoTypeConverter;
+import ton.klay.wspro.core.game.proto.PlayChoiceTypeProtoTypeConverter;
 
+@ProtoClass(ProtoPlayChoice.class)
 public class PlayChoice {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField(converter = PlayChoiceTypeProtoTypeConverter.class)
     private final PlayChoiceType choiceType;
+    @ProtoField
     private InterruptRuleAction interruptRuleAction;
+    @ProtoField
     private Ability ability;
+    @ProtoField
     private PlayZonePair stagePositionPair;
+    @ProtoField
     private AttackPositionPair attackPositionPair;
+    @ProtoField
     private PlayZone zone;
-    private LocalizedString string;
-
+    @ProtoField
+    private LocalizedString localizedString;
+    @ProtoField
     private PlayingCard card;
+    @ProtoField(converter = PlayChoiceActionProtoTypeConverter.class)
     private PlayChoiceAction action;
 
     private PlayChoice(PlayChoiceType choiceType, PlayingCard card){
@@ -47,9 +61,9 @@ public class PlayChoice {
         this(choiceType);
         this.zone = zone;
     }
-    private PlayChoice(PlayChoiceType choiceType, LocalizedString string){
+    private PlayChoice(PlayChoiceType choiceType, LocalizedString localizedString){
         this(choiceType);
-        this.string = string;
+        this.localizedString = localizedString;
     }
     private PlayChoice(PlayChoiceType choiceType, InterruptRuleAction interruptRuleAction){
         this(choiceType);
@@ -104,7 +118,7 @@ public class PlayChoice {
         return ability;
     }
 
-    public PlayZonePair getExchangeableStagePositions() {
+    public PlayZonePair getStagePositionPair() {
         return stagePositionPair;
     }
 
@@ -117,7 +131,7 @@ public class PlayChoice {
     }
 
     public LocalizedString getLocalizedString() {
-        return string;
+        return localizedString;
     }
 
     public InterruptRuleAction getInterruptRuleAction() {
@@ -134,7 +148,7 @@ public class PlayChoice {
                 .add("stagePositionPair", stagePositionPair)
                 .add("attackPositionPair", attackPositionPair)
                 .add("zone", zone)
-                .add("string", string)
+                .add("string", localizedString)
                 .add("card", card)
                 .add("action", action)
                 .toString();

@@ -5,6 +5,7 @@ package ton.klay.wspro.core.api.cards.abilities;
  */
 public enum AbilityKeyword {
 
+    KEYWORD_NONE,
     KEYWORD_ALARM,
     KEYWORD_ENCORE,
     KEYWORD_ASSIST,
@@ -19,6 +20,5 @@ public enum AbilityKeyword {
     KEYWORD_SHIFT,
     KEYWORD_ACCELERATE,
     KEYWORD_RESONATE,
-    KEYWORD_NONE,
 
 }

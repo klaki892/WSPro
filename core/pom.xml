@@ -15,6 +15,14 @@
 
     <name>Core Gameplay Module</name>
 
+    <repositories>
+        <!--needed for protobuf-converter -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!--<dependency>-->
             <!--<groupId>commons-io</groupId>-->
@@ -50,6 +58,19 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.12.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.silencecorner</groupId>
+            <artifactId>protobuf-converter</artifactId>
+            <version>1.1.5</version>
+            <exclusions>
+<!--                <exclusion>-->
+<!--                    <groupId>com.google.protobuf</groupId>-->
+<!--                    <artifactId>protobuf-java</artifactId>-->
+<!--                </exclusion>-->
+            </exclusions>
+        </dependency>
+
 
     </dependencies>
 

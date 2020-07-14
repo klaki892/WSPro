@@ -1,21 +1,28 @@
 package ton.klay.wspro.core.game.formats.standard.triggers;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoPhaseStartedTrigger;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.formats.standard.phases.TurnPhase;
+import ton.klay.wspro.core.game.proto.TurnPhaseProtoTypeConverter;
 
+@ProtoClass(ProtoPhaseStartedTrigger.class)
 public class PhaseStartedTrigger extends BaseTrigger {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField
     private final GamePlayer turnPlayer;
-    private final TurnPhase identifier;
+    @ProtoField(converter = TurnPhaseProtoTypeConverter.class)
+    private final TurnPhase phase;
 
     public PhaseStartedTrigger(GamePlayer turnPlayer, TurnPhase phase, TriggerCause cause, GameEntity caller) {
         super(cause, caller);
         this.turnPlayer = turnPlayer;
-        this.identifier = phase;
+        this.phase = phase;
     }
 
     @Override
@@ -28,6 +35,6 @@ public class PhaseStartedTrigger extends BaseTrigger {
     }
 
     public TurnPhase getPhase() {
-        return identifier;
+        return phase;
     }
 }

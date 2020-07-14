@@ -2,8 +2,8 @@ package ton.klay.wspro.core.game.effects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 
 public abstract class OwnableBaseEffect implements OwnableEffect {
 

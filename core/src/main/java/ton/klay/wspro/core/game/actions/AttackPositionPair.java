@@ -2,14 +2,21 @@ package ton.klay.wspro.core.game.actions;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoAttackPositionPair;
 import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
+import ton.klay.wspro.core.game.proto.AttackTypeProtoTypeConverter;
 
+@ProtoClass(ProtoAttackPositionPair.class)
 public class AttackPositionPair {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField(converter = AttackTypeProtoTypeConverter.class)
     private final AttackType attackType;
+    @ProtoField
     private final PlayZone zone;
 
     public AttackPositionPair(AttackType attackType, PlayZone zone) {

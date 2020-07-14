@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "to.klay.wspro.core.game.proto";
+option java_outer_classname = "ProtoPlayChooser";
+
+import "to/klay/wspro/core/game/proto/ProtoEntities.proto";
+package to.klay.wspro.core.game.proto;
+
+
+message PlayRequestProto {
+  repeated ProtoPlayChoice playChoices = 1;
+}
+
+message ProtoPlayChoice {
+  ProtoPlayChoiceType choice_type = 1;
+  ProtoInterruptRuleAction interruptRuleAction = 2;
+  ProtoAbility ability = 3;
+  ProtoPlayZonePair stagePositionPair = 4;
+  ProtoAttackPositionPair attackPositionPair = 5;
+  ProtoPlayZone zone = 6;
+  ProtoLocalizedString string = 7;
+  ProtoPlayingCard card = 8;
+  ProtoPlayChoiceAction action = 9;
+}
+
+enum ProtoPlayChoiceType{
+  CHOOSE_CARD = 0;
+  CHOOSE_ABILITY = 1;
+  CHOOSE_ZONE = 2;
+  EXCHANGE_POSITIONS = 3;
+  CHOOSE_ACTION = 4;
+  CHOOSE_STRING = 5;
+  CHOOSE_RULE_ACTION = 6;
+  CHOOSE_ATTACK = 7;
+}
+
+message ProtoInterruptRuleAction {
+  //todo InterruptRuleAction Type? (because there are so few)
+}
+
+message ProtoAbility {
+  ProtoAbilityType type = 1;
+  repeated ProtoAbilityKeyword keywords = 2;
+  ProtoPlayingCard card = 3;
+  // todo "ability #", the number corresponding to the ability listed, -1 (or 0) should be default encore
+}
+
+enum ProtoAbilityType {
+  ABILITY_ACTIVATED = 0;
+  ABILITY_CONTINUOUS = 1;
+  ABILITY_AUTOMATIC = 2;
+}
+
+enum ProtoAbilityKeyword{
+  KEYWORD_ALARM = 0;
+  KEYWORD_ENCORE = 1;
+  KEYWORD_ASSIST = 2;
+  KEYWORD_BOND = 3;
+  KEYWORD_BACKUP = 4;
+  KEYWORD_COUNTER = 5;
+  KEYWORD_GREAT_PERFORMANCE = 6;
+  KEYWORD_BRAINSTORM = 7;
+  KEYWORD_CHANGE = 8;
+  KEYWORD_MEMORY = 9;
+  KEYWORD_EXPERIENCE = 10;
+  KEYWORD_SHIFT = 11;
+  KEYWORD_ACCELERATE = 12;
+  KEYWORD_RESONATE = 13;
+  KEYWORD_NONE = 14;
+}
+
+message ProtoPlayZonePair {
+  ProtoPlayZone firstZone = 1;
+  ProtoPlayZone secondZone = 2;
+}
+
+message ProtoAttackPositionPair {
+    ProtoAttackType attack_type = 1;
+    ProtoPlayZone zone = 2;
+}
+
+enum ProtoPlayChoiceAction {
+    AFFIRMATIVE = 0;
+    NEGATIVE = 1;
+    END_ACTION = 2;
+    ROCK = 3;
+    PAPER = 4;
+    SCISSORS = 5;
+}

@@ -54,7 +54,7 @@
 <!--                    </execution>-->
 <!--                </executions>-->
 <!--                <configuration>-->
-<!--                    <mainClass>to.klay.wspro.core.proto.ProtoExtraction</mainClass>-->
+<!--                    <mainClass>to.klay.wspro.core.proto.CoreProtoGenerator</mainClass>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
         </plugins>

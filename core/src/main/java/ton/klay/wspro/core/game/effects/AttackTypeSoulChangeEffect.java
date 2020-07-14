@@ -1,8 +1,8 @@
 package ton.klay.wspro.core.game.effects;
 
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.api.game.GameRuntimeException;
 import ton.klay.wspro.core.game.actions.AttackType;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 public class AttackTypeSoulChangeEffect extends SoulChangeContinuousEffect {

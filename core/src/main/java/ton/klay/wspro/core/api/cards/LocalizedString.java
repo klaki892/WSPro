@@ -1,19 +1,29 @@
 package ton.klay.wspro.core.api.cards;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
+import to.klay.wspro.core.game.proto.ProtoLocalizedString;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
+import ton.klay.wspro.core.game.proto.GameLocaleProtoTypeConverter;
 
 /**
  * Grouping that holds a string based on the {@link GameLocale} associated with it
  */
+@ProtoClass(ProtoLocalizedString.class)
 public class LocalizedString {
 
-    GameLocale gameLocale;
+    @ProtoField(converter = GameLocaleProtoTypeConverter.class)
+    GameLocale locale;
+    @ProtoField
     String string;
 
-    protected LocalizedString(GameLocale gameLocale, String string){}
+    protected LocalizedString(GameLocale locale, String string){
+        this.locale = locale;
+        this.string = string;
+    }
 
     public GameLocale getLocale(){
-        return gameLocale;
+        return locale;
     }
     public String getString(){
         return string; //todo concatenate both (or more) names

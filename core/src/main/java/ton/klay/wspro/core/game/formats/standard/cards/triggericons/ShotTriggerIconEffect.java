@@ -44,7 +44,7 @@ public class ShotTriggerIconEffect implements Effect {
 
                 if (trigger instanceof DamageProcessedTrigger) {
                     DamageProcessedTrigger dmgTrigger = (DamageProcessedTrigger) trigger;
-                    if (dmgTrigger.wasCancelled()) {
+                    if (dmgTrigger.isDamageCancelled()) {
                         Commands.dealDamage(attackingCard, 1, dmgTrigger.getReceivingPlayer(),
                                 TriggerCause.GAME_ACTION, thisEffect);
                         //remove this effect so it doesnt happen for any future damage

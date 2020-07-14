@@ -2,13 +2,17 @@ package ton.klay.wspro.core.game.scripting.lua;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.luaj.vm2.*;
+import org.luaj.vm2.Globals;
+import org.luaj.vm2.LuaError;
+import org.luaj.vm2.LuaFunction;
+import org.luaj.vm2.LuaValue;
+import org.luaj.vm2.Varargs;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
 import org.luaj.vm2.lib.jse.CoerceLuaToJava;
 import ton.klay.wspro.core.api.cards.PaperCard;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.game.AbilityFinder;
 import ton.klay.wspro.core.game.Game;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
@@ -30,19 +34,21 @@ public abstract class LuaAbilityFinder  implements AbilityFinder {
     public TypedAbilityList getAbilitiesForCard(Game game, PlayingCard card) {
         Instant start = Instant.now();
         Optional<String> potentialLuaScript;
-        if (idToScriptMap.containsKey(card.getID())) {
-            potentialLuaScript = Optional.of(idToScriptMap.get(card.getID()));
+        if (idToScriptMap.containsKey(card.getId())) {
+            potentialLuaScript = Optional.of(idToScriptMap.get(card.getId()));
         } else {
             potentialLuaScript = getLuaScript(card.getPaperCard());
         }
         Instant end = Instant.now();
         totalTime = totalTime.plus(Duration.between(start, end));
-        log.debug("Total time retrieving card scripts so far:" + totalTime.toMillis());
-        log.warn("No Scripts found for " + card + "It will be initialized without abilities");
-        if (!potentialLuaScript.isPresent()) return new TypedAbilityList(Collections.emptyList());
+        log.trace("Total time retrieving card scripts so far:" + totalTime.toMillis());
+        if (!potentialLuaScript.isPresent()) {
+            log.warn("No Scripts found for " + card + "It will be initialized without abilities");
+            return new TypedAbilityList(Collections.emptyList());
+        }
 
         String scriptContent = potentialLuaScript.get();
-        idToScriptMap.putIfAbsent(card.getID(), scriptContent);
+        idToScriptMap.putIfAbsent(card.getId(), scriptContent);
 
         Globals engine = LuaScriptEngine.initLuaJEngine(game);
 
@@ -74,7 +80,7 @@ public abstract class LuaAbilityFinder  implements AbilityFinder {
             return new TypedAbilityList(abilities);
 
         } catch (LuaError ex){
-            log.error(String.format("Failed to load abilities for %s from script", card.getID()), ex);
+            log.error(String.format("Failed to load abilities for %s from script", card.getId()), ex);
         }
 
         return new TypedAbilityList(Collections.emptyList());

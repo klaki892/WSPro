@@ -1,18 +1,18 @@
-package to.klay.wspro.server.setup.modules;
+package to.klay.wspro.server;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import picocli.CommandLine;
-import to.klay.wspro.server.ArmeriaServer;
-import to.klay.wspro.server.ServerGameManager;
 import to.klay.wspro.server.setup.CommandLineArgumentOptions;
+import to.klay.wspro.server.setup.modules.FinderModule;
+import to.klay.wspro.server.setup.modules.ServerOptions;
 
 /**
  * Responsible for starting the program from a standard command line / IDE
  */
-public class MainModule {
+public class Main {
 
     private static final Logger log = LogManager.getLogger();
 
@@ -29,7 +29,7 @@ public class MainModule {
 
         ServerOptions serverOptions = new ServerOptions(commandLineArgumentOptions);
         serverOptions.initConfig();
-        new MainModule().injectAndStart(serverOptions);
+        new Main().injectAndStart(serverOptions);
 
     }
 

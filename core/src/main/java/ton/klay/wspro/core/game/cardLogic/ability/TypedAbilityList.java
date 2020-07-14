@@ -1,6 +1,5 @@
 package ton.klay.wspro.core.game.cardLogic.ability;
 
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
 
 import java.util.ArrayList;

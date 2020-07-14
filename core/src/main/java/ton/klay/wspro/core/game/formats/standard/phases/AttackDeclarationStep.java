@@ -121,14 +121,14 @@ public class AttackDeclarationStep extends BasePhase  {
             if (card.getOrientation() != CardOrientation.STAND) continue;
 
             if (hasCardFacing) {
-                if (card.canFrontalAttack()) {
+                if (card.isFrontalAttackCapable()) {
                     attackChoices.add(PlayChoice.makeAttackChoice(new AttackPositionPair(AttackType.FRONTAL, zone)));
                 }
-                if (card.canSideAttack()) {
+                if (card.isSideAttackCapable()) {
                     attackChoices.add(PlayChoice.makeAttackChoice(new AttackPositionPair(AttackType.SIDE, zone)));
                 }
             } else {
-                if (card.canDirectAttack()) {
+                if (card.isDirectAttackCapable()) {
                     attackChoices.add(PlayChoice.makeAttackChoice(new AttackPositionPair(AttackType.DIRECT, zone)));
                 }
             }

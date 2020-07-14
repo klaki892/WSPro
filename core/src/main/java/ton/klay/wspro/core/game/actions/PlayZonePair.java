@@ -1,17 +1,24 @@
 package ton.klay.wspro.core.game.actions;
 
 import com.google.common.base.MoreObjects;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoPlayZonePair;
 import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 import java.util.Arrays;
 import java.util.List;
 
+@ProtoClass(ProtoPlayZonePair.class)
 public class PlayZonePair {
 
     private static final Logger log = LogManager.getLogger();
+
+    @ProtoField
     private final PlayZone firstZone;
+    @ProtoField
     private final PlayZone secondZone;
 
     public PlayZonePair(PlayZone firstZone, PlayZone secondZone){

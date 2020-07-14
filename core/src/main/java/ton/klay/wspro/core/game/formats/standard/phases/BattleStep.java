@@ -33,19 +33,19 @@ public class BattleStep extends BasePhase  {
 
             //compare power and reverse respective characters
             if(attacker.getPower() > defender.getPower()){
-                if (defender.canBeReversed()){
+                if (defender.isReversable()){
                     Commands.changeCardOrientation(defender, REVERSED, TriggerCause.GAME_ACTION, this);
                 }
             } else if (attacker.getPower() < defender.getPower()){
-                if (attacker.canBeReversed()){
+                if (attacker.isReversable()){
                     Commands.changeCardOrientation(attacker, REVERSED, TriggerCause.GAME_ACTION, this);
                 }
             } else {
                 //draw, everyone's reversed
-                if (attacker.canBeReversed()){
+                if (attacker.isReversable()){
                     Commands.changeCardOrientation(attacker, REVERSED, TriggerCause.GAME_ACTION, this);
                 }
-                if (defender.canBeReversed()){
+                if (defender.isReversable()){
                     Commands.changeCardOrientation(defender, REVERSED, TriggerCause.GAME_ACTION, this);
                 }
             }

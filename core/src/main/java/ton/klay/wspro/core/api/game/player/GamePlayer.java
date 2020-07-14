@@ -1,5 +1,8 @@
 package ton.klay.wspro.core.api.game.player;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
+import to.klay.wspro.core.game.proto.ProtoGamePlayer;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.PaperDeck;
 import ton.klay.wspro.core.api.game.field.PlayArea;
@@ -7,12 +10,15 @@ import ton.klay.wspro.core.api.game.setup.GameLocale;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.Player;
 
+@ProtoClass(ProtoGamePlayer.class)
 public class GamePlayer implements GameEntity {
 
 
     private final transient Game game;
     private final transient Player player;
     private transient PlayArea playArea;
+
+    @ProtoField
     private final String playerName; //used for serialization only
 
     public GamePlayer(Game game, Player player) {

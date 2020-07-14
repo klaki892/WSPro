@@ -1,10 +1,13 @@
 package ton.klay.wspro.core.game.scripting.lua;
 
 import com.google.common.eventbus.EventBus;
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.luaj.vm2.LuaFunction;
 import org.luaj.vm2.lib.jse.CoerceJavaToLua;
+import to.klay.wspro.core.game.proto.ProtoAbility;
 import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
@@ -13,19 +16,24 @@ import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
+import ton.klay.wspro.core.game.proto.AbilityKeywordCollectionProtoTypeConverter;
 
 import java.util.Arrays;
 import java.util.List;
 
+@ProtoClass(ProtoAbility.class)
 public class LuaAutomaticAbility extends AutomaticAbility implements TriggerableAbilityListener  {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField
     private final PlayingCard card;
+    @ProtoField(converter = AbilityKeywordCollectionProtoTypeConverter.class)
     private final List<AbilityKeyword> keywords;
-    private Effect effect;
-    private final LuaFunction triggerCondition;
-    private final Cost cost;
-    private EventBus eventBus;
+
+    private transient Effect effect;
+    private final transient  LuaFunction triggerCondition;
+    private final transient  Cost cost;
+    private transient EventBus eventBus;
 
     public LuaAutomaticAbility(PlayingCard card, List<AbilityKeyword> keywords,
                                Effect effect,

@@ -1,27 +1,40 @@
 package ton.klay.wspro.core.game.formats.standard.triggers;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoCardMovedTrigger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
+import ton.klay.wspro.core.game.proto.CardOrientationTypeConverter;
+import ton.klay.wspro.core.game.proto.GameVisibilityTypeConverter;
 
 /**
  * Announces that a card moved from a zone to another zone.
  */
+@ProtoClass(ProtoCardMovedTrigger.class)
 public final class CardMovedTrigger extends BaseTrigger{
 
     private static final Logger log = LogManager.getLogger();
     private final TriggerName name = TriggerName.CARD_MOVED;
 
+    @ProtoField
     private final PlayingCard sourceCard;
+    @ProtoField
     private final PlayZone sourceZone;
+    @ProtoField
     private final PlayZone destinationZone;
+    @ProtoField
     private final int destinationIndex;
+    @ProtoField
     private final PlayingCard destinationCard;
+    @ProtoField(converter = CardOrientationTypeConverter.class)
     private final CardOrientation destinationOrientation;
+    @ProtoField(converter = GameVisibilityTypeConverter.class)
     private final GameVisibility destinationVisibility;
 
     public CardMovedTrigger(PlayingCard sourceCard, PlayZone sourceZone,

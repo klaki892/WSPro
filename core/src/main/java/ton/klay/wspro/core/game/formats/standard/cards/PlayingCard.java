@@ -1,7 +1,10 @@
 package ton.klay.wspro.core.game.formats.standard.cards;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoPlayingCard;
 import ton.klay.wspro.core.api.cards.CardAffiliation;
 import ton.klay.wspro.core.api.cards.CardColor;
 import ton.klay.wspro.core.api.cards.CardIcon;
@@ -20,50 +23,89 @@ import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
 import ton.klay.wspro.core.game.cards.CardType;
 import ton.klay.wspro.core.game.formats.standard.FundamentalOrderable;
 import ton.klay.wspro.core.game.formats.standard.triggers.listeners.TriggerableAbilityListener;
+import ton.klay.wspro.core.game.proto.CardAffiliationProtoTypeConverter;
+import ton.klay.wspro.core.game.proto.CardColorTypeConverter;
+import ton.klay.wspro.core.game.proto.CardIconTypeConverter;
+import ton.klay.wspro.core.game.proto.CardOrientationTypeConverter;
+import ton.klay.wspro.core.game.proto.CardTriggerCollectionProtoTypeConverter;
+import ton.klay.wspro.core.game.proto.CardTypeProtoTypeConverter;
+import ton.klay.wspro.core.game.proto.GameVisibilityTypeConverter;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+@ProtoClass(ProtoPlayingCard.class)
 public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     private static final Logger log = LogManager.getLogger();
     protected final transient Game game;
     protected final transient PaperCard baseCard;
-    protected String guid;
 
     protected final transient List<TriggerableAbilityListener> triggerableAbilities = new ArrayList<>();
     protected final transient List<ActivatedAbility> activatedAbilities = new ArrayList<>();
-    protected CardOrientation orientation;
     protected final transient GamePlayer owner;
-    protected transient GamePlayer master;
+
+    @ProtoField
+    protected  GamePlayer master;
+    @ProtoField
+    protected String guid;
+
+    @ProtoField(converter = CardOrientationTypeConverter.class)
+    protected CardOrientation orientation;
+
+    @ProtoField(converter = GameVisibilityTypeConverter.class)
     protected GameVisibility visibility;
+
+    @ProtoField
     protected final List<PlayingCard> markers = new ArrayList<>();
 
-    protected boolean canStand = true;
-    protected boolean canRest = true;
-    protected boolean canBeReversed = true;
-    protected boolean canBeTargeted = true;
-    protected boolean canFrontalAttack = true;
-    protected boolean canSideAttack = true;
-    protected boolean canDirectAttack = true;
+    @ProtoField
+    protected boolean standable = true;
+    @ProtoField
+    protected boolean restable = true;
+    @ProtoField
+    protected boolean reversable = true;
+    @ProtoField
+    protected boolean targetable = true;
+    @ProtoField
+    protected boolean frontalAttackCapable = true;
+    @ProtoField
+    protected boolean sideAttackCapable = true;
+    @ProtoField
+    protected boolean directAttackCapable = true;
 
-
+    @ProtoField
     protected int fundamentalOrder;
 
+    @ProtoField
     protected Collection<LocalizedString> cardName;
+    @ProtoField
     protected int level;
+
     protected transient Cost costActions;
+
+    @ProtoField
     protected int cost;
+
+    @ProtoField(converter = CardIconTypeConverter.class)
     protected CardIcon icon;
+    @ProtoField
     protected int power;
+    @ProtoField
     protected int soul;
+    @ProtoField(converter = CardColorTypeConverter.class)
     protected CardColor color;
+    @ProtoField(converter = CardTypeProtoTypeConverter.class)
     protected CardType cardType;
+    @ProtoField
     protected Collection<LocalizedString> titleName;
+    @ProtoField
     protected String id;
+    @ProtoField(converter = CardAffiliationProtoTypeConverter.class)
     protected CardAffiliation affiliations;
+    @ProtoField
     protected Collection<LocalizedString> traits;
+    @ProtoField(converter = CardTriggerCollectionProtoTypeConverter.class)
     protected Collection<CardTrigger> triggerIcons;
 
 
@@ -149,7 +191,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
          * Get the GUID (Game - Unique - ID) for this particular GameCard.
          * @return a GUID in string form
          */
-    public String getGUID() {
+    public String getGuid() {
         return guid;
     }
 
@@ -205,44 +247,44 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         return new ArrayList<>(markers);
     }
 
-    public boolean canStand() {
-        return canStand;
+    public boolean isStandable() {
+        return standable;
     }
 
-    public boolean canRest() {
-        return canRest;
+    public boolean isRestable() {
+        return restable;
     }
 
-    public boolean canBeReversed() {
-        return canBeReversed;
+    public boolean isReversable() {
+        return reversable;
     }
 
-    public boolean canBeTargeted() {
-        return canBeTargeted;
+    public boolean isTargetable() {
+        return targetable;
     }
 
-    public boolean canFrontalAttack() {
-        return canFrontalAttack;
+    public boolean isFrontalAttackCapable() {
+        return frontalAttackCapable;
     }
 
-    public void setCanFrontalAttack(boolean canFrontalAttack) {
-        this.canFrontalAttack = canFrontalAttack;
+    public void setFrontalAttackCapable(boolean frontalAttackCapable) {
+        this.frontalAttackCapable = frontalAttackCapable;
     }
 
-    public boolean canSideAttack() {
-        return canSideAttack;
+    public boolean isSideAttackCapable() {
+        return sideAttackCapable;
     }
 
-    public void setCanSideAttack(boolean canSideAttack) {
-        this.canSideAttack = canSideAttack;
+    public void setSideAttackCapable(boolean sideAttackCapable) {
+        this.sideAttackCapable = sideAttackCapable;
     }
 
-    public boolean canDirectAttack() {
-        return canDirectAttack;
+    public boolean isDirectAttackCapable() {
+        return directAttackCapable;
     }
 
-    public void setCanDirectAttack(boolean canDirectAttack) {
-        this.canDirectAttack = canDirectAttack;
+    public void setDirectAttackCapable(boolean directAttackCapable) {
+        this.directAttackCapable = directAttackCapable;
     }
 
 
@@ -265,20 +307,20 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         this.visibility = visibility;
     }
 
-    public void setCanStand(boolean canStand) {
-        this.canStand = canStand;
+    public void setStandable(boolean standable) {
+        this.standable = standable;
     }
 
-    public void setCanRest(boolean canRest) {
-        this.canRest = canRest;
+    public void setRestable(boolean restable) {
+        this.restable = restable;
     }
 
-    public void setCanBeReversed(boolean canBeReversed) {
-        this.canBeReversed = canBeReversed;
+    public void setReversable(boolean reversable) {
+        this.reversable = reversable;
     }
 
-    public void setCanBeTargeted(boolean canBeTargeted) {
-        this.canBeTargeted = canBeTargeted;
+    public void setTargetable(boolean targetable) {
+        this.targetable = targetable;
     }
 
     public void setCardName(Collection<LocalizedString> cardName) {
@@ -375,7 +417,7 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
          * Returns the CollectionID contained within this GameCard
          * @return the collectionID of the card
          */
-    public String getID() {
+    public String getId() {
         return id;
     }
 

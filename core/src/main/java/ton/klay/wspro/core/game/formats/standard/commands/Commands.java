@@ -72,7 +72,7 @@ public class Commands {
 
         if (!sourceZone.contains(card)){
             log.error(String.format("Tried to move Card (%s) From Zone(%s) But card is not located there. ",
-                    card.getGUID(), sourceZone.getZoneName().name()) );
+                    card.getGuid(), sourceZone.getZoneName().name()) );
             return null; //may need to throw exception instead as this is an illegal call...
         }
 
@@ -230,13 +230,13 @@ public class Commands {
 
         switch (orientTo){
             case STAND:
-                if (card.canStand()) card.setOrientation(CardOrientation.STAND);
+                if (card.isStandable()) card.setOrientation(CardOrientation.STAND);
                 break;
             case REST:
-                if (card.canRest()) card.setOrientation(CardOrientation.REST);
+                if (card.isRestable()) card.setOrientation(CardOrientation.REST);
                 break;
             case REVERSED:
-                if (card.canRest()) card.setOrientation(CardOrientation.REVERSED);
+                if (card.isRestable()) card.setOrientation(CardOrientation.REVERSED);
                 break;
         }
         if (card.getOrientation() != orientTo) return Optional.empty();

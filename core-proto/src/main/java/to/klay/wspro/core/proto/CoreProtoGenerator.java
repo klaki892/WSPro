@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,11 +29,12 @@ import java.util.List;
  * This process cant be automated (chicken&egg paradox with `core` package) and should only be used when major
  * changes have happened in the structure of core, or new objects need to be serialized.
  */
-public class ProtoExtraction {
+public class CoreProtoGenerator {
 
     private static final Logger log = LogManager.getLogger();
     static HashSet<String> protoDefs = new HashSet<>();
     static List<String> triggerNames = new ArrayList<>();
+    static HashMap<String, String> renameIndex = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
 //        Player player1 = new TestPlayer("TestPlayer1", new MockStandardDeck(), TestPlayerControllers::commandLinePlayChoiceMaker);
@@ -55,9 +58,7 @@ public class ProtoExtraction {
             if (Modifier.isAbstract(triggerClass.getModifiers())) continue;
             Schema<? extends BaseTrigger> schema = (Schema<? extends BaseTrigger>) RuntimeSchema.getSchema(triggerClass);
             String content = Generators.newProtoGenerator(schema).generate();
-            String filteredProtoFile = filterProtoFile(content);
-//            System.out.println(filteredProtoFile);
-
+            filterProtoFile(content);
         }
 
         //insert header
@@ -85,6 +86,12 @@ public class ProtoExtraction {
             String messageDeclaration = item.split("\n")[0];
             String type = messageDeclaration.split(" ")[0];
             String name = messageDeclaration.split(" ")[1];
+
+            //Prepend Proto in front of every message/enum type name
+            renameIndex.put(name, "Proto"+name);
+
+
+            //pull trigger names for the GameTriggerProto Generation
             if (type.trim().equalsIgnoreCase("message") &&
                     name.trim().contains("Trigger")){
                 triggerNames.add(name);
@@ -100,6 +107,9 @@ public class ProtoExtraction {
                         "  }\n" +
                         "}\n";
         StringBuilder oneOfTypes = new StringBuilder();
+
+        //sort to prevent less randomization changes
+        triggerNames.sort(Comparator.naturalOrder());
         for (int i = 0; i < triggerNames.size(); i++) {
             //to camelcase
             String formattedName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_CAMEL, triggerNames.get(i));
@@ -110,12 +120,22 @@ public class ProtoExtraction {
         defs.add(gameTriggerProtodef);
 
         StringBuilder sb = new StringBuilder(header);
+        //sort to prevent less randomization changes
+        defs.sort(Comparator.naturalOrder());
         defs.forEach(str -> sb.append(str+"\n\n"));
 
+        //rename all fields with their Prefix
 
-        //todo generate playchoices protobuf
+        final String[] outputString = {sb.toString()};
+        renameIndex.forEach((s, s2) -> {
+            outputString[0] = outputString[0].replaceAll(s, s2);
+        });
+
+
+        //generate playchoices protobuf
+
         FileWriter fw = new FileWriter("ProtoEntities.proto");
-        fw.write(sb.toString());
+        fw.write(outputString[0]);
         fw.flush();
         fw.close();
     }

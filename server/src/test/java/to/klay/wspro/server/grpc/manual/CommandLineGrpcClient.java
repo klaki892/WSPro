@@ -4,8 +4,11 @@ import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import to.klay.wspro.core.game.proto.GameMessageProto;
+import to.klay.wspro.core.game.proto.ProtoPlayChoice;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayerToken;
 import to.klay.wspro.server.grpc.gameplay.GrpcSuccessResponse;
+
+import java.util.List;
 
 public class CommandLineGrpcClient {
 
@@ -35,8 +38,15 @@ public class CommandLineGrpcClient {
     public void getGameEvents(GrpcPlayerToken token){
         playWeissTestClient.getEventListener(token.getToken(), token.getPlayerName(), new StreamObserver<GameMessageProto>() {
             @Override
-            public void onNext(GameMessageProto GameMessageProto) {
-                System.out.println(GameMessageProto);
+            public void onNext(GameMessageProto gameMessageProto) {
+                if (gameMessageProto.hasTrigger()) {
+                    System.out.println(gameMessageProto.getTrigger());
+                } else {
+                    List<ProtoPlayChoice> playChoicesList = gameMessageProto.getRequest().getPlayChoicesList();
+                    for (int i = 0; i < playChoicesList.size(); i++) {
+                        System.out.println("#" + i + ": " + playChoicesList.get(i).toString().replaceAll("\\n",""));
+                    }
+                }
             }
 
             @Override

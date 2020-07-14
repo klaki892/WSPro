@@ -10,7 +10,7 @@ public class TestProtoExtraction {
     private static final Logger log = LogManager.getLogger();
 
     public static void main(String[] args) throws IOException {
-        ProtoExtraction.main(null);
+        CoreProtoGenerator.main(null);
     }
 
 }

@@ -2,7 +2,7 @@ package ton.klay.wspro.core.game.formats.standard.cards.triggericons;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 import ton.klay.wspro.core.game.effects.SoulChangeContinuousEffect;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 

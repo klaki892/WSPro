@@ -135,9 +135,13 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
     private GrpcGameConnectResponse establishGameConnection(GrpcGameConnectRequest request) {
         String gameIdentifier = request.getGameIdentifier().trim();
         String playerName = request.getPlayerName().trim();
-        Optional<ServerGame> pendingGame = serverGameManager.getPendingGame(gameIdentifier);
+        Optional<ServerGame> game = serverGameManager.getPendingGame(gameIdentifier);
+        if (!game.isPresent()){
+            //check for a connection that needs to be resumed
+            game = serverGameManager.getActiveGame(gameIdentifier);
+        }
 
-        if (!pendingGame.isPresent()){
+        if (!game.isPresent()){
             log.info("Player (" + playerName + ") tried to connect to a non-existing game (" + gameIdentifier +")");
             return GrpcGameConnectResponse.newBuilder().setConnectionAccepted(false).build();
         }
@@ -149,12 +153,12 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
                 .setToken(newTokenString).build();
 
         //game is present, let them in
-        Optional<ServerPlayer> gamePlayer = pendingGame.get().getPlayer(playerName);
+        Optional<ServerPlayer> gamePlayer = game.get().getPlayer(playerName);
         if (gamePlayer.isPresent()){
 
             //register communicator if not already there
             if (gamePlayer.get().getController() == null){
-                GrpcPlayerController controller = new GrpcPlayerController(pendingGame.get().getWeissGame());
+                GrpcPlayerController controller = new GrpcPlayerController(game.get().getWeissGame());
                         gamePlayer.get().setController(controller);
                 tokenControllerMap.put(token, controller);
             } else {

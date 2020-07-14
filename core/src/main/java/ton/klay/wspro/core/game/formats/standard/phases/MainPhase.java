@@ -72,7 +72,7 @@ public class MainPhase extends BasePhase  {
                     choice.getAbility().performEffect();
                     break;
                 case EXCHANGE_POSITIONS:
-                    exchangePositions(choice.getExchangeableStagePositions());
+                    exchangePositions(choice.getStagePositionPair());
                     break;
                 case CHOOSE_ACTION:
                     if (choice.getAction() != END_ACTION) {
@@ -151,6 +151,7 @@ public class MainPhase extends BasePhase  {
             //All Choices resolved, pay cost and put on stage.
             Commands.payCost(card.getCostActions(), this);
             Commands.playCard(turnPlayer, card, hand, stagePosition, TriggerCause.GAME_ACTION, this);
+            return true;
         } else if (card.getCardType() == EVENT){
 
             //Events are played to resolution zone
@@ -159,6 +160,7 @@ public class MainPhase extends BasePhase  {
             //All Choices resolved, pay cost and put on stage.
             Commands.payCost(card.getCostActions(), this);
             Commands.playCard(turnPlayer, card, hand, resolution, TriggerCause.GAME_ACTION, this);
+            return true;
         }
 
         //somehow they picked a climax, return and log error message

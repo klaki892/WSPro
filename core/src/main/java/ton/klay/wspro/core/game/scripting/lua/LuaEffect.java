@@ -3,8 +3,8 @@ package ton.klay.wspro.core.game.scripting.lua;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.luaj.vm2.LuaFunction;
-import ton.klay.wspro.core.api.cards.abilities.Ability;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
+import ton.klay.wspro.core.game.cardLogic.ability.Ability;
 import ton.klay.wspro.core.game.effects.OwnableEffect;
 
 public class LuaEffect implements OwnableEffect {

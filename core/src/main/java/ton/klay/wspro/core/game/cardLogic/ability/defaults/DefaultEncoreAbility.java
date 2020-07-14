@@ -1,7 +1,10 @@
 package ton.klay.wspro.core.game.cardLogic.ability.defaults;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoAbility;
 import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.GameVisibility;
@@ -23,14 +26,17 @@ import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 import java.util.Collections;
 import java.util.List;
 
+@ProtoClass(ProtoAbility.class)
 public class DefaultEncoreAbility extends AutomaticAbility {
 
     private static final Logger log = LogManager.getLogger();
+
+    @ProtoField
     private final GamePlayer master;
 
-    private final CardMovedTrigger cardMovedTrigger;
-    private final PlayingCard card;
-    protected final Cost cost;
+    private transient final CardMovedTrigger cardMovedTrigger;
+    private transient PlayingCard card;
+    protected transient Cost cost;
 
 
     public DefaultEncoreAbility(PlayingCard card, CardMovedTrigger trigger) {

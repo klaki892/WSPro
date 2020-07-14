@@ -9,51 +9,80 @@ option java_outer_classname = "ProtoEntities";
 
 package to.klay.wspro.core.game.proto;
 
-message WillAttackTrigger {
-   TriggerCause cause = 1;
-   PlayingCard attackingCard = 2;
-   AttackType attackType = 3;
+enum ProtoAttackType {
+  DIRECT = 0;
+  FRONTAL = 1;
+  SIDE = 2;
 }
 
-message DeckEmptyTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
+enum ProtoCardAffiliation {
+  AFFILIATION_WEISS = 0;
+  AFFILIATION_SCHWARZ = 1;
+  AFFILIATION_BOTH = 2;
 }
 
-message EndOfAttackTrigger {
-   TriggerCause cause = 1;
-   GamePlayer turnPlayer = 2;
+enum ProtoCardColor {
+  CARD_COLOR_BLUE = 0;
+  CARD_COLOR_RED = 1;
+  CARD_COLOR_YELLOW = 2;
+  CARD_COLOR_GREEN = 3;
+  CARD_COLOR_PURPLE = 4;
 }
 
-enum GameVisibility {
+enum ProtoCardIcon {
+  COUNTER = 0;
+  CLOCK = 1;
+  NO_ICON = 2;
+}
+
+enum ProtoCardOrientation {
+  STAND = 0;
+  REST = 1;
+  REVERSED = 2;
+}
+
+enum ProtoCardTrigger {
+  NONE = 0;
+  SOUL = 1;
+  RETURN = 2;
+  POOL = 3;
+  COMEBACK = 4;
+  DRAW = 5;
+  SHOT = 6;
+  TREASURE = 7;
+  GATE = 8;
+  STANDBY = 9;
+  CHOICE = 10;
+}
+
+enum ProtoCardType {
+  CHARACTER = 0;
+  EVENT = 1;
+  CLIMAX = 2;
+}
+
+enum ProtoGameLocale {
+  JP = 0;
+  EN = 1;
+}
+
+enum ProtoGameVisibility {
   HIDDEN = 0;
   VISIBLE_TO_MASTER = 1;
   VISIBLE_TO_ALL = 2;
   VISIBLE_TO_OPPONENT = 3;
 }
 
-enum TurnPhase {
-  STAND_PHASE = 0;
-  DRAW_PHASE = 1;
-  CLOCK_PHASE = 2;
-  MAIN_PHASE = 3;
-  CLIMAX_PHASE = 4;
-  ATTACK_PHASE = 5;
-  ATTACK_DECLARATION_STEP = 6;
-  TRIGGER_STEP = 7;
-  COUNTER_STEP = 8;
-  DAMAGE_STEP = 9;
-  BATTLE_STEP = 10;
-  ENCORE_STEP = 11;
-  END_PHASE = 12;
+enum ProtoLoseConditions {
+  LEVEL4 = 0;
+  EMPTY_DECK_AND_WAITING = 1;
+  DRAW_CONDITION = 2;
+  CONCEDE = 3;
+  CARD_EFFECT_CONDITION = 4;
+  GAME_ERROR = 5;
 }
 
-message GameOverTrigger {
-   TriggerCause cause = 1;
-  repeated GamePlayer losingPlayers = 2;
-}
-
-enum TriggerName {
+enum ProtoTriggerName {
   CARD_MOVED = 0;
   CARD_DRAWN = 1;
   CARD_DISCARDED = 2;
@@ -80,171 +109,23 @@ enum TriggerName {
   ATTACK_SETUP = 23;
 }
 
-message CostPaidTrigger {
-   TriggerCause cause = 1;
+enum ProtoTurnPhase {
+  STAND_PHASE = 0;
+  DRAW_PHASE = 1;
+  CLOCK_PHASE = 2;
+  MAIN_PHASE = 3;
+  CLIMAX_PHASE = 4;
+  ATTACK_PHASE = 5;
+  ATTACK_DECLARATION_STEP = 6;
+  TRIGGER_STEP = 7;
+  COUNTER_STEP = 8;
+  DAMAGE_STEP = 9;
+  BATTLE_STEP = 10;
+  ENCORE_STEP = 11;
+  END_PHASE = 12;
 }
 
-message ZoneShuffledTrigger {
-   TriggerCause cause = 1;
-   PlayZone zone = 2;
-  repeated PlayingCard cards = 3;
-   TriggerName triggerName = 4;
-}
-
-enum CardColor {
-  CARD_COLOR_BLUE = 0;
-  CARD_COLOR_RED = 1;
-  CARD_COLOR_YELLOW = 2;
-  CARD_COLOR_GREEN = 3;
-  CARD_COLOR_PURPLE = 4;
-}
-
-message CardDiscardedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-   PlayingCard card = 3;
-}
-
-message LocalizedString {
-   GameLocale gameLocale = 1;
-   string string = 2;
-}
-
-message CardDrawnTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-   PlayingCard card = 3;
-}
-
-enum LoseConditions {
-  LEVEL4 = 0;
-  EMPTY_DECK_AND_WAITING = 1;
-  DRAW_CONDITION = 2;
-  CONCEDE = 3;
-  CARD_EFFECT_CONDITION = 4;
-  GAME_ERROR = 5;
-}
-
-message PlayZone {
-   GamePlayer owner = 1;
-   Zones ZONE_NAME = 2;
-   GameVisibility visibility = 3;
-  repeated PlayingCard cardList = 4;
-}
-
-message CardClockedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer turnPlayer = 2;
-   PlayingCard card = 3;
-}
-
-message CardOrientedTrigger {
-   TriggerCause cause = 1;
-   PlayingCard card = 2;
-   CardOrientation orientedFrom = 3;
-   CardOrientation orientTo = 4;
-}
-
-message PlayerLostTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-   LoseConditions loseCondition = 3;
-}
-
-message CardPlayedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-   PlayingCard card = 3;
-   PlayZone sourceZone = 4;
-   PlayZone destinationZone = 5;
-}
-
-enum CardTrigger {
-  NONE = 0;
-  SOUL = 1;
-  RETURN = 2;
-  POOL = 3;
-  COMEBACK = 4;
-  DRAW = 5;
-  SHOT = 6;
-  TREASURE = 7;
-  GATE = 8;
-  STANDBY = 9;
-  CHOICE = 10;
-}
-
-enum TriggerCause {
-  GAME_ACTION = 0;
-  CARD_EFFECT = 1;
-}
-
-enum CardOrientation {
-  STAND = 0;
-  REST = 1;
-  REVERSED = 2;
-}
-
-enum CardIcon {
-  COUNTER = 0;
-  CLOCK = 1;
-  NO_ICON = 2;
-}
-
-enum CardType {
-  CHARACTER = 0;
-  EVENT = 1;
-  CLIMAX = 2;
-}
-
-message PhaseStartedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer turnPlayer = 2;
-   TurnPhase identifier = 3;
-}
-
-message ClockFullTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-}
-
-enum CardAffiliation {
-  AFFILIATION_WEISS = 0;
-  AFFILIATION_SCHWARZ = 1;
-  AFFILIATION_BOTH = 2;
-}
-
-message GamePlayer {
-   string playerName = 1;
-}
-
-enum GameLocale {
-  JP = 0;
-  EN = 1;
-}
-
-message TurnStartedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
-}
-
-message CardEncoredTrigger {
-   TriggerCause cause = 1;
-   PlayingCard card = 2;
-}
-
-enum AttackType {
-  DIRECT = 0;
-  FRONTAL = 1;
-  SIDE = 2;
-}
-
-message ReversedInBattleTrigger {
-   TriggerCause cause = 1;
-   PlayingCard reversedCard = 2;
-   PlayingCard opposingCard = 3;
-}
-
-enum Zones {
+enum ProtoZones {
   ZONE_DECK = 0;
   ZONE_HAND = 1;
   ZONE_WAITING_ROOM = 2;
@@ -266,95 +147,188 @@ enum Zones {
   ZONE_BACK_STAGE_RIGHT_MARKER = 18;
 }
 
-message CardMovedTrigger {
-   TriggerCause cause = 1;
-   TriggerName name = 2;
-   PlayingCard sourceCard = 3;
-   PlayZone sourceZone = 4;
-   PlayZone destinationZone = 5;
-   int32 destinationIndex = 6;
-   PlayingCard destinationCard = 7;
-   CardOrientation destinationOrientation = 8;
-   GameVisibility destinationVisibility = 9;
+message ProtoCardClockedTrigger {
+   ProtoGamePlayer player = 1;
+   ProtoPlayingCard card = 2;
 }
 
-message TriggerCheckedTrigger {
-   TriggerCause cause = 1;
-   PlayingCard triggerCard = 2;
+message ProtoCardDiscardedTrigger {
+   ProtoGamePlayer player = 1;
+   ProtoPlayingCard card = 2;
 }
 
-message PlayingCard {
-   string guid = 1;
-   CardOrientation orientation = 2;
-   GameVisibility visibility = 3;
-  repeated PlayingCard markers = 4;
-   bool canStand = 5;
-   bool canRest = 6;
-   bool canBeReversed = 7;
-   bool canBeTargeted = 8;
-   bool canFrontalAttack = 9;
-   bool canSideAttack = 10;
-   bool canDirectAttack = 11;
-   int32 fundamentalOrder = 12;
-  repeated LocalizedString cardName = 13;
-   int32 level = 14;
-   int32 cost = 15;
-   CardIcon icon = 16;
-   int32 power = 17;
-   int32 soul = 18;
-   CardColor color = 19;
-   CardType cardType = 20;
-  repeated LocalizedString titleName = 21;
-   string id = 22;
-   CardAffiliation affiliations = 23;
-  repeated LocalizedString traits = 24;
-  repeated CardTrigger triggerIcons = 25;
+message ProtoCardDrawnTrigger {
+   ProtoGamePlayer player = 1;
+   ProtoPlayingCard card = 2;
 }
 
-message DamageProcessedTrigger {
-   TriggerCause cause = 1;
-   PlayingCard sourceCard = 2;
-   int32 amount = 3;
-   GamePlayer receivingPlayer = 4;
-   bool wasCancelled = 5;
+message ProtoCardEncoredTrigger {
+   ProtoPlayingCard card = 1;
 }
 
-message LeveledUpTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
+message ProtoCardMovedTrigger {
+   ProtoTriggerName name = 1;
+   ProtoPlayingCard sourceCard = 2;
+   ProtoPlayZone sourceZone = 3;
+   ProtoPlayZone destinationZone = 4;
+   int32 destinationIndex = 5;
+   ProtoPlayingCard destinationCard = 6;
+   ProtoCardOrientation destinationOrientation = 7;
+   ProtoGameVisibility destinationVisibility = 8;
 }
 
-message RefreshPointAddedTrigger {
-   TriggerCause cause = 1;
-   GamePlayer player = 2;
+message ProtoCardOrientedTrigger {
+   ProtoPlayingCard card = 1;
+   ProtoCardOrientation orientedFrom = 2;
+   ProtoCardOrientation orientTo = 3;
+}
+
+message ProtoCardPlayedTrigger {
+   ProtoGamePlayer player = 1;
+   ProtoPlayingCard card = 2;
+   ProtoPlayZone sourceZone = 3;
+   ProtoPlayZone destinationZone = 4;
+}
+
+message ProtoClockFullTrigger {
+   ProtoGamePlayer player = 1;
+}
+
+message ProtoCostPaidTrigger {
+}
+
+message ProtoDamageProcessedTrigger {
+   ProtoPlayingCard sourceCard = 1;
+   int32 amount = 2;
+   ProtoGamePlayer receivingPlayer = 3;
+   bool damageCancelled = 4;
+}
+
+message ProtoDeckEmptyTrigger {
+   ProtoGamePlayer player = 1;
+}
+
+message ProtoEndOfAttackTrigger {
+   ProtoGamePlayer turnPlayer = 1;
+}
+
+message ProtoGameOverTrigger {
+  repeated ProtoGamePlayer losingPlayers = 1;
+}
+
+message ProtoGamePlayer {
+   string playerName = 1;
 }
 
 message GameTriggerProto {
   oneof triggerType {
-    RefreshPointAddedTrigger refreshPointAddedTrigger = 1;
-    LeveledUpTrigger leveledUpTrigger = 2;
-    DamageProcessedTrigger damageProcessedTrigger = 3;
-    TriggerCheckedTrigger triggerCheckedTrigger = 4;
-    CardMovedTrigger cardMovedTrigger = 5;
-    ReversedInBattleTrigger reversedInBattleTrigger = 6;
-    CardEncoredTrigger cardEncoredTrigger = 7;
-    TurnStartedTrigger turnStartedTrigger = 8;
-    ClockFullTrigger clockFullTrigger = 9;
-    PhaseStartedTrigger phaseStartedTrigger = 10;
-    CardPlayedTrigger cardPlayedTrigger = 11;
-    PlayerLostTrigger playerLostTrigger = 12;
-    CardOrientedTrigger cardOrientedTrigger = 13;
-    CardClockedTrigger cardClockedTrigger = 14;
-    CardDrawnTrigger cardDrawnTrigger = 15;
-    CardDiscardedTrigger cardDiscardedTrigger = 16;
-    ZoneShuffledTrigger zoneShuffledTrigger = 17;
-    CostPaidTrigger costPaidTrigger = 18;
-    GameOverTrigger gameOverTrigger = 19;
-    EndOfAttackTrigger endOfAttackTrigger = 20;
-    DeckEmptyTrigger deckEmptyTrigger = 21;
-    WillAttackTrigger willAttackTrigger = 22;
+    ProtoCardClockedTrigger cardClockedTrigger = 1;
+    ProtoCardDiscardedTrigger cardDiscardedTrigger = 2;
+    ProtoCardDrawnTrigger cardDrawnTrigger = 3;
+    ProtoCardEncoredTrigger cardEncoredTrigger = 4;
+    ProtoCardMovedTrigger cardMovedTrigger = 5;
+    ProtoCardOrientedTrigger cardOrientedTrigger = 6;
+    ProtoCardPlayedTrigger cardPlayedTrigger = 7;
+    ProtoClockFullTrigger clockFullTrigger = 8;
+    ProtoCostPaidTrigger costPaidTrigger = 9;
+    ProtoDamageProcessedTrigger damageProcessedTrigger = 10;
+    ProtoDeckEmptyTrigger deckEmptyTrigger = 11;
+    ProtoEndOfAttackTrigger endOfAttackTrigger = 12;
+    ProtoGameOverTrigger gameOverTrigger = 13;
+    ProtoLeveledUpTrigger leveledUpTrigger = 14;
+    ProtoPhaseStartedTrigger phaseStartedTrigger = 15;
+    ProtoPlayerLostTrigger playerLostTrigger = 16;
+    ProtoRefreshPointAddedTrigger refreshPointAddedTrigger = 17;
+    ProtoReversedInBattleTrigger reversedInBattleTrigger = 18;
+    ProtoTriggerCheckedTrigger triggerCheckedTrigger = 19;
+    ProtoTurnStartedTrigger turnStartedTrigger = 20;
+    ProtoWillAttackTrigger willAttackTrigger = 21;
+    ProtoZoneShuffledTrigger zoneShuffledTrigger = 22;
 
   }
 }
 
+
+message ProtoLeveledUpTrigger {
+   ProtoGamePlayer player = 1;
+}
+
+message ProtoLocalizedString {
+   ProtoGameLocale locale = 1;
+   string string = 2;
+}
+
+message ProtoPhaseStartedTrigger {
+   ProtoGamePlayer turnPlayer = 1;
+   ProtoTurnPhase phase = 2;
+}
+
+message ProtoPlayZone {
+   ProtoGamePlayer owner = 1;
+   ProtoZones zoneName = 2;
+   ProtoGameVisibility visibility = 3;
+  repeated ProtoPlayingCard contents = 4;
+}
+
+message ProtoPlayerLostTrigger {
+   ProtoGamePlayer player = 1;
+   ProtoLoseConditions loseCondition = 2;
+}
+
+message ProtoPlayingCard {
+   ProtoGamePlayer master = 1;
+   string guid = 2;
+   ProtoCardOrientation orientation = 3;
+   ProtoGameVisibility visibility = 4;
+  repeated ProtoPlayingCard markers = 5;
+   bool standable = 6;
+   bool restable = 7;
+   bool reversable = 8;
+   bool targetable = 9;
+   bool frontalAttackCapable = 10;
+   bool sideAttackCapable = 11;
+   bool directAttackCapable = 12;
+   int32 fundamentalOrder = 13;
+  repeated ProtoLocalizedString cardName = 14;
+   int32 level = 15;
+   int32 cost = 16;
+   ProtoCardIcon icon = 17;
+   int32 power = 18;
+   int32 soul = 19;
+   ProtoCardColor color = 20;
+   ProtoCardType cardType = 21;
+  repeated ProtoLocalizedString titleName = 22;
+   string id = 23;
+   ProtoCardAffiliation affiliations = 24;
+  repeated ProtoLocalizedString traits = 25;
+  repeated ProtoCardTrigger triggerIcons = 26;
+}
+
+message ProtoRefreshPointAddedTrigger {
+   ProtoGamePlayer player = 1;
+}
+
+message ProtoReversedInBattleTrigger {
+   ProtoPlayingCard reversedCard = 1;
+   ProtoPlayingCard opposingCard = 2;
+}
+
+message ProtoTriggerCheckedTrigger {
+   ProtoPlayingCard triggerCard = 1;
+}
+
+message ProtoTurnStartedTrigger {
+   ProtoGamePlayer player = 1;
+}
+
+message ProtoWillAttackTrigger {
+   ProtoPlayingCard attackingCard = 1;
+   ProtoAttackType attackType = 2;
+}
+
+message ProtoZoneShuffledTrigger {
+   ProtoPlayZone zone = 1;
+  repeated ProtoPlayingCard cards = 2;
+   ProtoTriggerName triggerName = 3;
+}
 

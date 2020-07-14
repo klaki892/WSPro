@@ -1,12 +1,17 @@
 package ton.klay.wspro.core.game.formats.standard.zones;
 
+import net.badata.protobuf.converter.annotation.ProtoClass;
+import net.badata.protobuf.converter.annotation.ProtoField;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.ProtoPlayZone;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.proto.GameVisibilityTypeConverter;
+import ton.klay.wspro.core.game.proto.ZonesProtoTypeConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +19,33 @@ import java.util.List;
 /**
  * A zone that could be represented in a list format for functionality.
  */
+@ProtoClass(ProtoPlayZone.class)
 public class PlayZone implements GameEntity {
 
     private static final Logger log = LogManager.getLogger();
+    @ProtoField
     protected GamePlayer owner;
-    protected Zones ZONE_NAME = null;
+    @ProtoField(converter = ZonesProtoTypeConverter.class)
+    protected Zones zoneName;
+    @ProtoField(converter = GameVisibilityTypeConverter.class)
     protected GameVisibility visibility;
 
-    ArrayList<PlayingCard> cardList = new ArrayList<>();
+    @ProtoField
+    ArrayList<PlayingCard> contents = new ArrayList<>();
 
     /**
      * Creates a zone with a list based implementation for holding the cards within it.
-     * @param owner - The player that will own this zone.
      * @param zoneName - the name of the zone for referencing and searching
      * @param visibility  - indicates who is allowed to see the information within the zone.
      */
-    protected PlayZone(GamePlayer owner, Zones zoneName, GameVisibility visibility){
+    public PlayZone(GamePlayer owner, Zones zoneName, GameVisibility visibility){
         this.owner = owner;
-        this.ZONE_NAME = zoneName;
+        this.zoneName = zoneName;
         this.visibility = visibility;
     }
 
     protected ArrayList<PlayingCard> getCardList() {
-        return cardList;
+        return contents;
     }
 
     /**
@@ -96,7 +105,7 @@ public class PlayZone implements GameEntity {
     }
 
     public Zones getZoneName(){
-        return ZONE_NAME;
+        return zoneName;
     }
 
     public GameVisibility getVisibility() {
@@ -118,6 +127,6 @@ public class PlayZone implements GameEntity {
 
     @Override
     public String toString() {
-        return ZONE_NAME.toString();
+        return zoneName.toString();
     }
 }
