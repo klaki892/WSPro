@@ -9,8 +9,8 @@ import io.protostuff.runtime.RuntimeSchema;
 import net.webby.protostuff.runtime.Generators;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
-import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
+import to.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import to.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -51,7 +51,7 @@ public class CoreProtoGenerator {
 
         ClassPath classPath = ClassPath.from(ClassLoader.getSystemClassLoader());
 
-        ImmutableSet<ClassPath.ClassInfo> topLevelClasses = classPath.getTopLevelClasses("ton.klay.wspro.core.game.formats.standard.triggers");
+        ImmutableSet<ClassPath.ClassInfo> topLevelClasses = classPath.getTopLevelClasses("to.klay.wspro.core.game.formats.standard.triggers");
 
         for (ClassPath.ClassInfo triggerClassInfo : topLevelClasses) {
             Class<?> triggerClass = triggerClassInfo.load();

@@ -1,7 +1,7 @@
 package to.klay.wspro.server.setup.finders.abilities;
 
-import ton.klay.wspro.core.api.cards.PaperCard;
-import ton.klay.wspro.core.game.AbilityFinder;
+import to.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.game.AbilityFinder;
 
 public interface QueryableAbilityFinder extends AbilityFinder  {
 

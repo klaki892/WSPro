@@ -1,6 +1,6 @@
 package to.klay.wspro.server.setup.finders.cards;
 
-import ton.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.api.cards.PaperCard;
 
 import java.util.List;
 import java.util.Optional;

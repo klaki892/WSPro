@@ -3,12 +3,12 @@ package to.klay.wspro.server.game;
 import com.google.common.eventbus.Subscribe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.Game;
+import to.klay.wspro.core.game.actions.PlayChoice;
+import to.klay.wspro.core.game.actions.PlayChooser;
+import to.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import to.klay.wspro.core.game.proto.GameMessageProto;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayResponse;
-import ton.klay.wspro.core.game.Game;
-import ton.klay.wspro.core.game.actions.PlayChoice;
-import ton.klay.wspro.core.game.actions.PlayChooser;
-import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 
 import java.util.ArrayList;
 import java.util.HashMap;

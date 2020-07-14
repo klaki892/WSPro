@@ -6,6 +6,7 @@ import io.grpc.protobuf.ProtoUtils;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.api.cards.PaperCard;
 import to.klay.wspro.server.ServerGameManager;
 import to.klay.wspro.server.game.PaperDeckBuilder;
 import to.klay.wspro.server.game.ServerGame;
@@ -18,7 +19,6 @@ import to.klay.wspro.server.grpc.setupgame.PlayerInfo;
 import to.klay.wspro.server.grpc.setupgame.SetupGameGrpc;
 import to.klay.wspro.server.grpc.setupgame.SetupGameRequest;
 import to.klay.wspro.server.setup.finders.cards.CardFinderDeckResult;
-import ton.klay.wspro.core.api.cards.PaperCard;
 
 import java.util.ArrayList;
 import java.util.Arrays;

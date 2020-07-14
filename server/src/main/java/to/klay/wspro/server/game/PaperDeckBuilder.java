@@ -1,7 +1,7 @@
 package to.klay.wspro.server.game;
 
-import ton.klay.wspro.core.api.cards.PaperCard;
-import ton.klay.wspro.core.api.game.PaperDeck;
+import to.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.api.game.PaperDeck;
 
 import java.util.List;
 

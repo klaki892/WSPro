@@ -3,9 +3,9 @@ package to.klay.wspro.server.game;
 import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.PaperDeck;
-import ton.klay.wspro.core.api.game.setup.GameLocale;
-import ton.klay.wspro.core.game.Player;
+import to.klay.wspro.core.api.game.PaperDeck;
+import to.klay.wspro.core.api.game.setup.GameLocale;
+import to.klay.wspro.core.game.Player;
 
 public class ServerPlayer implements Player {
 

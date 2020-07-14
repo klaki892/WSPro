@@ -5,10 +5,10 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.api.cards.PaperCard;
 import to.klay.wspro.server.setup.finders.cards.CardFinder;
 import to.klay.wspro.server.setup.finders.cards.CardFinderDeckResult;
 import to.klay.wspro.server.setup.modules.ServerOptions;
-import ton.klay.wspro.core.api.cards.PaperCard;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

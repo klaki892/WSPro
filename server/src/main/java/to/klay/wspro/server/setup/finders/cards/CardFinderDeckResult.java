@@ -2,7 +2,7 @@ package to.klay.wspro.server.setup.finders.cards;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.api.cards.PaperCard;
 
 import java.util.List;
 

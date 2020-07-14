@@ -3,10 +3,10 @@ package to.klay.wspro.server.game;
 import com.google.common.eventbus.Subscribe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.api.game.GameStatus;
+import to.klay.wspro.core.game.Game;
+import to.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
 import to.klay.wspro.server.ServerGameManager;
-import ton.klay.wspro.core.api.game.GameStatus;
-import ton.klay.wspro.core.game.Game;
-import ton.klay.wspro.core.game.formats.standard.triggers.GameOverTrigger;
 
 import java.util.Arrays;
 import java.util.List;

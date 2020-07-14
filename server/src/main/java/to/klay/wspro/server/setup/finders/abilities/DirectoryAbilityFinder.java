@@ -3,11 +3,11 @@ package to.klay.wspro.server.setup.finders.abilities;
 import com.google.inject.Inject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.game.Game;
+import to.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
+import to.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import to.klay.wspro.server.setup.modules.ServerOptions;
-import ton.klay.wspro.core.api.cards.PaperCard;
-import ton.klay.wspro.core.game.Game;
-import ton.klay.wspro.core.game.cardLogic.ability.TypedAbilityList;
-import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 
 import javax.inject.Named;
 import java.nio.file.Path;

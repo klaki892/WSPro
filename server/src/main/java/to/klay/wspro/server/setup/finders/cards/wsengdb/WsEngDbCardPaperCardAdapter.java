@@ -1,13 +1,13 @@
 package to.klay.wspro.server.setup.finders.cards.wsengdb;
 
 import com.google.gson.Gson;
-import ton.klay.wspro.core.api.cards.CardAffiliation;
-import ton.klay.wspro.core.api.cards.CardColor;
-import ton.klay.wspro.core.api.cards.CardIcon;
-import ton.klay.wspro.core.api.cards.CardTrigger;
-import ton.klay.wspro.core.api.cards.LocalizedString;
-import ton.klay.wspro.core.api.cards.PaperCard;
-import ton.klay.wspro.core.game.cards.CardType;
+import to.klay.wspro.core.api.cards.CardAffiliation;
+import to.klay.wspro.core.api.cards.CardColor;
+import to.klay.wspro.core.api.cards.CardIcon;
+import to.klay.wspro.core.api.cards.CardTrigger;
+import to.klay.wspro.core.api.cards.LocalizedString;
+import to.klay.wspro.core.api.cards.PaperCard;
+import to.klay.wspro.core.game.cards.CardType;
 
 import java.util.Collection;
 import java.util.Collections;
