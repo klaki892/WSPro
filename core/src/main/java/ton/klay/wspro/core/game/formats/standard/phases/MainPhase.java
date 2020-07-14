@@ -2,7 +2,6 @@ package ton.klay.wspro.core.game.formats.standard.phases;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.actions.PlayChoice;
@@ -15,8 +14,13 @@ import ton.klay.wspro.core.game.cards.filters.LevelFilter;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static ton.klay.wspro.core.game.actions.PlayChoiceAction.END_ACTION;
@@ -145,7 +149,7 @@ public class MainPhase extends BasePhase  {
             PlayZone stagePosition = Commands.makeSinglePlayChoice(turnPlayer, stageChoices).getZone();
 
             //All Choices resolved, pay cost and put on stage.
-            Commands.payCost(card.getCost(), this);
+            Commands.payCost(card.getCostActions(), this);
             Commands.playCard(turnPlayer, card, hand, stagePosition, TriggerCause.GAME_ACTION, this);
         } else if (card.getCardType() == EVENT){
 
@@ -153,7 +157,7 @@ public class MainPhase extends BasePhase  {
             PlayZone resolution = turnPlayer.getPlayArea().getPlayZone(Zones.ZONE_RESOLUTION);
 
             //All Choices resolved, pay cost and put on stage.
-            Commands.payCost(card.getCost(), this);
+            Commands.payCost(card.getCostActions(), this);
             Commands.playCard(turnPlayer, card, hand, resolution, TriggerCause.GAME_ACTION, this);
         }
 

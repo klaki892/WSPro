@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * Creates a zone based on being in the back row
  * //todo rule reference
  */
-public class BackStageZone extends MultiCardZone {
+public class BackStageZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

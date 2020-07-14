@@ -1,11 +1,13 @@
 package to.klay.wspro.server.game;
 
 import com.google.common.eventbus.Subscribe;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import to.klay.wspro.server.grpc.gameplay.GrpcGameMessage;
-import to.klay.wspro.server.grpc.gameplay.GrpcGameTrigger;
-import to.klay.wspro.server.grpc.gameplay.GrpcPlayRequest;
+import to.klay.wspro.core.game.proto.GameMessageProto;
+import to.klay.wspro.core.game.proto.GameTriggerProto;
+import to.klay.wspro.core.game.proto.PlayRequestProto;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayResponse;
 import ton.klay.wspro.core.game.Game;
 import ton.klay.wspro.core.game.actions.PlayChoice;
@@ -34,22 +36,24 @@ public class GrpcPlayerController implements ServerPlayerController {
         game.getTriggerManager().register(this);
     }
 
-    LinkedBlockingQueue<GrpcGameMessage> gameEventQueue = new LinkedBlockingQueue();
+    LinkedBlockingQueue<GameMessageProto> gameEventQueue = new LinkedBlockingQueue<>();
 
     CompletableFuture<List<Integer>> playRequest;
 
-    public LinkedBlockingQueue<GrpcGameMessage> getGameEventQueue() {
+    public LinkedBlockingQueue<GameMessageProto> getGameEventQueue() {
         return gameEventQueue;
     }
 
     @Subscribe
     public void handleGameEvent(BaseTrigger event){
-
-        GrpcGameTrigger trigger = GrpcGameTrigger.newBuilder()
-                .setTriggerText(event.toString())
+        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        String text = gson.toJson(event);
+        String treetext = gson.toJsonTree(event).toString();
+        GameTriggerProto trigger = GameTriggerProto.newBuilder()
+//                .set(gson.toJson(event))
                 .build();
 
-        gameEventQueue.add(GrpcGameMessage.newBuilder().setTrigger(trigger).build());
+        gameEventQueue.add(GameMessageProto.newBuilder().setTrigger(trigger).build());
     }
 
     public void answerPlayRequest(GrpcPlayResponse response){
@@ -60,9 +64,9 @@ public class GrpcPlayerController implements ServerPlayerController {
     public List<PlayChoice> makePlayChoice(PlayChooser chooser) {
 
         AnswerablePlayChoice apw = new AnswerablePlayChoice(chooser);
-        GrpcPlayRequest playRequest = GrpcPlayRequest.newBuilder().setChoiceBlock(apw.toString()).build();
+        PlayRequestProto playRequest = PlayRequestProto.newBuilder().setChoiceBlock(apw.toString()).build();
 
-        gameEventQueue.add(GrpcGameMessage.newBuilder().setRequest(playRequest).build());
+        gameEventQueue.add(GameMessageProto.newBuilder().setRequest(playRequest).build());
         this.playRequest = new CompletableFuture<>();
 
         try {

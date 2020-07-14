@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * An object that represents the Clockzone on a playing field.
  * //todo rules reference
  */
-public class ClockZone extends MultiCardZone {
+public class ClockZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

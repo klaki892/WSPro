@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * An object that represents the Waiting Room  zone on a playing field.
  * //todo rules reference
  */
-public class WaitingRoomZone extends MultiCardZone {
+public class WaitingRoomZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

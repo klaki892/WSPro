@@ -2,7 +2,15 @@ package ton.klay.wspro.core.game.formats.standard.cards;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.cards.*;
+import ton.klay.wspro.core.api.cards.CardAffiliation;
+import ton.klay.wspro.core.api.cards.CardColor;
+import ton.klay.wspro.core.api.cards.CardIcon;
+import ton.klay.wspro.core.api.cards.CardOrientation;
+import ton.klay.wspro.core.api.cards.CardTrigger;
+import ton.klay.wspro.core.api.cards.Cost;
+import ton.klay.wspro.core.api.cards.GameVisibility;
+import ton.klay.wspro.core.api.cards.LocalizedString;
+import ton.klay.wspro.core.api.cards.PaperCard;
 import ton.klay.wspro.core.api.game.GameEntity;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.api.game.setup.GameLocale;
@@ -20,15 +28,15 @@ import java.util.List;
 public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     private static final Logger log = LogManager.getLogger();
-    protected final Game game;
-    protected final PaperCard baseCard;
+    protected final transient Game game;
+    protected final transient PaperCard baseCard;
     protected String guid;
 
-    protected final  List<TriggerableAbilityListener> triggerableAbilities = new ArrayList<>();
-    protected final  List<ActivatedAbility> activatedAbilities = new ArrayList<>();
+    protected final transient List<TriggerableAbilityListener> triggerableAbilities = new ArrayList<>();
+    protected final transient List<ActivatedAbility> activatedAbilities = new ArrayList<>();
     protected CardOrientation orientation;
-    protected final GamePlayer owner;
-    protected GamePlayer master;
+    protected final transient GamePlayer owner;
+    protected transient GamePlayer master;
     protected GameVisibility visibility;
     protected final List<PlayingCard> markers = new ArrayList<>();
 
@@ -45,7 +53,8 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
 
     protected Collection<LocalizedString> cardName;
     protected int level;
-    protected Cost cost;
+    protected transient Cost costActions;
+    protected int cost;
     protected CardIcon icon;
     protected int power;
     protected int soul;
@@ -90,7 +99,8 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
     private void copyBaseStats(PaperCard c) {
         setCardName(c.getCardName());
         setLevel(c.getLevel());
-        setCost(new StockCost.Builder().setOwner(this).setCostCount(c.getCost()).createStockCost());
+        setCost(c.getCost());
+        setCostActions(new StockCost.Builder().setOwner(this).setCostCount(c.getCost()).createStockCost());
         setIcon(c.getIcon());
         setPower(c.getPower());
         setSoul(c.getSoul());
@@ -279,8 +289,8 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         this.level = level;
     }
 
-    public void setCost(Cost cost) {
-        this.cost = cost;
+    public void setCostActions(Cost costActions) {
+        this.costActions = costActions;
     }
 
     public void setIcon(CardIcon icon) {
@@ -322,12 +332,20 @@ public class PlayingCard implements GameEntity, FundamentalOrderable {
         triggerableAbilities.add(triggerableAbilityListener);
     }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
     public int getLevel() {
         return level;
     }
 
-    public Cost getCost() {
-        return cost;
+    public Cost getCostActions() {
+        return costActions;
     }
 
     public CardIcon getIcon() {

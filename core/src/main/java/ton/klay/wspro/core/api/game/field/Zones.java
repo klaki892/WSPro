@@ -1,5 +1,7 @@
 package ton.klay.wspro.core.api.game.field;
 
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
+
 import java.util.EnumSet;
 
 /**

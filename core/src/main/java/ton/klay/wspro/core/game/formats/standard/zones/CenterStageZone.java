@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * Creates a zone based on being in the center stage
  * //todo rule reference
  */
-public class CenterStageZone extends MultiCardZone {
+public class CenterStageZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

@@ -10,13 +10,15 @@ import ton.klay.wspro.core.game.Player;
 public class GamePlayer implements GameEntity {
 
 
-    private final Game game;
-    private final Player player;
-    private PlayArea playArea;
+    private final transient Game game;
+    private final transient Player player;
+    private transient PlayArea playArea;
+    private final String playerName; //used for serialization only
 
     public GamePlayer(Game game, Player player) {
         this.game = game;
         this.player = player;
+        playerName = player.getName();
     }
 
     public PlayArea getPlayArea(){

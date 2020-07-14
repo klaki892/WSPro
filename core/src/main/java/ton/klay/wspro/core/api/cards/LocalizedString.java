@@ -5,26 +5,26 @@ import ton.klay.wspro.core.api.game.setup.GameLocale;
 /**
  * Grouping that holds a string based on the {@link GameLocale} associated with it
  */
-public interface LocalizedString {
-    GameLocale getLocale();
-    String getString();
+public class LocalizedString {
 
-    static LocalizedString makeEN(String enString){
-        return new LocalizedString() {
-            @Override
-            public GameLocale getLocale() {
-                return GameLocale.EN;
-            }
+    GameLocale gameLocale;
+    String string;
 
-            @Override
-            public String getString() {
-                return enString;
-            }
+    protected LocalizedString(GameLocale gameLocale, String string){}
 
-            @Override
-            public String toString() {
-                return getString();
-            }
-        };
+    public GameLocale getLocale(){
+        return gameLocale;
+    }
+    public String getString(){
+        return string; //todo concatenate both (or more) names
+    }
+
+    @Override
+    public String toString(){
+        return string;
+    }
+
+    public static LocalizedString makeEN(String enString){
+        return new LocalizedString(GameLocale.EN, enString);
     }
 }

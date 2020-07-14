@@ -2,8 +2,8 @@ package ton.klay.wspro.core.game.actions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 /**
  * Utility functions which help operate the game. <br>

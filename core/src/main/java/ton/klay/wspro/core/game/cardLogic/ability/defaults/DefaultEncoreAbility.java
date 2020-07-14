@@ -7,7 +7,6 @@ import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
 import ton.klay.wspro.core.api.cards.abilities.components.effects.Effect;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.cardLogic.ability.AutomaticAbility;
@@ -19,6 +18,7 @@ import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.CardEncoredTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.CardMovedTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 import java.util.Collections;
 import java.util.List;

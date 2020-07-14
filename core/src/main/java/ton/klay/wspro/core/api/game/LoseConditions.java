@@ -18,7 +18,7 @@ public enum LoseConditions {
      *     Side note: Yes, it is possible. Specific case example is the effect from FT/EN-S02-037 U.
      * @see <code>Weiss Schwarz Rule 1.2.3</code>
      */
-    DRAW,
+    DRAW_CONDITION,
 
     /**
      * The Lose Condition for a player conceding. (not technically a lose condition, but deal with it.)<br/><br/>
@@ -31,7 +31,7 @@ public enum LoseConditions {
      * @see <code>Weiss Schwarz Rule 1.2.5 </code>
      *
      */
-    CARD_EFFECT,
+    CARD_EFFECT_CONDITION,
 
     /**
      * A special lose condition to indicate the game was ended prematurely, no one should be a loser in this situation.

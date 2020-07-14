@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * A Zone that represents a marker based zone on the field
  * //todo rule reference
  */
-public class MarkerZone extends MultiCardZone {
+public class MarkerZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

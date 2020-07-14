@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.GameEntity;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 /**
  * Announces that a card moved from a zone to another zone.

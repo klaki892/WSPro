@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardIcon;
 import ton.klay.wspro.core.api.cards.abilities.AbilityKeyword;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.actions.PlayChoice;
@@ -12,10 +11,15 @@ import ton.klay.wspro.core.game.actions.PlayChoiceAction;
 import ton.klay.wspro.core.game.actions.PlayChoiceType;
 import ton.klay.wspro.core.game.cardLogic.ability.ActivatedAbility;
 import ton.klay.wspro.core.game.cards.CardType;
-import ton.klay.wspro.core.game.cards.filters.*;
+import ton.klay.wspro.core.game.cards.filters.CardFilter;
+import ton.klay.wspro.core.game.cards.filters.CardIconFilter;
+import ton.klay.wspro.core.game.cards.filters.CardTypeFilter;
+import ton.klay.wspro.core.game.cards.filters.LevelFilter;
+import ton.klay.wspro.core.game.cards.filters.NumericFilter;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,7 +99,7 @@ public class CounterStep extends BasePhase  {
         return CardFilter.andFilter(
                 Arrays.asList(levelFilter, counterIconFilter, eventFilter))
                 .filter(handCards).stream()
-                .filter(event -> event.getCost().isPayable()).collect(Collectors.toList());
+                .filter(event -> event.getCostActions().isPayable()).collect(Collectors.toList());
     }
 
 }

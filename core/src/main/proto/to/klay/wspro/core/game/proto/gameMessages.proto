@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "to.klay.wspro.core.game.proto";
+option java_outer_classname = "ProtoGameMessages";
+
+import "to/klay/wspro/core/game/proto/ProtoEntities.proto";
+package to.klay.wspro.core.game.proto;
+
+
+message GameMessageProto {
+  oneof gameEvent {
+    PlayRequestProto request = 1;
+    GameTriggerProto trigger = 2;
+  }
+}
+
+message PlayRequestProto {
+  string choiceBlock = 1;
+
+}
+

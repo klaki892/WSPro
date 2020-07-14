@@ -5,17 +5,26 @@ import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardOrientation;
 import ton.klay.wspro.core.api.cards.GameVisibility;
 import ton.klay.wspro.core.api.game.GameRuntimeException;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.api.game.player.GamePlayer;
 import ton.klay.wspro.core.game.TimingManager;
 import ton.klay.wspro.core.game.actions.AttackType;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
-import ton.klay.wspro.core.game.formats.standard.cards.triggericons.*;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.ChoiceTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.ComebackTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.DrawTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.GateTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.PoolTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.ReturnTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.ShotTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.SoulTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.StandbyTriggerIconEffect;
+import ton.klay.wspro.core.game.formats.standard.cards.triggericons.TreasureTriggerIconEffect;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.BaseTrigger;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCheckedTrigger;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 public class TriggerStep extends BasePhase  {
 

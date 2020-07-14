@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  *  * An object that represents the Hand zone on a playing field.
  * //todo rules reference
  */
-public class HandZone extends MultiCardZone{
+public class HandZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

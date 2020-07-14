@@ -3,10 +3,10 @@ package ton.klay.wspro.core.game.cards.filters;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.CardColor;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
 import ton.klay.wspro.core.game.formats.standard.phases.ClimaxPhase;
 import ton.klay.wspro.core.game.formats.standard.phases.MainPhase;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 import java.util.ArrayList;
 import java.util.List;

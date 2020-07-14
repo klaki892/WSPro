@@ -3,7 +3,7 @@ package to.klay.wspro.server.grpc.manual;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import to.klay.wspro.server.grpc.gameplay.GrpcGameMessage;
+import to.klay.wspro.core.game.proto.GameMessageProto;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayerToken;
 import to.klay.wspro.server.grpc.gameplay.GrpcSuccessResponse;
 
@@ -33,10 +33,10 @@ public class CommandLineGrpcClient {
         getGameEvents(GrpcPlayerToken.newBuilder().setPlayerName(player).setToken(ID).build());
     }
     public void getGameEvents(GrpcPlayerToken token){
-        playWeissTestClient.getEventListener(token.getToken(), token.getPlayerName(), new StreamObserver<GrpcGameMessage>() {
+        playWeissTestClient.getEventListener(token.getToken(), token.getPlayerName(), new StreamObserver<GameMessageProto>() {
             @Override
-            public void onNext(GrpcGameMessage grpcGameMessage) {
-                System.out.println(grpcGameMessage);
+            public void onNext(GameMessageProto GameMessageProto) {
+                System.out.println(GameMessageProto);
             }
 
             @Override

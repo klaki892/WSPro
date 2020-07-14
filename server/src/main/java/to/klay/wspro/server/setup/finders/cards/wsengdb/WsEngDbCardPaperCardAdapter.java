@@ -66,7 +66,7 @@ class WsEngDbCardPaperCardAdapter implements PaperCard {
                 return CardIcon.CLOCK;
 
         }
-        return CardIcon.NONE;
+        return CardIcon.NO_ICON;
     }
 
     @Override

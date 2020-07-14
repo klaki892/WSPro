@@ -5,9 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ton.klay.wspro.core.api.cards.LocalizedString;
 import ton.klay.wspro.core.api.cards.abilities.Ability;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.game.events.InterruptRuleAction;
 import ton.klay.wspro.core.game.formats.standard.cards.PlayingCard;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 public class PlayChoice {
 

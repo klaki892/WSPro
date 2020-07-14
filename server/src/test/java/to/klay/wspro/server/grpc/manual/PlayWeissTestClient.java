@@ -6,9 +6,9 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.GameMessageProto;
 import to.klay.wspro.server.grpc.gameplay.GrpcGameConnectRequest;
 import to.klay.wspro.server.grpc.gameplay.GrpcGameConnectResponse;
-import to.klay.wspro.server.grpc.gameplay.GrpcGameMessage;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayResponse;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayerToken;
 import to.klay.wspro.server.grpc.gameplay.GrpcSuccessResponse;
@@ -41,7 +41,7 @@ public class PlayWeissTestClient implements Closeable {
                 .build());
     }
 
-    public void getEventListener(String token, String playerName, StreamObserver<GrpcGameMessage> observer) {
+    public void getEventListener(String token, String playerName, StreamObserver<GameMessageProto> observer) {
         GrpcPlayerToken playerToken = GrpcPlayerToken.newBuilder().setToken(token).setPlayerName(playerName).build();
         asyncStub.listenToGameEvents(playerToken, observer);
     }

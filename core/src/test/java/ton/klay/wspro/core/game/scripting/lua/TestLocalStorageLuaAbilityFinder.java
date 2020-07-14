@@ -25,6 +25,7 @@ public class TestLocalStorageLuaAbilityFinder extends LuaAbilityFinder {
     @Override
     public Optional<String> getLuaScript(PaperCard card) {
         String luaScript = null;
+        if (luaScripts == null) return Optional.empty();
         for (File scriptFile : luaScripts) {
             if (scriptFile.getName().split("\\.")[0].equalsIgnoreCase(card.getID())){
                 try {

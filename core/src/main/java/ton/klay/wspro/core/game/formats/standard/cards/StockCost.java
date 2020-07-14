@@ -7,11 +7,11 @@ import ton.klay.wspro.core.api.cards.Cost;
 import ton.klay.wspro.core.api.cards.CostConditional;
 import ton.klay.wspro.core.api.cards.PayCost;
 import ton.klay.wspro.core.api.game.GameEntity;
-import ton.klay.wspro.core.api.game.field.PlayZone;
 import ton.klay.wspro.core.api.game.field.Zones;
 import ton.klay.wspro.core.game.formats.standard.commands.Commands;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerCause;
 import ton.klay.wspro.core.game.formats.standard.triggers.TriggerName;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 /**
  * A Cost that consists of Moving stock cards to the waiting room

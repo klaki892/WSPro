@@ -11,7 +11,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  *  //todo rule reference
 
  */
-public class ClimaxZone extends MultiCardZone {
+public class ClimaxZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

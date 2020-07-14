@@ -1,8 +1,12 @@
 package ton.klay.wspro.core.game.formats.standard.cards;
 
 import com.google.common.base.MoreObjects;
-import ton.klay.wspro.core.api.cards.*;
-import ton.klay.wspro.core.api.game.setup.GameLocale;
+import ton.klay.wspro.core.api.cards.CardAffiliation;
+import ton.klay.wspro.core.api.cards.CardColor;
+import ton.klay.wspro.core.api.cards.CardIcon;
+import ton.klay.wspro.core.api.cards.CardTrigger;
+import ton.klay.wspro.core.api.cards.LocalizedString;
+import ton.klay.wspro.core.api.cards.PaperCard;
 import ton.klay.wspro.core.game.cards.CardType;
 
 import java.util.Collection;
@@ -14,22 +18,7 @@ public class MockCharacterPaperCard implements PaperCard {
 
     @Override
     public Collection<LocalizedString> getCardName() {
-        return Collections.singleton(new LocalizedString() {
-            @Override
-            public GameLocale getLocale() {
-                return GameLocale.EN;
-            }
-
-            @Override
-            public String getString() {
-                return "Test Card";
-            }
-
-            @Override
-            public String toString() {
-                return getString();
-            }
-        });
+        return Collections.singleton(LocalizedString.makeEN("Test Card"));
     }
 
     @Override

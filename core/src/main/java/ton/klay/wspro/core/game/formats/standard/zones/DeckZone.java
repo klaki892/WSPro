@@ -10,7 +10,7 @@ import ton.klay.wspro.core.api.game.player.GamePlayer;
  * AN object that represents the deck zone on a playing field.
  * //todo rules reference
  */
-public class DeckZone extends MultiCardZone {
+public class DeckZone extends PlayZone {
 
     private static final Logger log = LogManager.getLogger();
 

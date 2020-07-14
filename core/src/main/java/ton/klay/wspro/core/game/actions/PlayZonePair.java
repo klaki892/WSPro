@@ -3,7 +3,7 @@ package ton.klay.wspro.core.game.actions;
 import com.google.common.base.MoreObjects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ton.klay.wspro.core.api.game.field.PlayZone;
+import ton.klay.wspro.core.game.formats.standard.zones.PlayZone;
 
 import java.util.Arrays;
 import java.util.List;

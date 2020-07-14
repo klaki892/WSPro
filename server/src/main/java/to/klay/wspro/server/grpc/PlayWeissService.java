@@ -9,13 +9,13 @@ import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import to.klay.wspro.core.game.proto.GameMessageProto;
 import to.klay.wspro.server.ServerGameManager;
 import to.klay.wspro.server.game.GrpcPlayerController;
 import to.klay.wspro.server.game.ServerGame;
 import to.klay.wspro.server.game.ServerPlayer;
 import to.klay.wspro.server.grpc.gameplay.GrpcGameConnectRequest;
 import to.klay.wspro.server.grpc.gameplay.GrpcGameConnectResponse;
-import to.klay.wspro.server.grpc.gameplay.GrpcGameMessage;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayResponse;
 import to.klay.wspro.server.grpc.gameplay.GrpcPlayerToken;
 import to.klay.wspro.server.grpc.gameplay.GrpcSuccessResponse;
@@ -50,7 +50,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
         if (controller != null){
             controller.setPlayerReadied(true);
             responseBuilder.setWasSuccessful(true);
-            log.info(String.format("Player (%s) Readied up for Game %s", request.getPlayerName() ));
+            log.info(String.format("Player (%s) Readied up for Game %s", request.getPlayerName(), controller.getGame().getGameID() ));
         } else {
             responseBuilder.setWasSuccessful(false);
             log.error(String.format("Player (%s) attempted to ready up but no controller assoicated with token (%s)",
@@ -61,7 +61,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
     }
 
     @Override
-    public void listenToGameEvents(GrpcPlayerToken request, StreamObserver<GrpcGameMessage> responseObserver) {
+    public void listenToGameEvents(GrpcPlayerToken request, StreamObserver<GameMessageProto> responseObserver) {
         GrpcPlayerController controller = tokenControllerMap.get(request);
 
         if (controller != null) {
@@ -69,7 +69,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
             do {
                 //look for messages from the game and forward them
                 try {
-                    GrpcGameMessage gameMessage = controller.getGameEventQueue().poll(30, TimeUnit.SECONDS);
+                    GameMessageProto gameMessage = controller.getGameEventQueue().poll(30, TimeUnit.SECONDS);
 
                     if (gameMessage != null) {
                         //todo we need a better check
@@ -106,9 +106,9 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
 
     }
 
-    private boolean isGameOverMessage(GrpcGameMessage gameMessage) {
+    private boolean isGameOverMessage(GameMessageProto gameMessage) {
         if (gameMessage.hasTrigger()){
-            return gameMessage.getTrigger().getTriggerText().contains("GAME_OVER");
+            return gameMessage.getTrigger().hasGameOverTrigger();
         }
         return false;
     }

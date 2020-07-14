@@ -9,7 +9,7 @@ public abstract class BaseTrigger {
 
     private static final Logger log = LogManager.getLogger();
     private final TriggerCause cause;
-    private final GameEntity caller;
+    private final transient GameEntity caller;
 
     public BaseTrigger(TriggerCause cause, GameEntity caller) {
         this.cause = cause;

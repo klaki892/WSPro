@@ -7,5 +7,5 @@ package ton.klay.wspro.core.api.cards;
 public enum CardIcon {
     COUNTER,
     CLOCK,
-    NONE
+    NO_ICON
 }
