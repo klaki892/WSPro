@@ -1,6 +1,5 @@
 package to.klay.wspro.server.grpc.manual;
 
-import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -58,9 +57,9 @@ public class PlayWeissTestClient implements Closeable {
     public void sendAnswer(GrpcPlayerToken token, int nextInt) {
         asyncStub.answerPlayRequest(GrpcPlayResponse.newBuilder()
                 .setToken(token)
-                .addChoiceNumber(nextInt).build(), new StreamObserver<Empty>() {
+                .addChoiceNumber(nextInt).build(), new StreamObserver<GrpcSuccessResponse>() {
             @Override
-            public void onNext(Empty empty) {
+            public void onNext(GrpcSuccessResponse grpcSuccessResponse) {
             }
 
             @Override

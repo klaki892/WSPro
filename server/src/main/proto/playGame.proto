@@ -4,16 +4,14 @@ option java_multiple_files = true;
 option java_package = "to.klay.wspro.server.grpc.gameplay";
 option java_outer_classname = "GamePlayProto";
 
-import "google/protobuf/empty.proto";
-import "to/klay/wspro/core/game/proto/gameMessages.proto";
-package gameplay;
+import "gameMessages.proto";
 
 service PlayWeissService{
   rpc connectToGame(GrpcGameConnectRequest) returns (GrpcGameConnectResponse);
   rpc readyUp(GrpcPlayerToken) returns (GrpcSuccessResponse);
   //todo all the playgame rpcs....
-  rpc listenToGameEvents(GrpcPlayerToken) returns (stream to.klay.wspro.core.game.proto.GameMessageProto);
-  rpc answerPlayRequest(GrpcPlayResponse) returns (google.protobuf.Empty);
+  rpc listenToGameEvents(GrpcPlayerToken) returns (stream GameMessageProto);
+  rpc answerPlayRequest(GrpcPlayResponse) returns (GrpcSuccessResponse);
 }
 
 message GrpcGameConnectRequest{

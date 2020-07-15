@@ -3,7 +3,6 @@ package to.klay.wspro.server.grpc;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Maps;
-import com.google.protobuf.Empty;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
@@ -114,7 +113,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
     }
 
     @Override
-    public void answerPlayRequest(GrpcPlayResponse request, StreamObserver<Empty> responseObserver) {
+    public void answerPlayRequest(GrpcPlayResponse request, StreamObserver<GrpcSuccessResponse> responseObserver) {
         //lookup controller and send answer
         GrpcPlayerController controller = tokenControllerMap.get(request.getToken());
         if (controller != null) {
@@ -125,7 +124,7 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
             log.error("Received invalid play response. No controller was mapped to this request:\n" + request);
         }
 
-        responseObserver.onNext(Empty.newBuilder().getDefaultInstanceForType());
+        responseObserver.onNext(GrpcSuccessResponse.newBuilder().setWasSuccessful(true).getDefaultInstanceForType());
         responseObserver.onCompleted();
     }
 

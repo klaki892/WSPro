@@ -2,10 +2,15 @@ package to.klay.wspro.server;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import com.linecorp.armeria.common.HttpHeaderNames;
+import com.linecorp.armeria.common.HttpMethod;
 import com.linecorp.armeria.common.HttpResponse;
+import com.linecorp.armeria.common.grpc.GrpcSerializationFormats;
 import com.linecorp.armeria.common.logging.LogLevel;
 import com.linecorp.armeria.server.Server;
 import com.linecorp.armeria.server.ServerBuilder;
+import com.linecorp.armeria.server.cors.CorsService;
+import com.linecorp.armeria.server.cors.CorsServiceBuilder;
 import com.linecorp.armeria.server.grpc.GrpcService;
 import com.linecorp.armeria.server.grpc.GrpcServiceBuilder;
 import com.linecorp.armeria.server.logging.AccessLogWriter;
@@ -65,6 +70,19 @@ public class ArmeriaServer {
         GrpcServiceBuilder grpcGameService = GrpcService.builder()
                 .addService(new SetupGameService(gameManager))
                 .addService(new PlayWeissService(gameManager));
+
+        //support GRPC-WEB and JSON formats
+        grpcGameService.supportedSerializationFormats(GrpcSerializationFormats.values());
+
+        //handle CORS
+        CorsServiceBuilder corsBuilder = CorsService.builderForAnyOrigin()
+                .allowRequestMethods(HttpMethod.POST)
+                .allowRequestHeaders(HttpHeaderNames.CONTENT_TYPE,
+                        HttpHeaderNames.of("X-GRPC-WEB"))
+                // Expose trailers of the HTTP response to the client.
+                .exposeHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+
+
         if (enableDebugging) {
             sb.decorator(LoggingService.builder()
                     .successfulResponseLogLevel(LogLevel.DEBUG)
@@ -77,7 +95,7 @@ public class ArmeriaServer {
 
 
         //add services and build server
-        sb.service(grpcGameService.build());
+        sb.service(grpcGameService.build(), corsBuilder.newDecorator());
 
         Server server = sb.build();
         CompletableFuture<Void> future = server.start();

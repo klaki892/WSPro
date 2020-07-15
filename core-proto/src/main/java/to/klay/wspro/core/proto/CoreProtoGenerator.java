@@ -69,8 +69,8 @@ public class CoreProtoGenerator {
                 "\n" +
                 "option java_multiple_files = true;\n" +
                 "option java_package = \"to.klay.wspro.core.game.proto\";\n" +
-                "option java_outer_classname = \"ProtoEntities\";\n\n" +
-                "package to.klay.wspro.core.game.proto;\n\n";
+                "option java_outer_classname = \"ProtoEntities\";\n\n";
+//                + "package to.klay.wspro.core.game.proto;\n\n";
 
         List<String> defs = new ArrayList<>(protoDefs);
 

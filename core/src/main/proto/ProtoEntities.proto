@@ -7,8 +7,6 @@ option java_multiple_files = true;
 option java_package = "to.klay.wspro.core.game.proto";
 option java_outer_classname = "ProtoEntities";
 
-package to.klay.wspro.core.game.proto;
-
 enum ProtoAttackType {
   DIRECT = 0;
   FRONTAL = 1;

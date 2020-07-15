@@ -4,9 +4,8 @@ option java_multiple_files = true;
 option java_package = "to.klay.wspro.core.game.proto";
 option java_outer_classname = "ProtoGameMessages";
 
-import "to/klay/wspro/core/game/proto/ProtoEntities.proto";
-import "to/klay/wspro/core/game/proto/PlayRequest.proto";
-package to.klay.wspro.core.game.proto;
+import "ProtoEntities.proto";
+import "PlayRequest.proto";
 
 
 message GameMessageProto {

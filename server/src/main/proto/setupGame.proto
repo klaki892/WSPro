@@ -5,7 +5,6 @@ option java_package = "to.klay.wspro.server.grpc.setupgame";
 option java_outer_classname = "SetupGameProto";
 
 
-package setupgame;
 
 service SetupGame {
   rpc requestGame(SetupGameRequest) returns (GameSetupStatus);
