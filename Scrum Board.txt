@@ -27,6 +27,7 @@ To-Do:
     - create a global CardAttribute map so when read in from a source we get both languages version external resource file?
 In-Progress:
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
+            - Connect to IP for server
             - Create a GUI to play the game.
 
     - Code the Abilities & effects scripting system

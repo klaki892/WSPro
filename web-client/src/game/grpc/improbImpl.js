@@ -26,14 +26,47 @@ function makeCall() {
 
     let client = new PlayWeissServiceClient(grpcURL);
 
-    let request = new GrpcGameConnectRequest();
+    let connectREquest = new GrpcGameConnectRequest();
 
-    request.setPlayername("p2");
-    request.setGameidentifier("4c4c6eb9-6280-3788-a77c-2e21efff3a4b");
+    let playerToken;
 
-    client.connectToGame(request, (err, response) => {
-        console.log(response?.getConnectionaccepted())
-        console.log(response?.getToken())
+    connectREquest.setPlayername("p2");
+    connectREquest.setGameidentifier("fe685056-e90c-3f9b-8a07-e5863e4636dc");
+
+    client.connectToGame(connectREquest, (err, token) => {
+        console.log(token?.getConnectionaccepted())
+        console.log(token?.getToken().getToken())
+        client.readyUp(token.getToken(), (error, responseMessage) => {
+            console.log(responseMessage.getWassuccessful());
+            console.log("ready to listen")
+            // var types = GameTriggerProto.TriggertypeCase;
+
+            client.listenToGameEvents(token.getToken()).on("data", message => {
+                console.log(message.toString());
+                if (message.hasTrigger()){
+                    let trigger = message.getTrigger();
+                    console.log("trigger")
+
+                    let triggertypeCase = trigger.getTriggertypeCase();
+                    console.log("triggerCase: " + triggertypeCase)
+                    // let caseToNumber = triggertypeCase.valueOf();
+                    switch (triggertypeCase) {
+                        case 5: //Card moved trigger - equivalent ENUM number, cant use actual enum due to typescripting errors
+                            console.log("card moved");
+                            break;
+                        case 22:
+                            console.log("zone shuffled")
+                            break;
+                        default:
+                            console.log("something else happened");
+
+                    }
+                } else {
+                    console.log("got request");
+                }
+            })
+
+        })
     })
 }
 
