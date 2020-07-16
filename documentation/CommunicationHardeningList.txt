@@ -1,0 +1,15 @@
+In order to make Triggers serializable and have descriptive information we need to look at the follow objects which are deemed "Dynamic Objects"
+Any "Dynmaic Object" is an interface which is impossible to get specific fields/information for  against and thus needs to be converted to an abstract class for the purpose of the game.
+remember: we're serializing the game. not the API, dont convert things that the game doesnt directly interact with (e.g never serialize papercard, only PlayingCard)
+- PlayZone
+- LocalizedString
+
+
+Communication Serialization Process:
+	1. All Triggers & data that is sent to the client must implemented a protoSerializable
+		ProtoSerializables:
+			Generate a GrpcGameMessage 
+				Triggers:
+					makes it own Grpc Trigger thats included in the OneOf inside a GrpcGameMessage
+				PlayChoice:
+					Makes its own special OneOf included inside GrpcGameMessage

@@ -1,0 +1,19 @@
+1. Wspro logo, front and center
+	Little description?
+	enter a nickname 
+	Disclamer of warranty 
+2. Configure
+	Encore Deck URL
+		-> ...Eventually - warn the user if all cards arent scripted
+	Image Repository URL (or Card DB w/ images in a supported format)
+3. Lobby
+	- Connect to main servers
+		- todo actual lobby, show open games, chat, etc. 
+	- direct connect link to a server
+4. Direct Connect:
+	- Enter IP
+	- Drop to game-pending room 
+5. Game-Pending 
+	Names of Both Players
+	Ready Up Status
+	Host can start game?

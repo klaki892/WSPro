@@ -20,8 +20,14 @@ To-Do:
             - create visibility filter for sending out info to players
             - make communication timeouts configurable
             - Create a GUI to play the game.
-                - Connect to IP for server
                 - Display Game Board
+                    - create zones ( as basic rectangle)
+                - Move Card
+                    - the logic to go from Point A to B
+                - Flip Card Animation
+                - Create OptionChooser (container that has buttons to do things)
+                - Integrate with network
+
 
     -refactor gameContext into Game
     - create a global CardAttribute map so when read in from a source we get both languages version external resource file?
