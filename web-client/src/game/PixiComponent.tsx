@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as PIXI from "pixi.js";
 import cardBack from '../resources/cardBack.png';
+import PlayArea from "./logic/field/PlayArea";
 
 export class PixiComponent extends React.Component {
     app: PIXI.Application | any;
@@ -46,13 +47,18 @@ export class PixiComponent extends React.Component {
        sprite.anchor.set(.5, .5);
        sprite.rotation = .5;
 
-       let rectangle = new PIXI.Graphics();
-       rectangle.beginFill(0x66CCFF);
-       rectangle.lineStyle(4, 0xFF3300, 1);
-       rectangle.drawRect(0,0, 64, 64);
-       rectangle.x = 100;
-       rectangle.y = 100;
-       app.stage.addChild(rectangle);
+       // let rectangle = new PIXI.Graphics();
+       // rectangle.beginFill(0x66CCFF);
+       // rectangle.lineStyle(4, 0xFF3300, 1);
+       // rectangle.drawRect(0, 0, 64, 64);
+       //  let centerStageMiddle = new PlayZone(ZoneName.CENTER_STAGE_MIDDLE);
+       // centerStageMiddle.x = 200;
+       // centerStageMiddle.y = 100;
+       // app.stage.addChild(centerStageMiddle);
+        let playerStageArea = new PlayArea();
+        playerStageArea.x = 200;
+        app.stage.addChild(playerStageArea);
+
        app.stage.addChild(sprite);
        let message = new PIXI.Text("Hello World");
        app.stage.addChild(message);
@@ -64,6 +70,7 @@ export class PixiComponent extends React.Component {
 
         /*Todo:
         *  Make classes for cards and playzones
+        * Add Special zones for Stackable cards? (hand and stock)
         * Create function to move a card from zone to zone
         * Look into Hexi and other GUI based libraries for fast implementing buttons and other technology
         * (We Might have to downgrade to get capability. */
@@ -84,7 +91,7 @@ export class PixiComponent extends React.Component {
         return (
             <React.Fragment>
             <div ref={(thisDiv) => {component.gameCanvas = thisDiv}} />
-            <img src={cardBack}/>
+            {/*<img src={cardBack}/>*/}
             </React.Fragment>
         );
     }
