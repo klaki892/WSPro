@@ -1,7 +1,10 @@
 import * as React from 'react';
 import * as PIXI from "pixi.js";
+import testCardFront from '../resources/testCardFront.jpg'
 import cardBack from '../resources/cardBack.png';
 import PlayArea from "./logic/field/PlayArea";
+import PlayCard from "./logic/PlayCard";
+import {ZoneName} from "./logic/field/ZoneName";
 
 export class PixiComponent extends React.Component {
     app: PIXI.Application | any;
@@ -29,42 +32,60 @@ export class PixiComponent extends React.Component {
         this.app.renderer.backgroundColor = 0xff;
         this.app.renderer.autoResize = true;
 
-        this.app.loader.add("cardBack", cardBack).load(() => this.setup(this.app))
+        this.app.loader.add("cardBack", cardBack)
+            .add("cardFront", testCardFront)
+            .load(() => this.setup(this.app))
         // this.setup(this.app)
+
+        //auto resizing
+        window.addEventListener('resize', this.autoResize);
 
         this.app.start();
     }
 
+    private autoResize() {
+        // this.app.renderer.resize(window.innerHeight, window.innerWidth);
+        if (this.app !== undefined) {
+            let parent = this.app.view.parentNode;
+            this.app.renderer.resize(this.app.screen.width, this.app.screen.height);
+        }
+
+    }
+
     setup(app: PIXI.Application){
-        let sprite = new PIXI.Sprite(
+        let sprite = new PlayCard(
+            app.loader.resources["cardFront"].texture,
             app.loader.resources["cardBack"].texture
         )
         // let sprite = PIXI.Sprite.from('https://i.imgur.com/rRoIHdc.png');
        sprite.x = 100;
        sprite.y = 100;
-       sprite.width = 128;
-       sprite.height = 128;
-       sprite.anchor.set(.5, .5);
-       sprite.rotation = .5;
 
-       // let rectangle = new PIXI.Graphics();
-       // rectangle.beginFill(0x66CCFF);
-       // rectangle.lineStyle(4, 0xFF3300, 1);
-       // rectangle.drawRect(0, 0, 64, 64);
-       //  let centerStageMiddle = new PlayZone(ZoneName.CENTER_STAGE_MIDDLE);
-       // centerStageMiddle.x = 200;
-       // centerStageMiddle.y = 100;
-       // app.stage.addChild(centerStageMiddle);
-        let playerStageArea = new PlayArea();
-        playerStageArea.x = 200;
-        app.stage.addChild(playerStageArea);
+
+
+       let playerStageArea = new PlayArea();
+       playerStageArea.x = 300;
+       app.stage.addChild(playerStageArea);
+
+        let card2 = new PlayCard(
+            app.loader.resources["cardFront"].texture,
+            app.loader.resources["cardBack"].texture
+        );
+        card2.flipCard();
+
+        app.stage.addChild(card2);
+
+        let deckZone = playerStageArea.zones.get(ZoneName.DECK);
+        if (deckZone !== undefined){
+            card2.position = deckZone.getGlobalPosition();
+        }
 
        app.stage.addChild(sprite);
        let message = new PIXI.Text("Hello World");
        app.stage.addChild(message);
        message.position.set(sprite.x, sprite.y);
        this.app.ticker.add((delta: any) =>{
-           sprite.y += 1;
+           // sprite.y += 1;
            message.position = sprite.position;
        })
 
