@@ -24,7 +24,6 @@ To-Do:
                     - create zones ( as basic rectangle)
                 - Move Card
                     - the logic to go from Point A to B
-                - Flip Card Animation
                 - Create OptionChooser (container that has buttons to do things)
                 - Integrate with network
 
@@ -44,6 +43,7 @@ In-Progress:
     - Code the Abilities & effects scripting system
 
 Done:
+    - Flip Card Animation
     - find a way to parse game triggers into grpc readable messages
     - Check that grpc clients dont timeout waiting for game events
     - Code grpc basic controller

@@ -5,6 +5,9 @@ import cardBack from '../resources/cardBack.png';
 import PlayArea from "./logic/field/PlayArea";
 import PlayCard from "./logic/PlayCard";
 import {ZoneName} from "./logic/field/ZoneName";
+import PlayActionUtilities from "./view/PlayActionUtilities";
+import {gsap} from "gsap";
+import {PixiPlugin} from "gsap/PixiPlugin";
 
 export class PixiComponent extends React.Component {
     app: PIXI.Application | any;
@@ -27,6 +30,11 @@ export class PixiComponent extends React.Component {
             resolution: 1,
             forceCanvas: true
         });
+
+        //register GSAP for animation handling
+        gsap.registerPlugin(PixiPlugin);
+        PixiPlugin.registerPIXI(PIXI);
+
         this.gameCanvas.appendChild(this.app.view);
 
         this.app.renderer.backgroundColor = 0xff;
@@ -64,18 +72,19 @@ export class PixiComponent extends React.Component {
 
 
        let playerStageArea = new PlayArea();
-       playerStageArea.x = 300;
-       app.stage.addChild(playerStageArea);
+       let playerStageAreaView = playerStageArea.view;
+       playerStageAreaView.x = 300;
+       app.stage.addChild(playerStageAreaView);
 
         let card2 = new PlayCard(
             app.loader.resources["cardFront"].texture,
             app.loader.resources["cardBack"].texture
         );
-        card2.flipCard();
+        // card2.flipCard();
 
         app.stage.addChild(card2);
 
-        let deckZone = playerStageArea.zones.get(ZoneName.DECK);
+        let deckZone = playerStageArea.getZone(ZoneName.DECK).view;
         if (deckZone !== undefined){
             card2.position = deckZone.getGlobalPosition();
         }
@@ -84,9 +93,14 @@ export class PixiComponent extends React.Component {
        let message = new PIXI.Text("Hello World");
        app.stage.addChild(message);
        message.position.set(sprite.x, sprite.y);
-       this.app.ticker.add((delta: any) =>{
+
+       PlayActionUtilities.moveCard(card2, playerStageArea.getZone(ZoneName.CENTER_STAGE_MIDDLE))
+
+
+        this.app.ticker.add((delta: any) =>{
            // sprite.y += 1;
            message.position = sprite.position;
+           this.gameloop();
        })
 
         /*Todo:
@@ -96,6 +110,12 @@ export class PixiComponent extends React.Component {
         * Look into Hexi and other GUI based libraries for fast implementing buttons and other technology
         * (We Might have to downgrade to get capability. */
     }
+
+    private gameloop() {
+        // let result = TWEEN
+
+    }
+
 
     /**
      * Stop the Application when unmounting.

@@ -1,89 +1,47 @@
 import {ZoneName} from "./ZoneName";
 import PlayZone from "./PlayZone";
 import * as PIXI from "pixi.js";
+import PlayAreaView from "../../view/field/PlayAreaView";
 
 
+const {CLIMAX, MEMORY, CENTER_STAGE_LEFT, CENTER_STAGE_RIGHT, STOCK, BACK_STAGE_RIGHT, WAITING_ROOM, CENTER_STAGE_MIDDLE, LEVEL, HAND, DECK, CLOCK, BACK_STAGE_LEFT} = ZoneName;
 export default class PlayArea extends PIXI.Container{
 
-    zones: Map<ZoneName, PlayZone>;
+    private zonesMap: Map<ZoneName, PlayZone> = new  Map<ZoneName, PlayZone>();
+    view: PlayAreaView
 
     constructor() {
         super();
-        this.zones = new Map<ZoneName, PlayZone>();
         this.initZones();
+        this.view = new PlayAreaView(this);
     }
 
     private initZones() {
+        this.zonesMap.set(MEMORY, new PlayZone(MEMORY));
+        this.zonesMap.set(DECK, new PlayZone(DECK));
+        this.zonesMap.set(WAITING_ROOM, new PlayZone(WAITING_ROOM));
+        this.zonesMap.set(CLIMAX, new PlayZone(CLIMAX));
+        this.zonesMap.set(LEVEL, new PlayZone(LEVEL));
+        this.zonesMap.set(HAND, new PlayZone(HAND));
+        this.zonesMap.set(STOCK, new PlayZone(STOCK));
+        this.zonesMap.set(CLOCK, new PlayZone(CLOCK));
+        this.zonesMap.set(CENTER_STAGE_RIGHT, new PlayZone(CENTER_STAGE_RIGHT));
+        this.zonesMap.set(CENTER_STAGE_MIDDLE, new PlayZone(CENTER_STAGE_MIDDLE));
+        this.zonesMap.set(CENTER_STAGE_LEFT, new PlayZone(CENTER_STAGE_LEFT));
+        this.zonesMap.set(BACK_STAGE_LEFT, new PlayZone(BACK_STAGE_LEFT));
+        this.zonesMap.set(BACK_STAGE_RIGHT, new PlayZone(BACK_STAGE_RIGHT));
+    }
 
-        let mem = new PlayZone(ZoneName.MEMORY);
-        mem.position.set(900, 100)
-        mem.pivot.set(mem.height/2, mem.width/2);
-        mem.angle = 90;
-        this.addChild(mem);
+    getZone(name: ZoneName): PlayZone{
+        let zone = this.zonesMap.get(name);
 
-        let deckZone = new PlayZone(ZoneName.DECK);
-        deckZone.position.set(800, 200)
-        this.addChild(deckZone);
-        this.zones.set(ZoneName.DECK, deckZone);
-
-        let waitingRoom = new PlayZone(ZoneName.WAITING_ROOM);
-        waitingRoom.position.set(800, 400)
-        this.addChild(waitingRoom);
-
-        let climax = new PlayZone(ZoneName.CLIMAX);
-        climax.position.set(250, 200)
-        climax.angle = 90;
-        this.addChild(climax);
-
-        //todo needs special stacking mechanism to see cards
-        let level = new PlayZone(ZoneName.LEVEL);
-        level.position.set(250, 400)
-        level.angle = 90;
-        this.addChild(level);
-
-        //todo needs special stacking mechanism to see cards
-        let hand = new PlayZone(ZoneName.HAND);
-        hand.position.set(200, 600)
-        this.addChild(hand);
-
-        //todo needs special stacking mechanism to see cards
-        let stock = new PlayZone(ZoneName.STOCK);
-        stock.position.set(50, 200)
-        stock.angle = 90;
-        this.addChild(stock);
-
-        //todo needs special stacking mechanism to see cards
-        let clock =  new PlayZone(ZoneName.CLOCK);
-        clock.position.set(300, 400)
-        this.addChild(clock);
-
-
-
-        //stage
-        let csR = new PlayZone(ZoneName.CENTER_STAGE_RIGHT);
-        csR.x = 600;
-        this.addChild(csR);
-
-        let csMid = new PlayZone(ZoneName.CENTER_STAGE_MIDDLE);
-        csMid.x = 400;
-        this.addChild(csMid);
-
-        let csL =  new PlayZone(ZoneName.CENTER_STAGE_LEFT);
-        csL.x = 200;
-        this.addChild(csL);
-
-        let bsL =  new PlayZone(ZoneName.BACK_STAGE_LEFT);
-        bsL.position.set((csL.x+csMid.x)/2, 200)
-        this.addChild(bsL);
-
-        let bsR =  new PlayZone(ZoneName.BACK_STAGE_RIGHT);
-        bsR.position.set((csMid.x+csR.x)/2, 200)
-        this.addChild(bsR);
-
-        // this.zones.set(CENTER_STAGE_MIDDLE, csMid);
-        // this.zones.set(CENTER_STAGE_RIGHT, csR);
-        // this.zones.set(CENTER_STAGE_LEFT, csL);
-
+        if (zone !== undefined){
+            return zone;
+        } else {
+            console.error(name + " was undefined in the PlayArea.");
+            // @ts-ignore - this should break the code if it happens.
+            return undefined;
+        }
     }
 
 
