@@ -1,119 +1,40 @@
 import * as React from 'react';
 import * as PIXI from "pixi.js";
-import testCardFront from '../resources/testCardFront.jpg'
-import cardBack from '../resources/cardBack.png';
-import PlayArea from "./logic/field/PlayArea";
-import PlayCard from "./logic/PlayCard";
-import {ZoneName} from "./logic/field/ZoneName";
-import PlayActionUtilities from "./view/PlayActionUtilities";
-import {gsap} from "gsap";
-import {PixiPlugin} from "gsap/PixiPlugin";
+import Game from "./logic/Game";
+import GameInfo from "./GameInfo";
+
+const WIDTH = 1920;
+const HEIGHT = 1080;
 
 export class PixiComponent extends React.Component {
-    app: PIXI.Application | any;
+    app: PIXI.Application;
     gameCanvas: HTMLDivElement | any;
+    private game: Game;
 
     constructor({props, context}: { props: any, context: any }) {
         super(props, context);
 
+        //todo retrieve game properties from actual global source
+        let playerName = "p1";
+        let gameToken = "token";
+        let url = "https://server.url";
+
+        let gameInfo = new GameInfo(playerName, gameToken, url);
+        //create new game
+        this.game = new Game(gameInfo);
+
+        this.app = this.game.view.getPixiApp();
     }
 
     /**
      * After mounting, add the PIXI Renderer to the div and start the Application.
      */
     componentDidMount() {
-        this.app = new PIXI.Application({
-            width: window.innerWidth,
-            height: window.innerHeight,
-            antialias: true,
-            transparent: false,
-            resolution: 1,
-            forceCanvas: true
-        });
-
-        //register GSAP for animation handling
-        gsap.registerPlugin(PixiPlugin);
-        PixiPlugin.registerPIXI(PIXI);
 
         this.gameCanvas.appendChild(this.app.view);
 
-        this.app.renderer.backgroundColor = 0xff;
-        this.app.renderer.autoResize = true;
-
-        this.app.loader.add("cardBack", cardBack)
-            .add("cardFront", testCardFront)
-            .load(() => this.setup(this.app))
-        // this.setup(this.app)
-
-        //auto resizing
-        window.addEventListener('resize', this.autoResize);
-
-        this.app.start();
-    }
-
-    private autoResize() {
-        // this.app.renderer.resize(window.innerHeight, window.innerWidth);
-        if (this.app !== undefined) {
-            let parent = this.app.view.parentNode;
-            this.app.renderer.resize(this.app.screen.width, this.app.screen.height);
-        }
-
-    }
-
-    setup(app: PIXI.Application){
-        let sprite = new PlayCard(
-            app.loader.resources["cardFront"].texture,
-            app.loader.resources["cardBack"].texture
-        )
-        // let sprite = PIXI.Sprite.from('https://i.imgur.com/rRoIHdc.png');
-       sprite.x = 100;
-       sprite.y = 100;
-
-
-
-       let playerStageArea = new PlayArea();
-       let playerStageAreaView = playerStageArea.view;
-       playerStageAreaView.x = 300;
-       app.stage.addChild(playerStageAreaView);
-
-        let card2 = new PlayCard(
-            app.loader.resources["cardFront"].texture,
-            app.loader.resources["cardBack"].texture
-        );
-        // card2.flipCard();
-
-        app.stage.addChild(card2);
-
-        let deckZone = playerStageArea.getZone(ZoneName.DECK).view;
-        if (deckZone !== undefined){
-            card2.position = deckZone.getGlobalPosition();
-        }
-
-       app.stage.addChild(sprite);
-       let message = new PIXI.Text("Hello World");
-       app.stage.addChild(message);
-       message.position.set(sprite.x, sprite.y);
-
-       PlayActionUtilities.moveCard(card2, playerStageArea.getZone(ZoneName.CENTER_STAGE_MIDDLE))
-
-
-        this.app.ticker.add((delta: any) =>{
-           // sprite.y += 1;
-           message.position = sprite.position;
-           this.gameloop();
-       })
-
-        /*Todo:
-        *  Make classes for cards and playzones
-        * Add Special zones for Stackable cards? (hand and stock)
-        * Create function to move a card from zone to zone
-        * Look into Hexi and other GUI based libraries for fast implementing buttons and other technology
-        * (We Might have to downgrade to get capability. */
-    }
-
-    private gameloop() {
-        // let result = TWEEN
-
+        //component loaded, start loading game.
+        this.game.init()
     }
 
 
@@ -121,7 +42,7 @@ export class PixiComponent extends React.Component {
      * Stop the Application when unmounting.
      */
     componentWillUnmount() {
-        this.app.stop();
+        this.game.endGame();
     }
 
     /**

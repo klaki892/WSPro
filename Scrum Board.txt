@@ -21,7 +21,7 @@ To-Do:
             - make communication timeouts configurable
             - Create a GUI to play the game.
                 - Display Game Board
-                    - create zones ( as basic rectangle)
+                    - Cascading Zones for cards that need to be stacked
                 - Move Card
                     - the logic to go from Point A to B
                 - Create OptionChooser (container that has buttons to do things)
@@ -35,7 +35,6 @@ In-Progress:
         - Code External Communication for input
             - Create a GUI to play the game.
                 - Display Game Board
-                    - create zones ( as basic rectangle)
             - Move Card
                 - the logic to go from Point A to B
         - Connect to IP for server
@@ -43,6 +42,7 @@ In-Progress:
     - Code the Abilities & effects scripting system
 
 Done:
+    - create zones ( as basic rectangle)
     - Flip Card Animation
     - find a way to parse game triggers into grpc readable messages
     - Check that grpc clients dont timeout waiting for game events

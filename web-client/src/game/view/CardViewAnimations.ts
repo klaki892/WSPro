@@ -1,9 +1,10 @@
-import PlayCard from "../logic/PlayCard";
+import PlayCardView from "./PlayCardView";
 import {gsap} from "gsap";
+import {Point} from "pixi.js";
 
 export default class CardViewAnimations {
 
-    static flipCardAnim(card: PlayCard) : GSAPTimeline{
+    static flipCardAnim(card: PlayCardView) : GSAPTimeline{
 
         let nextFace = card.texture === card.frontImage
             ? card.backImage : card.frontImage;
@@ -11,14 +12,13 @@ export default class CardViewAnimations {
 
         let t1 = gsap.timeline({
             autoRemoveChildren: true,
-            paused: true
 
         });
 
         t1.to(card, {
             pixi: {
                 width: 0,
-                height: PlayCard.baseHeight * 1.1
+                height: PlayCardView.baseHeight * 1.1
             },
             duration: .2,
             onComplete: args => card.texture = nextFace
@@ -26,14 +26,42 @@ export default class CardViewAnimations {
         })
             .to(card,{
                 pixi: {
-                    width: PlayCard.baseWidth,
-                    height: PlayCard.baseHeight
+                    width: PlayCardView.baseWidth,
+                    height: PlayCardView.baseHeight
                 },
                 duration: .2,
             } );
 
         return t1;
+    }
 
+    /**
+     *  Moves a card to a position specified by the zone, optionally flipping the card during the movement
+     * @param card
+     * @param newPosition
+     * @param flip
+     */
+    static moveCardAnim(card: PlayCardView, newPosition: Point, flip: boolean) : GSAPTimeline {
+        let moveTimeline = gsap.timeline();
+
+        //get the position the zone wants us to place the card
+
+        //generate the movement
+        moveTimeline.to(card, {duration: 1, x: newPosition.x, y: newPosition.y});
+
+        let anim = gsap.timeline({
+            autoRemoveChildren: true,
+            paused: true
+        });
+
+        anim.add(moveTimeline, 0);
+        if (flip){
+            let flipAnim = this.flipCardAnim(card);
+            flipAnim.timeScale(1);
+            anim.add(flipAnim, 0.2);
+        }
+
+        return anim;
     }
 
 }
