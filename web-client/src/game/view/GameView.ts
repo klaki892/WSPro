@@ -1,11 +1,9 @@
 import Game from "../logic/Game";
 import * as PIXI from "pixi.js";
-// @ts-ignore
-import * as PUXI from "@puxi/core/lib/puxi-core.js";
 import {gsap} from "gsap";
 import {PixiPlugin} from "gsap/PixiPlugin";
 import cardBack from "../../resources/cardBack.png";
-import testCardFront from "../../resources/testCardFront.jpg";
+import cardFront from "../../resources/cardFront.png";
 import PlayCardView from "./PlayCardView";
 import {ZoneName} from "../logic/field/ZoneName";
 import PlayActionUtilities from "./PlayActionUtilities";
@@ -47,7 +45,7 @@ export default class GameView {
 
         //todo load actual assets
         this.pixiApp.loader.add("testCardBack", cardBack)
-            .add("testCardFront", testCardFront)
+            .add("testCardFront", cardFront)
             .load(() => this.setupStage(this.pixiApp))
 
 
@@ -56,20 +54,6 @@ export default class GameView {
 
     private setupStage(app: PIXI.Application){
 
-        //trying PUXI
-        const uxStage = new PUXI.Stage({
-            width: 128,
-            height: 128
-        });
-
-        app.stage.addChild(uxStage);
-
-        uxStage.x = 30;
-        uxStage.y = 30;
-
-        uxStage.addChild(new PUXI.Button({
-            text: "Hello world!"
-        }));
 
         //todo only setup, dont do any actions.
         let sprite = new PlayCardView( new PlayCard("testCard", this.game))
@@ -102,12 +86,12 @@ export default class GameView {
         }
 
         app.stage.addChild(sprite);
-        let message = new PIXI.Text("Hello World");
+        let message = new PIXI.Text("Text");
         app.stage.addChild(message);
         message.position.set(sprite.x, sprite.y);
 
-        PlayActionUtilities.moveCard(card2, playerStageArea.getZone(ZoneName.STOCK));
-        PlayActionUtilities.moveCard(sprite, playerStageArea.getZone(ZoneName.CLOCK));
+        PlayActionUtilities.moveCard(card2, playerStageArea.getZone(ZoneName.LEVEL));
+        PlayActionUtilities.moveCard(sprite, oppStageArea.getZone(ZoneName.LEVEL));
 
 
         app.ticker.add((delta: any) =>{
@@ -119,8 +103,7 @@ export default class GameView {
 
         /*Todo:
         * Add Special zones for Stackable cards? (hand and stock)
-        * Look into Hexi and other GUI based libraries for fast implementing buttons and other technology
-        * (We Might have to downgrade to get capability. */
+         */
     }
 
 

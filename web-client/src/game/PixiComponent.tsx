@@ -13,7 +13,7 @@ export class PixiComponent extends React.Component {
 
         //todo retrieve game properties from actual global source
         let playerName = "p2";
-        let gameToken = "b26dfa28-6350-3cef-a8e3-25423580395e";
+        let gameToken = "ff2b9868-d419-34c6-8495-d52e672bfe73";
         let url = "http://localhost:80";
 
         let gameInfo = new GameInfo(playerName, gameToken, url);

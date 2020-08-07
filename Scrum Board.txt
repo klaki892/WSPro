@@ -1,4 +1,4 @@
-Board for Scripting Engine
+Board for WSPro
 --------------------------
 
 To-Do:
@@ -14,36 +14,62 @@ To-Do:
         - continuous and activatd ability examples
         - test making abilities from Utility/abilityTemplate lua library
         - Create a mapping from Triggers to TriggerSubscriber<TriggerName> & Create a reflection invoker for scripting
-        -Look into: can we make an annotation on classes and methods that need to be exposed to scripting so they automatically are? (potentially using eventhub? our annotation listens for a scriptengine to be emitted and then registers itself and its name)
+        -Look into: can we make an annotation on classes and methods that need to be exposed to scripting so they are automatically exposed? (potentially using eventhub? our annotation listens for a scriptengine to be emitted and then registers itself and its name)
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
         - Code External Communication for input
             - create visibility filter for sending out info to players
-            - make communication timeouts configurable
+            - Revamp Grpc communication of events to fix bugs
+                - Change message polling queue into lookup for next known message in log (to prevent current connected clients from skipping/missing messages)
+                    - Add a message identifier (or #) to each message sent to player
+                    
+            - make player choice timeouts configurable (currnetly 2mins)
             - Create a GUI to play the game.
                 - Display Game Board
-                    - Cascading Zones for cards that need to be stacked
-                - Move Card
-                    - the logic to go from Point A to B
-                - Create ChoiceSelector (container that has buttons to do things)
+                    - Cascading Zones for cards that need to be stacked (stock, clock, hand, level))
+                - Code Gameplay animations / display
+                    - Move Card
+                        - add orentiation change during movement
+                    - Orient Card (stand, rest, reverse)
+                    - Card Stats During Play Choices ( level, power, soul)
+                    - Create ChoiceSelector (container that has buttons to do things)
+                        - Handle Play Choice For Action, String, Ability
+                    - Create Window for  for displaying multiple cards in multiple locations at once (e.g. displaying deck)
+                    - Create Global Pointer for displaying play actions for selected card
+                        - Handle Playchoice Card Choice
+
+                - Display Magnified Card & Card Description to side of stage
                 - Integrate with network
+                    - Provide errors on disconnect
+    - Create a GUI flow to create a game
+        - Allow player to choose their name
+        - Allow players to select their deck ( at least 1 of the following)
+            - via a link of their EncoreDeck (using EncoreDeck API)
+            -
+        - Look into: let player choose how to get images (at least 1 of the following)
+            - Obtain images from a user-specified URL providing images for cards based on ID
+            - Let player load a DB containing images
+            - use TTS WSMTools deck image link for own cards, use WebRTC for pulling opponent deck cards as needed
+                - (* deck images are sorted alphabetically by ID)
+        - Allow player to lobby together for game creation
+            - Allow player to choose server IP/port to connect to game (and/or) lobby servers
+            - Allow player to ready-up & start game when all players are ready (lobby system?)
 
-
-    -refactor gameContext into Game
     - create a global CardAttribute map so when read in from a source we get both languages version external resource file?
-In-Progress:
+
+Last known In-Progress (Before suspension):
+
     - Code Player Choices & Controllers W/ Testing endpoints ( See WsPoCommunicationBreakdown.txt)
         - Code External Communication for input
+            - Revamp Grpc communication of events to fix bugs
+                - Change message polling queue into lookup for next known message in log (to prevent current connected clients from skipping/missing messages)
+
             - Create a GUI to play the game.
                 - Display Game Board
-                - Integrate with network
-
-            - Move Card
-                - the logic to go from Point A to B
-        - Connect to IP for server
-
-    - Code the Abilities & effects scripting system
+                - Code Gameplay animations / display
 
 Done:
+    - webui: the logic to go from Point A to B
+    - webui: receive past events if joined in progress
     - create zones ( as basic rectangle)
     - Flip Card Animation
     - find a way to parse game triggers into grpc readable messages

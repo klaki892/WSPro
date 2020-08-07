@@ -63,6 +63,7 @@ export default class CardMoveAction implements GameAction{
 
 
         //play animation
+        //FIXME flipping isnt this simple, need to look at the actual states
         let doFlip = sourceCard.getVisibility() !== destinationCard.getVisibility();
         let anim = CardViewAnimations.moveCardAnim(card.view, gameDestinationZone.view.getCardPosition(destinationIndex), doFlip).timeScale(1.5);
 
