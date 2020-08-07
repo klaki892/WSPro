@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/src/game/grpc/generated/*
+/tools/protoc.exe
+/tools/protoc-gen-grpc-web.exe
