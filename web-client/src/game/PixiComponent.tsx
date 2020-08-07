@@ -3,9 +3,6 @@ import * as PIXI from "pixi.js";
 import Game from "./logic/Game";
 import GameInfo from "./GameInfo";
 
-const WIDTH = 1920;
-const HEIGHT = 1080;
-
 export class PixiComponent extends React.Component {
     app: PIXI.Application;
     gameCanvas: HTMLDivElement | any;
@@ -15,9 +12,9 @@ export class PixiComponent extends React.Component {
         super(props, context);
 
         //todo retrieve game properties from actual global source
-        let playerName = "p1";
-        let gameToken = "token";
-        let url = "https://server.url";
+        let playerName = "p2";
+        let gameToken = "b26dfa28-6350-3cef-a8e3-25423580395e";
+        let url = "http://localhost:80";
 
         let gameInfo = new GameInfo(playerName, gameToken, url);
         //create new game

@@ -5,6 +5,9 @@ import Player from "./Player";
 import GameView from "../view/GameView";
 import GameInfo from "../GameInfo";
 import PlayArea from "./field/PlayArea";
+import GameAction from "./actions/GameAction";
+import GrpcNetworkManager from "../grpc/GrpcNetworkManager";
+import GameState from "./GameState";
 
 export default class Game {
 
@@ -13,6 +16,10 @@ export default class Game {
     players: Player[] = [];
     localPlayer!: Player;
     oppPlayer!: Player;
+    actionQueue: GameAction[] = [];
+    networkManager! : GrpcNetworkManager;
+    gameState: GameState = new GameState();
+    private executingAction: boolean = false;
 
     constructor(gameInfo : GameInfo) {
         this.gameInfo = gameInfo;
@@ -44,7 +51,37 @@ export default class Game {
     }
 
     startGame(){
+        //connect to game and mark as ready
         this.view.startRender();
+        this.networkManager = new GrpcNetworkManager(this, this.gameInfo);
+    }
+
+    private executeAction() {
+        //if we have an action, execute
+            if (!this.executingAction) {
+
+                let action = this.actionQueue[0];
+                if (action !== undefined) {
+                    this.executingAction = true;
+                    this.actionQueue = this.actionQueue.splice(0,0);
+                    //perform action
+                    action.perform(this, () => {
+                        this.executingAction = false;
+                        this.executeAction(); //start next loop or action.
+                    });
+
+                }
+            }
+    }
+
+    //when an action is recieved, perform a game loop
+    // this is to prevent the game from not continuing if the action queue ever empties
+    notifyActionReceived() {
+
+        if (this.actionQueue.length === 1) {
+            this.executeAction();
+        }
+
     }
 
     /**
@@ -56,5 +93,4 @@ export default class Game {
         //stop UI
         this.view.stopRender();
     }
-
 }

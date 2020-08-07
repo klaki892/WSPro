@@ -42,9 +42,7 @@ export default class PlayZoneView extends PIXI.Sprite{
         zoneNameText.position.y = (this.height / 2) - (zoneNameText.height / 2);
         this.addChild(zoneNameText);
 
-        let texture = this.app.renderer.generateTexture(graphic, SCALE_MODES.NEAREST, 2);
-
-        this.texture = texture;
+        this.texture = this.app.renderer.generateTexture(graphic, SCALE_MODES.NEAREST, 2);
 
         this.interactive = true;
         this.on('pointerover', this.focusZone);
@@ -86,5 +84,14 @@ export default class PlayZoneView extends PIXI.Sprite{
         let y = this.getGlobalPosition().y //+ (this.height/2);
         // let y = this.y + (this.height/2);
         return new Point(x, y);
+    }
+    getCardPosition(index: number) : PIXI.Point{
+        if (index > (this.playZone.size())) {
+            return this.getNextCardPosition();
+        }
+        //todo FIXME this is meant for specific positioning
+        // get the specified position, but move all cards after it when this is called?
+        return this.getNextCardPosition();
+
     }
 }

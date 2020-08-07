@@ -24,7 +24,7 @@ To-Do:
                     - Cascading Zones for cards that need to be stacked
                 - Move Card
                     - the logic to go from Point A to B
-                - Create OptionChooser (container that has buttons to do things)
+                - Create ChoiceSelector (container that has buttons to do things)
                 - Integrate with network
 
 
@@ -35,6 +35,8 @@ In-Progress:
         - Code External Communication for input
             - Create a GUI to play the game.
                 - Display Game Board
+                - Integrate with network
+
             - Move Card
                 - the logic to go from Point A to B
         - Connect to IP for server

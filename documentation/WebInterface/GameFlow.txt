@@ -1,0 +1,32 @@
+What is ths Sequence to perform mulligan?
+	1. Set indicator for cards in deck
+		1a. set card count to 50
+	2. Connect to server
+		2a. Start listening for events
+		2b. Declares ready
+	3. on gamestart
+		update UI to select from mulligan
+	4. perform respective card moves
+	5. on Play Choice, allow player to select each individual card
+	6. let player hit done button to end actin
+		sends response back to server
+		remove UI elements specifying mulligan
+How does the UI recieve events from GRPC?
+	Message is Trigger?
+		1. Determine the TriggerType
+			create action respective to the trigger
+			add to game queue
+		2. 
+	Message is playchoice?
+What is the loop to play the game?
+	1. check for action in queue
+		1a. if exists
+			Pop action 
+			set game as executing
+			perform action
+			remove executing flag
+		2a. if doesnt exist, continue
+			
+What is in an action?
+	- model altering
+	- animation play and wait for finish

@@ -1,5 +1,7 @@
 import Game from "../logic/Game";
 import * as PIXI from "pixi.js";
+// @ts-ignore
+import * as PUXI from "@puxi/core/lib/puxi-core.js";
 import {gsap} from "gsap";
 import {PixiPlugin} from "gsap/PixiPlugin";
 import cardBack from "../../resources/cardBack.png";
@@ -7,6 +9,7 @@ import testCardFront from "../../resources/testCardFront.jpg";
 import PlayCardView from "./PlayCardView";
 import {ZoneName} from "../logic/field/ZoneName";
 import PlayActionUtilities from "./PlayActionUtilities";
+import PlayCard from "../logic/PlayCard";
 
 
 //pixi settings
@@ -43,8 +46,8 @@ export default class GameView {
         window.addEventListener('resize', this.autoResize(this.pixiApp));
 
         //todo load actual assets
-        this.pixiApp.loader.add("cardBack", cardBack)
-            .add("cardFront", testCardFront)
+        this.pixiApp.loader.add("testCardBack", cardBack)
+            .add("testCardFront", testCardFront)
             .load(() => this.setupStage(this.pixiApp))
 
 
@@ -53,11 +56,23 @@ export default class GameView {
 
     private setupStage(app: PIXI.Application){
 
+        //trying PUXI
+        const uxStage = new PUXI.Stage({
+            width: 128,
+            height: 128
+        });
+
+        app.stage.addChild(uxStage);
+
+        uxStage.x = 30;
+        uxStage.y = 30;
+
+        uxStage.addChild(new PUXI.Button({
+            text: "Hello world!"
+        }));
+
         //todo only setup, dont do any actions.
-        let sprite = new PlayCardView(
-            app.loader.resources["cardFront"].texture,
-            app.loader.resources["cardBack"].texture
-        )
+        let sprite = new PlayCardView( new PlayCard("testCard", this.game))
         // let sprite = PIXI.Sprite.from('https://i.imgur.com/rRoIHdc.png');
         sprite.x = 100;
         sprite.y = 100;
@@ -76,10 +91,7 @@ export default class GameView {
         app.stage.addChild(oppStageAreaView);
         app.stage.addChild(playerStageAreaView);
 
-        let card2 = new PlayCardView(
-            app.loader.resources["cardFront"].texture,
-            app.loader.resources["cardBack"].texture
-        );
+        let card2 = new PlayCardView( new PlayCard("testCard", this.game))
         // card2.flipCard();
 
         app.stage.addChild(card2);

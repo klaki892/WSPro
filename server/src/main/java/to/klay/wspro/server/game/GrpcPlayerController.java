@@ -33,7 +33,7 @@ public class GrpcPlayerController implements ServerPlayerController {
     }
 
     LinkedBlockingQueue<GameMessageProto> gameEventQueue = new LinkedBlockingQueue<>();
-
+    List<BaseTrigger> gameEventLog = new ArrayList<>();
     CompletableFuture<List<Integer>> playRequest;
 
     public LinkedBlockingQueue<GameMessageProto> getGameEventQueue() {
@@ -42,8 +42,12 @@ public class GrpcPlayerController implements ServerPlayerController {
 
     @Subscribe
     public void handleGameEvent(BaseTrigger event){
-
+        gameEventLog.add(event);
         gameEventQueue.add(event.serializeToProto());
+    }
+
+    public List<BaseTrigger> getGameEventLog() {
+        return gameEventLog;
     }
 
     public void answerPlayRequest(GrpcPlayResponse response){

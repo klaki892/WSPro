@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import CardViewAnimations from "./CardViewAnimations";
+import PlayCard from "../logic/PlayCard";
 
 const baseColor = 0x000000;
 const activeColor = 0xFFFFFF;
@@ -11,20 +12,33 @@ export default class PlayCardView extends  PIXI.Sprite {
     frontImage: PIXI.Texture;
     backImage: PIXI.Texture;
     graphic: PIXI.Graphics;
+    card: PlayCard;
 
     static readonly baseWidth = width;
     static readonly baseHeight = height;
 
 
-    constructor(frontImage: PIXI.Texture, backImage: PIXI.Texture) {
+    constructor(card: PlayCard) {
         super();
-        this.frontImage = frontImage;
-        this.backImage = backImage;
+        this.card = card;
+        this.frontImage = PlayCardView.getFrontImage(card);
+        this.backImage = PlayCardView.getBackImage(card);
         this.graphic = new PIXI.Graphics();
         this.addChild(this.graphic);
         this.drawCard();
         this.initCard();
     }
+
+    private static getFrontImage(card: PlayCard) : PIXI.Texture {
+        //todo
+        return card.game.view.getPixiApp().loader.resources["testCardFront"].texture;
+    }
+
+    private static getBackImage(card: PlayCard) : PIXI.Texture {
+        //todo
+        return card.game.view.getPixiApp().loader.resources["testCardBack"].texture;
+    }
+
 
     private drawCard() {
         this.width = width;

@@ -105,6 +105,20 @@ public class PlayWeissService extends PlayWeissServiceGrpc.PlayWeissServiceImplB
 
     }
 
+    @Override
+    public void getAllPastGameEvents(GrpcPlayerToken request, StreamObserver<GameMessageProto> responseObserver) {
+        GrpcPlayerController controller = tokenControllerMap.get(request);
+
+        if (controller != null) {
+            controller.getGameEventLog().forEach(event -> responseObserver.onNext(event.serializeToProto()));
+        } else {
+            log.error("No/invalid token was mapped to this request.");
+            responseObserver.onError(new StatusRuntimeException(Status.NOT_FOUND));
+        }
+        responseObserver.onCompleted();
+
+    }
+
     private boolean isGameOverMessage(GameMessageProto gameMessage) {
         if (gameMessage.hasTrigger()){
             return gameMessage.getTrigger().hasGameOverTrigger();

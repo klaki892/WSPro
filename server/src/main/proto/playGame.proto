@@ -11,6 +11,7 @@ service PlayWeissService{
   rpc readyUp(GrpcPlayerToken) returns (GrpcSuccessResponse);
   //todo all the playgame rpcs....
   rpc listenToGameEvents(GrpcPlayerToken) returns (stream GameMessageProto);
+  rpc getAllPastGameEvents(GrpcPlayerToken) returns (stream GameMessageProto);
   rpc answerPlayRequest(GrpcPlayResponse) returns (GrpcSuccessResponse);
 }
 

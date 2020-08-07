@@ -1,6 +1,7 @@
 import PlayCardView from "./PlayCardView";
 import PlayZone from "../logic/field/PlayZone";
 import CardViewAnimations from "./CardViewAnimations";
+import Game from "../logic/Game";
 
 export default class PlayActionUtilities {
 
@@ -19,4 +20,12 @@ export default class PlayActionUtilities {
 
     }
 
+    static DoAnimateAndOnComplete(animation: GSAPTimeline, callback: Function){
+        animation.eventCallback('onComplete', callback());
+        animation.play();
+    }
+
+    static getStageView(game : Game) : PIXI.Container {
+        return game.view.getPixiApp().stage;
+    }
 }

@@ -1,11 +1,16 @@
 import PlayCardView from "../view/PlayCardView";
-import PIXI from "pixi.js";
+import Game from "./Game";
+
 
 export default class PlayCard {
     view: PlayCardView
-
-    constructor(frontImage: PIXI.Texture, backImage: PIXI.Texture) {
-        this.view = new PlayCardView(frontImage, backImage)
+    id: String
+    guid!: string
+    game: Game;
+    constructor(id: string, game : Game) {
+        this.id = id;
+        this.game = game;
+        this.view = new PlayCardView(this)
     }
 
 }

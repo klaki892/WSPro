@@ -1,7 +1,7 @@
 import {ZoneName} from "./ZoneName";
 import PlayZoneView from "../../view/field/PlayZoneView";
-import PlayCardView from "../../view/PlayCardView";
 import Player from "../Player";
+import PlayCard from "../PlayCard";
 
 const baseColor = 0x000000;
 const activeColor = 0xFFFFFF;
@@ -21,7 +21,7 @@ export default class PlayZone {
     view: PlayZoneView;
     owner: Player;
 
-    private contents: PlayCardView[];
+    private contents: PlayCard[];
 
     constructor(zoneName: ZoneName, owner : Player) {
         this.zoneName = zoneName;
@@ -31,22 +31,32 @@ export default class PlayZone {
     }
 
 
-    add(card: PlayCardView) {
+    add(card: PlayCard) {
         this.contents.push(card);
     }
 
-    remove(card: PlayCardView){
+    set(card: PlayCard, index: number) {
+        if (index >= this.contents.length){
+            this.add(card);
+        } else if (index < 0){
+            this.contents.splice(0, 0, card);
+        } else {
+            this.contents.splice(index, 0, card);
+        }
+    }
+
+    remove(card: PlayCard){
         const index = this.contents.indexOf(card);
         if (index > -1) {
             this.contents.splice(index, 1);
         }
     }
 
-    size() : Number{
+    size() : number{
         return this.contents.length;
     }
 
-    getContents() : PlayCardView[] {
+    getContents() : PlayCard[] {
         return this.contents.slice();
     }
 
