@@ -57,6 +57,7 @@ In an IDE: run [TestCommandLineGame.java](https://github.com/klaki892/WSPro/blob
 
 or execute via command line:
 ```
+mvn compiler:testCompile
 mvn exec:java  -D"exec.classpathScope"="test" -D"exec.mainClass"="to.klay.wspro.core.test.manual.TestCommandLineGame"
 ```
 

@@ -6,3 +6,4 @@ protoc.exe ^
 --js_out=import_style=commonjs,binary:"..\src\game\grpc\generated" ^
 --ts_out=service=grpc-web:"..\src\game\grpc\generated" ^
 "..\..\core\src\main\proto\*.proto" "..\..\server\src\main\proto\*.proto"
+ECHO finished.

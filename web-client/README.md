@@ -15,9 +15,10 @@ The Web Client module holds an ***Experimental*** browser client to play WSPro o
 1. install modules
     1. `cd web-client`
     2. `npm install`
-2. Generate Protobuf definitions
-    1. download [protoc.exe](https://github.com/protocolbuffers/protobuf/releases/latest) and [protoc-gen-grpc-web.exe](https://github.com/grpc/grpc-web/releases/latest) and copy into the `web-client\tools` folder
-    2. run `protocGen.bat`(Windows) or `protoc.sh` on Linux
+2. Generate Protobuf typescript definitions
+    1. download [protoc.exe](https://github.com/protocolbuffers/protobuf/releases/latest) and [protoc-gen-grpc-web.exe](https://github.com/grpc/grpc-web/releases/latest) (or the linux equivalents) and copy into the `web-client\tools` folder
+    2. run `protocGen.bat`(Windows) or `protocGen.sh` on Linux
+        1. this will generate typescript files for connecting to the game's grpc services.
 3. Fix Protobuf definitions ([why?](https://github.com/grpc/grpc-web/issues/447#issuecomment-492063767))
     1. navigate to `src/game/grpc/generated`
     2. add `/* eslint-disable */` to the top of every file
