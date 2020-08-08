@@ -33,7 +33,6 @@ import to.klay.wspro.core.game.proto.ProtoSerializable;
 import to.klay.wspro.core.game.scripting.lua.TestLocalStorageLuaAbilityFinder;
 import to.klay.wspro.core.test.TestLoggerConfigs;
 import to.klay.wspro.core.test.endtoend.MockStandardDeck;
-import to.klay.wspro.core.test.endtoend.TriggerLogger;
 
 public class BlankAutomatedGameTests {
 
@@ -45,7 +44,7 @@ public class BlankAutomatedGameTests {
 
 
     private void playAndLogLosers(Game game) {
-        game.getTriggerManager().register(new TriggerLogger());
+//        game.getTriggerManager().register(new TriggerLogger());
         game.startGame();
         Assertions.assertSame(GameStatus.FINISHED_SUCCESSFULLY, game.getGameState() );
 

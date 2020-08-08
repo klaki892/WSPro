@@ -197,7 +197,7 @@
                             <configuration>
                                 <transformers>
                                     <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                        <mainClass>to.klay.wspro.server.ArmeriaServer</mainClass>
+                                        <mainClass>to.klay.wspro.server.Main</mainClass>
                                     </transformer>
                                 </transformers>
                             </configuration>
