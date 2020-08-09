@@ -2,6 +2,8 @@
 
 Responsible for creating/hosting games and allowing players to connect over a network to play the game.
 
+It currently uses GRPC as its transport protocol and is written in Java.
+
 ## Building 
 #### Pre-requisites:
 

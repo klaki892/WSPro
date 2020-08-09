@@ -4,6 +4,9 @@ The Web Client module holds an ***Experimental*** browser client to play WSPro o
 
 **NOTE: This is currently not in a usable state**
 
+It is currently written in TypeScript and uses the [PIXI.JS game engine](https://www.pixijs.com/) for handling the game.
+The module uses create-react-app as React was intended for all interactions outside the game. 
+
 ### Building
 
 #### Pre-requisites:
