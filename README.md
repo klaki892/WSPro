@@ -8,6 +8,7 @@ The Goal of this project to provide a means to simulate a game of WS while autom
 
 
 ### State of Project: Usable; Not Playable 
+See the [Proof of concept](https://wspro.klay.to/#h.oc2mf6jhqyzm) consisting of command line gameplay. \
 To see the current roadmap and development timeline of the project, view the [State of WSPro](StateOfWSPro.md) document.
 
 ### Contributing
