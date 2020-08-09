@@ -7,6 +7,8 @@ Although a Lua Scripting engine is included, the scripting interface is generic 
 The tests included in this module allow the engine to be tested via AI players and a Command Line interface. 
 However this is *not meant for general use*. Please use an actual game player (i.e. [Web-Client](https://github.com/klaki892/WSPro/tree/master/web-client)) to play the game 
 
+See the Proof of Concept command line game on the website
+
 ## Scripting 
 
 The following is a [portion](https://github.com/klaki892/WSPro/blob/master/core/src/test/resources/lua/TestEncoreAbility.lua) of the lua script for creating the 3 cost encore auto ability found on all characters:
@@ -43,7 +45,7 @@ cd core
 mvn compile
 ```
 ## Contributing
-Join the [Discord Server](https://discord.gg/hkW5Xwc) for all questions relating to development, contributing, bug reports, and feature requests.
+Join the [Discord Server](https://discord.gg/6fszwZK) for all questions relating to development, contributing, bug reports, and feature requests.
 
 
 ### documentation

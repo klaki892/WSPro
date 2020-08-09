@@ -31,6 +31,6 @@ Look at output to see running port
     
 ### Contributing
 
-Join the [Discord Server](https://discord.gg/hkW5Xwc) for all questions relating to development, contributing, bug reports, and feature requests.
+Join the [Discord Server](https://discord.gg/6fszwZK) for all questions relating to development, contributing, bug reports, and feature requests.
 
  

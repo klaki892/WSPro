@@ -31,7 +31,7 @@ public class TestLocalStorageLuaAbilityFinder extends LuaAbilityFinder {
     private final File[] luaScripts;
 
     public TestLocalStorageLuaAbilityFinder(){
-        File resourcesDirectory = new File("src/test/resources/lua");
+        File resourcesDirectory = new File("core/src/test/resources/lua");
 
         //only pull files, not directories
         luaScripts = resourcesDirectory.listFiles(file -> {

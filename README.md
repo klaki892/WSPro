@@ -12,7 +12,7 @@ To see the current roadmap and development timeline of the project, view the [St
 
 ### Contributing
 
-Join the [Discord Server](https://discord.gg/hkW5Xwc) for all questions relating to development, contributing, bug reports, and feature requests.
+Join the [Discord Server](https://discord.gg/6fszwZK) for all questions relating to development, contributing, bug reports, and feature requests.
 
 ----
 Development
